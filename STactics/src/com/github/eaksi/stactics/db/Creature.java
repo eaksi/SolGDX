@@ -1,4 +1,4 @@
-package db;
+package com.github.eaksi.stactics.db;
 
 import java.util.Hashtable;
 import java.util.Vector;

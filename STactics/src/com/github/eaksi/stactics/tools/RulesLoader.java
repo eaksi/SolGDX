@@ -1,4 +1,4 @@
-package tools;
+package com.github.eaksi.stactics.tools;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

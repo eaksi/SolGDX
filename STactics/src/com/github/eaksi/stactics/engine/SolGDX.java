@@ -55,8 +55,8 @@ public class SolGDX extends ApplicationAdapter {
 		camera.setToOrtho(false, screenWidth, screenHeight);
 
 		batch = new SpriteBatch();
-		tempImg = new Texture("cleric_placeholder.png");
-		tempTile = new Texture("64px_tile_placeholder.png");
+		tempImg = new Texture("data/cleric_placeholder.png");
+		tempTile = new Texture("data/64px_tile_placeholder.png");
 		font = new BitmapFont();
         font.setColor(Color.BLACK);
         

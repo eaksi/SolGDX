@@ -1,4 +1,4 @@
-package db;
+package com.github.eaksi.stactics.db;
 
 public class Skill {
 	

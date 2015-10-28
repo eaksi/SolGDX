@@ -1,8 +1,10 @@
-import db.Creature;
-import db.World;
-import tools.RulesLoader;
+package com.github.eaksi.stactics.main;
 
-public class SolTactics {
+import com.github.eaksi.stactics.db.Creature;
+import com.github.eaksi.stactics.db.World;
+import com.github.eaksi.stactics.tools.RulesLoader;
+
+public class STactics {
 
 	public static void main(String[] args) {
 
