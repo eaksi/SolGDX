@@ -15,15 +15,17 @@ public class SolGDX extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private BitmapFont font;
-	private Texture tempImg;
+	private Texture chImage;
+	private Texture chFlippedImage;
 	private Texture tempTile;
 	private Rectangle tempRect;
 	private final int screenWidth = 640;
 	private final int screenHeight = 400;
 	
-	private boolean animating = false;
-	private int movingDirection = 0;    // 1 = NE, 3 = SE, 5 = SW, 7 = NW
-	private int moveFrame = -1;
+	private boolean chAnimating = false;
+	private int chMovingDirection = 1;    // 1 = NE, 3 = SE, 5 = SW, 7 = NW
+	private int chMoveFrame = -1;
+
 	
 	private int tileWidth = 64;
 	private int tileHeight = 32;
@@ -55,7 +57,8 @@ public class SolGDX extends ApplicationAdapter {
 		camera.setToOrtho(false, screenWidth, screenHeight);
 
 		batch = new SpriteBatch();
-		tempImg = new Texture("data/cleric_placeholder.png");
+		chImage = new Texture("data/cleric_placeholder.png");
+		chFlippedImage = new Texture("data/cleric_placeholder_flip.png");
 		tempTile = new Texture("data/64px_tile_placeholder.png");
 		font = new BitmapFont();
         font.setColor(Color.BLACK);
@@ -97,30 +100,30 @@ public class SolGDX extends ApplicationAdapter {
 	
 	public void getKeyboardInputs() {	// simplified, press multiple buttons at once etc.
 
-		if (animating) return;
+		if (chAnimating) return;
 				
 	    if(Gdx.input.isKeyPressed(Keys.UP)) {
-	    	movingDirection = 1;
-	    	moveFrame = 0;
-	    	animating = true;
+	    	chMovingDirection = 1;
+	    	chMoveFrame = 0;
+	    	chAnimating = true;
 	    }
 
 	    if(Gdx.input.isKeyPressed(Keys.DOWN)) {
-	    	movingDirection = 5;
-	    	moveFrame = 0;
-	    	animating = true;
+	    	chMovingDirection = 5;
+	    	chMoveFrame = 0;
+	    	chAnimating = true;
 	    }
 	    
 	    if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-	    	movingDirection = 7;
-	    	moveFrame = 0;
-	    	animating = true;
+	    	chMovingDirection = 7;
+	    	chMoveFrame = 0;
+	    	chAnimating = true;
 		}
 	    
 	    if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-	    	movingDirection = 3;
-	    	moveFrame = 0;
-	    	animating = true;
+	    	chMovingDirection = 3;
+	    	chMoveFrame = 0;
+	    	chAnimating = true;
 	    }
 	    
 	    if(Gdx.input.isKeyPressed(Keys.Q)) { // (Q)uit
@@ -133,8 +136,8 @@ public class SolGDX extends ApplicationAdapter {
 	//move rectangle/sprite
 	private void moveTempRect() {
 		
-		if (animating) {
-			switch (movingDirection) {
+		if (chAnimating) {
+			switch (chMovingDirection) {
 			case 1:
 		    	tempRect.x += 2;
 		    	tempRect.y += 1;
@@ -155,11 +158,17 @@ public class SolGDX extends ApplicationAdapter {
 				break;
 			}
 
-			moveFrame++;
+			chMoveFrame++;
 			
-			if (moveFrame >= 16) {
-				moveFrame = -1;
-				animating = false;
+			if (chMoveFrame == 3 || chMoveFrame == 11) { // XXX: temp simulate movement
+				tempRect.y += 2;
+			} else if (chMoveFrame == 7 || chMoveFrame == 15) {
+				tempRect.y -= 2;
+			}
+			
+			if (chMoveFrame >= 16) {
+				chMoveFrame = -1;
+				chAnimating = false;
 			}
 		}
 	}
@@ -184,14 +193,20 @@ public class SolGDX extends ApplicationAdapter {
 	
     
     private void drawCharacters() {
-    	batch.draw(tempImg, tempRect.x, tempRect.y);
+    	if (chMovingDirection == 5 || chMovingDirection == 7) { // XXX: temp different sprites for movement
+    		batch.draw(chFlippedImage, tempRect.x, tempRect.y);
+    	}
+    	if (chMovingDirection == 1 || chMovingDirection == 3) {
+    		batch.draw(chImage, tempRect.x, tempRect.y);
+    	}
+    	
     }
     
     
 	@Override
 	public void dispose() {
 		batch.dispose();
-		tempImg.dispose();
+		chImage.dispose();
 		tempTile.dispose();
 		font.dispose();
 	}
