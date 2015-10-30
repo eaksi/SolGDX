@@ -10,9 +10,7 @@ public class Creature {
 	private String name;
 	private String prefixName, suffixName; // titles and descriptors
 
-	//private int race, cclass, alignment;
-	//private Vector<History> characterHistory;  //idea
-	
+	//private int race, cclass, alignment;	
 	
 	// base stats
 	private int strength, agility, mind;

@@ -35,7 +35,7 @@ public class SolGDX extends ApplicationAdapter {
 	private int tileMap[][] = {	{1,1,1,1,1,1},
 								{1,0,0,0,1,1},
 								{1,0,0,1,1,1},
-								{1,0,0,1,1,1},
+								{1,1,1,1,1,1},
 								{1,0,0,1,1,1},
 								{1,0,0,1,1,1},
 								{1,0,0,1,1,1},
@@ -207,6 +207,7 @@ public class SolGDX extends ApplicationAdapter {
 	public void dispose() {
 		batch.dispose();
 		chImage.dispose();
+		chFlippedImage.dispose();
 		tempTile.dispose();
 		font.dispose();
 	}
