@@ -64,8 +64,8 @@ public class SolGDX extends ApplicationAdapter {
         font.setColor(Color.BLACK);
         
         tempRect = new Rectangle();
-        tempRect.x = screenWidth - (tileMapWidth * 32 - 32); // TODO: better formulas for OpenGL/LibGDX/Sprite/tiling
-        tempRect.y = screenHeight - (tileMapHeight * 16 - 20 ); // TODO: better formulas for OpenGL/LibGDX/Sprite/tiling
+        tempRect.x = getIsoX(0,2); 
+        tempRect.y = getIsoY(0,2) + 36; //XXX: sprite/tile sizes hack 
         tempRect.width = 64;
         tempRect.height = 64;
         
@@ -73,6 +73,7 @@ public class SolGDX extends ApplicationAdapter {
         		"  difference = " + tileMapWidthHeightDifference);
 	}
 
+	
 	@Override
 	public void render () {
 		
@@ -97,6 +98,7 @@ public class SolGDX extends ApplicationAdapter {
 
 		moveTempRect(); 		// XXX: temp character turn-based keyboard movement
 	}
+	
 	
 	public void getKeyboardInputs() {	// simplified, press multiple buttons at once etc.
 
@@ -132,7 +134,7 @@ public class SolGDX extends ApplicationAdapter {
 
 	}
 	
-
+	
 	//move rectangle/sprite
 	private void moveTempRect() {
 		
@@ -176,22 +178,27 @@ public class SolGDX extends ApplicationAdapter {
 	
 	private void drawTiles() {
 
-    	int tempx = 0, tempy = 0;
-    	
-    	
     	// FIXME: make comments and better code for transforming coordinates
     	for (int i = 0; i < tileMapWidth; i++) {
         	for (int j = 0; j < tileMapHeight; j++) {
     			if (tileMap[i][j] != 0 ) {
-    				tempx = screenWidth - ((tileMapWidth * 32 - 32) + (i - j)* tileWidthHalf);
-    				tempy = screenHeight - ((tileMapHeight * 16 - 32) + (i + j) * tileHeightHalf);
-    				batch.draw(tempTile, tempx, tempy);	
+    				batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i) + 16));	
     			}
     		}
     	}
     }
 	
-    
+    private int getIsoX(int mapx, int mapy) {
+    	return (screenWidth - ((tileMapWidth * 32 - 32) + (mapy - mapx) * tileWidthHalf));
+    			
+    }
+
+    private int getIsoY(int mapx, int mapy) {
+    	return (screenHeight - ((tileMapHeight * 16 - 32) + (mapy + mapx) * tileHeightHalf));
+    			
+    }
+
+	
     private void drawCharacters() {
     	if (chMovingDirection == 5 || chMovingDirection == 7) { // XXX: temp different sprites for movement
     		batch.draw(chFlippedImage, tempRect.x, tempRect.y);
