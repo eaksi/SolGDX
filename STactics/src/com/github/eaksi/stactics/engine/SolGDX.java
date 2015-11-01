@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
 public class SolGDX extends ApplicationAdapter {
@@ -18,6 +19,8 @@ public class SolGDX extends ApplicationAdapter {
 	private Texture chImage;
 	private Texture chFlippedImage;
 	private Texture tempTile;
+	private Texture spriteSheet;
+	private TextureRegion[][] splitSheet;
 	private Rectangle tempRect;
 	private final int screenWidth = 640;
 	private final int screenHeight = 400;
@@ -25,7 +28,6 @@ public class SolGDX extends ApplicationAdapter {
 	private boolean chAnimating = false;
 	private int chMovingDirection = 1;    // 1 = NE, 3 = SE, 5 = SW, 7 = NW
 	private int chMoveFrame = -1;
-
 	
 	private int tileWidth = 64;
 	private int tileHeight = 32;
@@ -59,13 +61,18 @@ public class SolGDX extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		chImage = new Texture("data/cleric_placeholder.png");
 		chFlippedImage = new Texture("data/cleric_placeholder_flip.png");
+		spriteSheet = new Texture("data/fcleric_placeholder.png");
+		
+		splitSheet = TextureRegion.split(spriteSheet, 32, 32);
+		System.out.println("splitSheet regionHeight:" + splitSheet[0][0].getRegionHeight());
+		
 		tempTile = new Texture("data/64px_tile_placeholder.png");
 		font = new BitmapFont();
         font.setColor(Color.BLACK);
         
         tempRect = new Rectangle();
         tempRect.x = getIsoX(0,2); 
-        tempRect.y = getIsoY(0,2) + 36; //XXX: sprite/tile sizes hack 
+        tempRect.y = getIsoY(0,2) + 36; //XXX: sprite/tile sizes hack
         tempRect.width = 64;
         tempRect.height = 64;
         
