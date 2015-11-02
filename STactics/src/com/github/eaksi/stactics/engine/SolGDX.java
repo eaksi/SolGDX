@@ -16,12 +16,13 @@ public class SolGDX extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private BitmapFont font;
-	private Texture chImage;
-	private Texture chFlippedImage;
+	
 	private Texture tempTile;
+	
 	private Texture spriteSheet;
 	private TextureRegion[][] splitSheet;
-	private Rectangle tempRect;
+	private TextureRegion[][] flippedSheet;
+	private Rectangle charRect;
 	private final int screenWidth = 640;
 	private final int screenHeight = 400;
 	
@@ -59,22 +60,27 @@ public class SolGDX extends ApplicationAdapter {
 		camera.setToOrtho(false, screenWidth, screenHeight);
 
 		batch = new SpriteBatch();
-		chImage = new Texture("data/cleric_placeholder.png");
-		chFlippedImage = new Texture("data/cleric_placeholder_flip.png");
-		spriteSheet = new Texture("data/fcleric_placeholder.png");
 		
-		splitSheet = TextureRegion.split(spriteSheet, 32, 32);
-		System.out.println("splitSheet regionHeight:" + splitSheet[0][0].getRegionHeight());
+		spriteSheet = new Texture("data/farcher_placeholder.png");
+		splitSheet = TextureRegion.split(spriteSheet, 32, 64);
+		flippedSheet = TextureRegion.split(spriteSheet, 32, 64);
+
+		// flip all sprites within sheet 
+		for (int i=0; i < 2; i++) {
+			for (int j=0; j<7; j++) {
+				flippedSheet[i][j].flip(true, false);
+			}
+		}
 		
 		tempTile = new Texture("data/64px_tile_placeholder.png");
 		font = new BitmapFont();
         font.setColor(Color.BLACK);
         
-        tempRect = new Rectangle();
-        tempRect.x = getIsoX(0,2); 
-        tempRect.y = getIsoY(0,2) + 36; //XXX: sprite/tile sizes hack
-        tempRect.width = 64;
-        tempRect.height = 64;
+        charRect = new Rectangle();
+        charRect.x = getIsoX(0,2) + 16; 
+        charRect.y = getIsoY(0,2) + 36; //XXX: sprite/tile sizes hack
+        charRect.width = 32;
+        charRect.height = 64;
         
         System.out.println("tileMapWidth = " + tileMapWidth + "  tileMapHeight = " + tileMapHeight + 
         		"  difference = " + tileMapWidthHeightDifference);
@@ -94,8 +100,12 @@ public class SolGDX extends ApplicationAdapter {
 	    
 	    // draw everything
 	    batch.begin();
+	    
+	    //batch.draw(splitSheet[0][0], 0, 0);
+	    
 	    drawTiles();
 	    drawCharacters();
+	    drawDebug();
 	    batch.end();
 		
 	    // update FPS counter on window title
@@ -103,7 +113,7 @@ public class SolGDX extends ApplicationAdapter {
 				
 		getKeyboardInputs();	// keyboard controls handled at this point
 
-		moveTempRect(); 		// XXX: temp character turn-based keyboard movement
+		moveCharRect(); 		// XXX: temp character turn-based keyboard movement
 	}
 	
 	
@@ -143,37 +153,31 @@ public class SolGDX extends ApplicationAdapter {
 	
 	
 	//move rectangle/sprite
-	private void moveTempRect() {
+	private void moveCharRect() {
 		
 		if (chAnimating) {
 			switch (chMovingDirection) {
 			case 1:
-		    	tempRect.x += 2;
-		    	tempRect.y += 1;
+		    	charRect.x += 2;
+		    	charRect.y += 1;
 				break;
 			case 3:
-		    	tempRect.x += 2;
-		    	tempRect.y -= 1;
+		    	charRect.x += 2;
+		    	charRect.y -= 1;
 				break;
 			case 5:
-		    	tempRect.x -= 2;
-		    	tempRect.y -= 1;
+		    	charRect.x -= 2;
+		    	charRect.y -= 1;
 				break;
 			case 7:
-		    	tempRect.x -= 2;
-		    	tempRect.y += 1;
+		    	charRect.x -= 2;
+		    	charRect.y += 1;
 				break;
 			default:
 				break;
 			}
 
 			chMoveFrame++;
-			
-			if (chMoveFrame == 3 || chMoveFrame == 11) { // XXX: temp simulate movement
-				tempRect.y += 2;
-			} else if (chMoveFrame == 7 || chMoveFrame == 15) {
-				tempRect.y -= 2;
-			}
 			
 			if (chMoveFrame >= 16) {
 				chMoveFrame = -1;
@@ -182,10 +186,26 @@ public class SolGDX extends ApplicationAdapter {
 		}
 	}
 	
+	private void drawDebug() {
+		
+		// draw the original sprite sheet by region
+		for (int i=0; i<2; i++) {
+			for (int j=0; j<7; j++) {
+				batch.draw(splitSheet[i][j],240+j*32,64-i*64);
+			}
+		}
+		
+		// draw the flipped sprite sheet by region
+	    for (int i=0; i<2; i++) {
+			for (int j=0; j<7; j++) {
+				batch.draw(flippedSheet[i][j],j*32,64-i*64);
+			}
+		}
+
+	}
 	
 	private void drawTiles() {
 
-    	// FIXME: make comments and better code for transforming coordinates
     	for (int i = 0; i < tileMapWidth; i++) {
         	for (int j = 0; j < tileMapHeight; j++) {
     			if (tileMap[i][j] != 0 ) {
@@ -207,22 +227,80 @@ public class SolGDX extends ApplicationAdapter {
 
 	
     private void drawCharacters() {
-    	if (chMovingDirection == 5 || chMovingDirection == 7) { // XXX: temp different sprites for movement
-    		batch.draw(chFlippedImage, tempRect.x, tempRect.y);
-    	}
-    	if (chMovingDirection == 1 || chMovingDirection == 3) {
-    		batch.draw(chImage, tempRect.x, tempRect.y);
+		if (chMoveFrame == 3 || chMoveFrame == 11) { // XXX: temp simulate movement
+			charRect.y += 1;
+		} else if (chMoveFrame == 5 || chMoveFrame == 14) {
+			charRect.y -= 1;
+		}
+    	
+    	switch(chMoveFrame) {
+    	case -1: case 0: case 1: case 7: case 8: case 9: case 15:
+    	    switch(chMovingDirection) {
+	    	case 1:
+	    		batch.draw(flippedSheet[0][3], charRect.x, charRect.y);
+	    		break;
+	    	case 3:
+	    		batch.draw(splitSheet[0][0], charRect.x, charRect.y);
+	    		break;
+	    	case 5:
+	    		batch.draw(flippedSheet[0][0], charRect.x, charRect.y);
+	    		break;
+	    	case 7:
+	    		batch.draw(splitSheet[0][3], charRect.x, charRect.y);
+	    		break;
+	    	default:
+	    		System.err.println("Warning: invalid direction of character!"); //FIXME: written 60 times per second
+	    	}
+    	    break;
+    	case 2: case 3: case 4: case 5: case 6:	//walk 1
+        	switch(chMovingDirection) {
+        	case 1:
+        		batch.draw(flippedSheet[0][4], charRect.x, charRect.y);
+        		break;
+        	case 3:
+        		batch.draw(splitSheet[0][1], charRect.x, charRect.y);
+        		break;
+        	case 5:
+        		batch.draw(flippedSheet[0][1], charRect.x, charRect.y);
+        		break;
+        	case 7:
+        		batch.draw(splitSheet[0][4], charRect.x, charRect.y);
+        		break;
+        	default:
+        		System.err.println("Warning: invalid direction of character!"); //FIXME: written 60 times per second
+        	}
+    		break;
+    	case 10: case 11: case 12: case 13: case 14: // walk 2
+        	switch(chMovingDirection) {
+        	case 1:
+        		batch.draw(flippedSheet[0][5], charRect.x, charRect.y);
+        		break;
+        	case 3:
+        		batch.draw(splitSheet[0][2], charRect.x, charRect.y);
+        		break;
+        	case 5:
+        		batch.draw(flippedSheet[0][2], charRect.x, charRect.y);
+        		break;
+        	case 7:
+        		batch.draw(splitSheet[0][5], charRect.x, charRect.y);
+        		break;
+        	default:
+        		System.err.println("Warning: invalid direction of character!"); //FIXME: written 60 times per second
+        	}
+    		break;
+    	default:
+    		System.err.println("Warning: invalid animation frame!"); //FIXME: written 60 times per second
+    			
     	}
     	
-    }
-    
-    
+
+    	
+    }    
 	@Override
 	public void dispose() {
 		batch.dispose();
-		chImage.dispose();
-		chFlippedImage.dispose();
 		tempTile.dispose();
+		spriteSheet.dispose();
 		font.dispose();
 	}
 
