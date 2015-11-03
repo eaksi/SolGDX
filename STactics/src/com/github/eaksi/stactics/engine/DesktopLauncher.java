@@ -9,7 +9,7 @@ public class DesktopLauncher {
 		
         config.title = "SolTactics";
         config.width = 640;
-        config.height = 400;
+        config.height = 480;
         
         new LwjglApplication(new SolGDX(), config);
 	}

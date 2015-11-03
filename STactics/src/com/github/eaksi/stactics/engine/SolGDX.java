@@ -13,6 +13,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
 public class SolGDX extends ApplicationAdapter {
+	
+	public enum Direction {
+		NE, SE, SW, NW
+	}
+	
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private BitmapFont font;
@@ -24,10 +29,10 @@ public class SolGDX extends ApplicationAdapter {
 	private TextureRegion[][] flippedSheet;
 	private Rectangle charRect;
 	private final int screenWidth = 640;
-	private final int screenHeight = 400;
+	private final int screenHeight = 480;
 	
 	private boolean chAnimating = false;
-	private int chMovingDirection = 1;    // 1 = NE, 3 = SE, 5 = SW, 7 = NW
+	private Direction chMovingDirection = Direction.NE;
 	private int chMoveFrame = -1;
 	
 	private int tileWidth = 64;
@@ -100,9 +105,6 @@ public class SolGDX extends ApplicationAdapter {
 	    
 	    // draw everything
 	    batch.begin();
-	    
-	    //batch.draw(splitSheet[0][0], 0, 0);
-	    
 	    drawTiles();
 	    drawCharacters();
 	    drawDebug();
@@ -122,25 +124,25 @@ public class SolGDX extends ApplicationAdapter {
 		if (chAnimating) return;
 				
 	    if(Gdx.input.isKeyPressed(Keys.UP)) {
-	    	chMovingDirection = 1;
+	    	chMovingDirection = Direction.NE;
 	    	chMoveFrame = 0;
 	    	chAnimating = true;
 	    }
 
 	    if(Gdx.input.isKeyPressed(Keys.DOWN)) {
-	    	chMovingDirection = 5;
+	    	chMovingDirection = Direction.SW;
 	    	chMoveFrame = 0;
 	    	chAnimating = true;
 	    }
 	    
 	    if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-	    	chMovingDirection = 7;
+	    	chMovingDirection = Direction.NW;
 	    	chMoveFrame = 0;
 	    	chAnimating = true;
 		}
 	    
 	    if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-	    	chMovingDirection = 3;
+	    	chMovingDirection = Direction.SE;
 	    	chMoveFrame = 0;
 	    	chAnimating = true;
 	    }
@@ -157,19 +159,19 @@ public class SolGDX extends ApplicationAdapter {
 		
 		if (chAnimating) {
 			switch (chMovingDirection) {
-			case 1:
+			case NE:
 		    	charRect.x += 2;
 		    	charRect.y += 1;
 				break;
-			case 3:
+			case SE:
 		    	charRect.x += 2;
 		    	charRect.y -= 1;
 				break;
-			case 5:
+			case SW:
 		    	charRect.x -= 2;
 		    	charRect.y -= 1;
 				break;
-			case 7:
+			case NW:
 		    	charRect.x -= 2;
 		    	charRect.y += 1;
 				break;
@@ -186,6 +188,7 @@ public class SolGDX extends ApplicationAdapter {
 		}
 	}
 	
+	// Draw the needed stuff for debug (for quick testing)
 	private void drawDebug() {
 		
 		// draw the original sprite sheet by region
@@ -204,6 +207,7 @@ public class SolGDX extends ApplicationAdapter {
 
 	}
 	
+	// Draw the tile map
 	private void drawTiles() {
 
     	for (int i = 0; i < tileMapWidth; i++) {
@@ -215,11 +219,13 @@ public class SolGDX extends ApplicationAdapter {
     	}
     }
 	
+	// Get the isometric projection coordinate X, given tilemap X and Y as parameters.
     private int getIsoX(int mapx, int mapy) {
     	return (screenWidth - ((tileMapWidth * 32 - 32) + (mapy - mapx) * tileWidthHalf));
     			
     }
 
+	// Get the isometric projection coordinate Y, given tilemap X and Y as parameters.
     private int getIsoY(int mapx, int mapy) {
     	return (screenHeight - ((tileMapHeight * 16 - 32) + (mapy + mapx) * tileHeightHalf));
     			
@@ -236,16 +242,16 @@ public class SolGDX extends ApplicationAdapter {
     	switch(chMoveFrame) {
     	case -1: case 0: case 1: case 7: case 8: case 9: case 15:
     	    switch(chMovingDirection) {
-	    	case 1:
+	    	case NE:
 	    		batch.draw(flippedSheet[0][3], charRect.x, charRect.y);
 	    		break;
-	    	case 3:
+	    	case SE:
 	    		batch.draw(splitSheet[0][0], charRect.x, charRect.y);
 	    		break;
-	    	case 5:
+	    	case SW:
 	    		batch.draw(flippedSheet[0][0], charRect.x, charRect.y);
 	    		break;
-	    	case 7:
+	    	case NW:
 	    		batch.draw(splitSheet[0][3], charRect.x, charRect.y);
 	    		break;
 	    	default:
@@ -254,16 +260,16 @@ public class SolGDX extends ApplicationAdapter {
     	    break;
     	case 2: case 3: case 4: case 5: case 6:	//walk 1
         	switch(chMovingDirection) {
-        	case 1:
+        	case NE:
         		batch.draw(flippedSheet[0][4], charRect.x, charRect.y);
         		break;
-        	case 3:
+        	case SE:
         		batch.draw(splitSheet[0][1], charRect.x, charRect.y);
         		break;
-        	case 5:
+        	case SW:
         		batch.draw(flippedSheet[0][1], charRect.x, charRect.y);
         		break;
-        	case 7:
+        	case NW:
         		batch.draw(splitSheet[0][4], charRect.x, charRect.y);
         		break;
         	default:
@@ -272,16 +278,16 @@ public class SolGDX extends ApplicationAdapter {
     		break;
     	case 10: case 11: case 12: case 13: case 14: // walk 2
         	switch(chMovingDirection) {
-        	case 1:
+        	case NE:
         		batch.draw(flippedSheet[0][5], charRect.x, charRect.y);
         		break;
-        	case 3:
+        	case SE:
         		batch.draw(splitSheet[0][2], charRect.x, charRect.y);
         		break;
-        	case 5:
+        	case SW:
         		batch.draw(flippedSheet[0][2], charRect.x, charRect.y);
         		break;
-        	case 7:
+        	case NW:
         		batch.draw(splitSheet[0][5], charRect.x, charRect.y);
         		break;
         	default:
