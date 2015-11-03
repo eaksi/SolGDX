@@ -118,39 +118,24 @@ public class SolGDX extends ApplicationAdapter {
 		moveCharRect(); 		// XXX: temp character turn-based keyboard movement
 	}
 	
+	private void setMoveDirection(Direction d) {
+    	chMovingDirection = d;
+    	chMoveFrame = 0;
+    	chAnimating = true;
+	}
+	
 	
 	public void getKeyboardInputs() {	// simplified, press multiple buttons at once etc.
 
 		if (chAnimating) return;
 				
-	    if(Gdx.input.isKeyPressed(Keys.UP)) {
-	    	chMovingDirection = Direction.NE;
-	    	chMoveFrame = 0;
-	    	chAnimating = true;
-	    }
+	    if(Gdx.input.isKeyPressed(Keys.UP))		setMoveDirection(Direction.NE);
+	    if(Gdx.input.isKeyPressed(Keys.DOWN))	setMoveDirection(Direction.SW);
+	    if(Gdx.input.isKeyPressed(Keys.LEFT))	setMoveDirection(Direction.NW);
+	    if(Gdx.input.isKeyPressed(Keys.RIGHT))	setMoveDirection(Direction.SE);
 
-	    if(Gdx.input.isKeyPressed(Keys.DOWN)) {
-	    	chMovingDirection = Direction.SW;
-	    	chMoveFrame = 0;
-	    	chAnimating = true;
-	    }
+	    if(Gdx.input.isKeyPressed(Keys.Q))		Gdx.app.exit();
 	    
-	    if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-	    	chMovingDirection = Direction.NW;
-	    	chMoveFrame = 0;
-	    	chAnimating = true;
-		}
-	    
-	    if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-	    	chMovingDirection = Direction.SE;
-	    	chMoveFrame = 0;
-	    	chAnimating = true;
-	    }
-	    
-	    if(Gdx.input.isKeyPressed(Keys.Q)) { // (Q)uit
-	    	Gdx.app.exit();
-	    }
-
 	}
 	
 	
