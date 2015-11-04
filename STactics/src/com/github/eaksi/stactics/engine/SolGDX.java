@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class SolGDX extends ApplicationAdapter {
 	
-	public enum Direction {
+	public enum TempDirection {
 		NE, SE, SW, NW
 	}
 	
@@ -32,7 +32,7 @@ public class SolGDX extends ApplicationAdapter {
 	private final int screenHeight = 480;
 	
 	private boolean chAnimating = false;
-	private Direction chMovingDirection = Direction.NE;
+	private TempDirection chMovingDirection = TempDirection.NE;
 	private int chMoveFrame = -1;
 	
 	private int tileWidth = 64;
@@ -118,7 +118,7 @@ public class SolGDX extends ApplicationAdapter {
 		moveCharRect(); 		// XXX: temp character turn-based keyboard movement
 	}
 	
-	private void setMoveDirection(Direction d) {
+	private void setMoveDirection(TempDirection d) {
     	chMovingDirection = d;
     	chMoveFrame = 0;
     	chAnimating = true;
@@ -129,10 +129,10 @@ public class SolGDX extends ApplicationAdapter {
 
 		if (chAnimating) return;
 				
-	    if(Gdx.input.isKeyPressed(Keys.UP))		setMoveDirection(Direction.NE);
-	    if(Gdx.input.isKeyPressed(Keys.DOWN))	setMoveDirection(Direction.SW);
-	    if(Gdx.input.isKeyPressed(Keys.LEFT))	setMoveDirection(Direction.NW);
-	    if(Gdx.input.isKeyPressed(Keys.RIGHT))	setMoveDirection(Direction.SE);
+	    if(Gdx.input.isKeyPressed(Keys.UP))		setMoveDirection(TempDirection.NE);
+	    if(Gdx.input.isKeyPressed(Keys.DOWN))	setMoveDirection(TempDirection.SW);
+	    if(Gdx.input.isKeyPressed(Keys.LEFT))	setMoveDirection(TempDirection.NW);
+	    if(Gdx.input.isKeyPressed(Keys.RIGHT))	setMoveDirection(TempDirection.SE);
 
 	    if(Gdx.input.isKeyPressed(Keys.Q))		Gdx.app.exit();
 	    
