@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.github.eaksi.stactics.db.BattleMap;
 
 public class SolGDX extends ApplicationAdapter {
 	
@@ -40,21 +41,22 @@ public class SolGDX extends ApplicationAdapter {
 	private int tileWidthHalf = tileWidth / 2; 		// slight optimization
 	private int tileHeightHalf = tileHeight / 2; 	// slight optimization
 	
-	private int tileMap[][] = {	{1,1,1,1,1,1},
-								{1,0,0,0,1,1},
-								{1,0,0,1,1,1},
-								{1,1,1,1,1,1},
-								{1,0,0,1,1,1},
-								{1,0,0,1,1,1},
-								{1,0,0,1,1,1},
-								{1,0,0,0,1,1},
-								{1,0,0,0,1,1},
-								{1,0,0,0,1,1},
-								{1,1,1,1,1,1} };
 	
-	int tileMapWidth = tileMap.length; // XXX: arrays always rectangular, checked elsewhere
-	int tileMapHeight = tileMap[0].length;
-	int tileMapWidthHeightDifference = tileMapWidth - tileMapHeight;
+	private BattleMap battleMap = new BattleMap();
+
+	private int tileMap[][] = battleMap.getMap();	//FIXME: remove tileMap and check instantiation
+	/* = {	{1,1,1,1,1,1},
+	{1,0,0,0,1,1},
+	{1,0,0,1,1,1},
+	{1,1,1,1,1,1},
+	{1,0,0,1,1,1},
+	{1,0,0,1,1,1},
+	{1,0,0,1,1,1},
+	{1,0,0,0,1,1},
+	{1,0,0,0,1,1},
+	{1,0,0,0,1,1},
+	{1,1,1,1,1,1} };*/
+
 
 	
 	@Override
@@ -87,8 +89,8 @@ public class SolGDX extends ApplicationAdapter {
         charRect.width = 32;
         charRect.height = 64;
         
-        System.out.println("tileMapWidth = " + tileMapWidth + "  tileMapHeight = " + tileMapHeight + 
-        		"  difference = " + tileMapWidthHeightDifference);
+        System.out.println("battleMap.getWidth() = " + battleMap.getWidth() + "  battleMap.getHeight() = " + battleMap.getHeight() + 
+        		"  difference = " + (battleMap.getWidth()-battleMap.getHeight()));
 	}
 
 	
@@ -195,8 +197,8 @@ public class SolGDX extends ApplicationAdapter {
 	// Draw the tile map
 	private void drawTiles() {
 
-    	for (int i = 0; i < tileMapWidth; i++) {
-        	for (int j = 0; j < tileMapHeight; j++) {
+    	for (int i = 0; i < battleMap.getWidth(); i++) {
+        	for (int j = 0; j < battleMap.getHeight(); j++) {
     			if (tileMap[i][j] != 0 ) {
     				batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i) + 16));	
     			}
@@ -206,13 +208,13 @@ public class SolGDX extends ApplicationAdapter {
 	
 	// Get the isometric projection coordinate X, given tilemap X and Y as parameters.
     private int getIsoX(int mapx, int mapy) {
-    	return (screenWidth - ((tileMapWidth * 32 - 32) + (mapy - mapx) * tileWidthHalf));
+    	return (screenWidth - ((battleMap.getWidth() * 32 - 32) + (mapy - mapx) * tileWidthHalf));
     			
     }
 
 	// Get the isometric projection coordinate Y, given tilemap X and Y as parameters.
     private int getIsoY(int mapx, int mapy) {
-    	return (screenHeight - ((tileMapHeight * 16 - 32) + (mapy + mapx) * tileHeightHalf));
+    	return (screenHeight - ((battleMap.getHeight() * 16 - 32) + (mapy + mapx) * tileHeightHalf));
     			
     }
 
