@@ -44,21 +44,6 @@ public class SolGDX extends ApplicationAdapter {
 	
 	private BattleMap battleMap = new BattleMap();
 
-	private int tileMap[][] = battleMap.getMap();	//FIXME: remove tileMap and check instantiation
-	/* = {	{1,1,1,1,1,1},
-	{1,0,0,0,1,1},
-	{1,0,0,1,1,1},
-	{1,1,1,1,1,1},
-	{1,0,0,1,1,1},
-	{1,0,0,1,1,1},
-	{1,0,0,1,1,1},
-	{1,0,0,0,1,1},
-	{1,0,0,0,1,1},
-	{1,0,0,0,1,1},
-	{1,1,1,1,1,1} };*/
-
-
-	
 	@Override
 	public void create () {
 		
@@ -199,7 +184,7 @@ public class SolGDX extends ApplicationAdapter {
 
     	for (int i = 0; i < battleMap.getWidth(); i++) {
         	for (int j = 0; j < battleMap.getHeight(); j++) {
-    			if (tileMap[i][j] != 0 ) {
+    			if (battleMap.getTile(i,j) != 0 ) {
     				batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i) + 16));	
     			}
     		}
