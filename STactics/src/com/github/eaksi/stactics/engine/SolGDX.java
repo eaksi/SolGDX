@@ -112,16 +112,32 @@ public class SolGDX extends ApplicationAdapter {
 	}
 	
 	
-	public void getKeyboardInputs() {	// simplified, press multiple buttons at once etc.
+	public void getKeyboardInputs() {
 
+		// Quit the application
+		if(Gdx.input.isKeyPressed(Keys.ESCAPE))		Gdx.app.exit();
+
+        // Moving the view
+        if (Gdx.input.isKeyPressed(Keys.A))			camera.translate(-5, 0, 0);
+        if (Gdx.input.isKeyPressed(Keys.D))			camera.translate(5, 0, 0);
+        if (Gdx.input.isKeyPressed(Keys.S))			camera.translate(0, -5, 0);
+        if (Gdx.input.isKeyPressed(Keys.W))			camera.translate(0, 5, 0);
+		
+		// Zooming the view
+		if (Gdx.input.isKeyPressed(Keys.Z))			camera.zoom += 0.05;
+        if (Gdx.input.isKeyPressed(Keys.X))			camera.zoom -= 0.05;
+
+        // Rotating the view    
+        if (Gdx.input.isKeyPressed(Keys.Q))			camera.rotate(-1f, 0, 0, 1);
+        if (Gdx.input.isKeyPressed(Keys.E))			camera.rotate(1f, 0, 0, 1);
+       
 		if (chAnimating) return;
-				
-	    if(Gdx.input.isKeyPressed(Keys.UP))		setMoveDirection(TempDirection.NE);
-	    if(Gdx.input.isKeyPressed(Keys.DOWN))	setMoveDirection(TempDirection.SW);
-	    if(Gdx.input.isKeyPressed(Keys.LEFT))	setMoveDirection(TempDirection.NW);
-	    if(Gdx.input.isKeyPressed(Keys.RIGHT))	setMoveDirection(TempDirection.SE);
-
-	    if(Gdx.input.isKeyPressed(Keys.Q))		Gdx.app.exit();
+		else {
+		    if(Gdx.input.isKeyPressed(Keys.UP))		setMoveDirection(TempDirection.NE);
+		    if(Gdx.input.isKeyPressed(Keys.DOWN))	setMoveDirection(TempDirection.SW);
+		    if(Gdx.input.isKeyPressed(Keys.LEFT))	setMoveDirection(TempDirection.NW);
+		    if(Gdx.input.isKeyPressed(Keys.RIGHT))	setMoveDirection(TempDirection.SE);
+		}
 	    
 	}
 	
