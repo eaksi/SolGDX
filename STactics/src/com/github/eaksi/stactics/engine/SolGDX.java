@@ -142,7 +142,7 @@ public class SolGDX extends ApplicationAdapter {
 	    
 	}
 
-	// this fires only once per move
+	// this fires only once per move //FIXME: REFACTOR
 	private void setMoveDirection(TempDirection d) {
 
 		boolean canMove = false;
@@ -150,23 +150,35 @@ public class SolGDX extends ApplicationAdapter {
 		// check if creature can move to a tile
 		switch (chMovingDirection) {
 		case NE:
-			if (battleMap.getTile((creature.getX()-1), creature.getY()) == 1) canMove = true;
-			System.out.println("NE from (" + creature.getX() + "," + creature.getY() + ")->(" +
+			if (battleMap.getTile((creature.getX()-1), creature.getY()) == 1) {
+				canMove = true;
+				creature.setX(creature.getX()-1);
+			}
+			System.out.println("NE (-x) (" + creature.getX() + "," + creature.getY() + ") -> (" +
 					(creature.getX()-1) + "," + creature.getY() + ")");	// XXX: debug
 			break;
 		case SE:
-			if (battleMap.getTile(creature.getX(), (creature.getY())+1) == 1) canMove = true;
-			System.out.println("SE from (" + creature.getX() + "," + creature.getY() + ")->(" +
+			if (battleMap.getTile(creature.getX(), (creature.getY())+1) == 1) {
+				canMove = true;
+				creature.setY(creature.getY()+1);
+			}
+			System.out.println("SE (+y) (" + creature.getX() + "," + creature.getY() + ") -> (" +
 					creature.getX() + "," + (creature.getY()+1) + ")");	// XXX: debug
 			break;
 		case SW:
-			if (battleMap.getTile((creature.getX()+1), creature.getY()) == 1) canMove = true;
-			System.out.println("SW from (" + creature.getX() + "," + creature.getY() + ")->(" +
+			if (battleMap.getTile((creature.getX()+1), creature.getY()) == 1) {
+				canMove = true;
+				creature.setX(creature.getX()+1);
+			}
+			System.out.println("SW (+x) (" + creature.getX() + "," + creature.getY() + ") -> (" +
 					(creature.getX()+1) + "," + creature.getY() + ")");	// XXX: debug
 			break;
 		case NW:
-			if (battleMap.getTile(creature.getX(), (creature.getY())-1) == 1) canMove = true;
-			System.out.println("NW from (" + creature.getX() + "," + creature.getY() + ")->(" +
+			if (battleMap.getTile(creature.getX(), (creature.getY())-1) == 1) {
+				canMove = true;
+				creature.setY(creature.getY()-1);
+			}
+			System.out.println("NW (-y) (" + creature.getX() + "," + creature.getY() + ") -> (" +
 					creature.getX() + "," + (creature.getY()-1) + ")");	// XXX: debug
 			break;
 		default:
@@ -174,23 +186,6 @@ public class SolGDX extends ApplicationAdapter {
 		}
 		
 		if (canMove) {
-			switch (chMovingDirection) {
-			case NE:
-				creature.setX(creature.getX()-1);
-				break;
-			case SE:
-				creature.setY(creature.getY()+1);
-				break;
-			case SW:
-				creature.setX(creature.getX()+1);
-				break;
-			case NW:
-				creature.setY(creature.getY()-1);
-				break;
-			default:
-				break;
-			}
-
     		chMoveFrame = 0;
     		chAnimating = true;
 		}
