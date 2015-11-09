@@ -16,6 +16,9 @@ public class Creature {
 	private int strength, agility, mind;
 	private int baseHP, baseMP, baseTP, baseDelay;
 	
+	// x, y on battlemap
+	private int x, y;
+	
 	private Vector<Integer> knownSpells;
 	public Hashtable<Integer, Integer> skills; // XXX: temp public
 	
@@ -28,7 +31,7 @@ public class Creature {
 		suffixName = "Cormaian";
 	
 		strength = 10;		// damage done
-		agility = 10;		// 
+		agility = 10;
 		mind = 10;
 				
 		baseHP = 10;
@@ -37,6 +40,9 @@ public class Creature {
 		baseDelay = 50;
 		
 		skills.put(1,2);
+		
+		x = 0;
+		y = 0;
 		
 	}
 	
@@ -57,6 +63,26 @@ public class Creature {
 		}
 		
 		return fullName;
+	}
+
+
+	public int getX() {
+		return x;
+	}
+
+
+	public void setX(int currentX) {
+		this.x = currentX;
+	}
+
+
+	public int getY() {
+		return y;
+	}
+
+
+	public void setY(int currentY) {
+		this.y = currentY;
 	}
 	
 	//Derived stats

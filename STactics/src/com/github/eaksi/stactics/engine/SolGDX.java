@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.github.eaksi.stactics.db.BattleMap;
+import com.github.eaksi.stactics.db.Creature;
 
 public class SolGDX extends ApplicationAdapter {
 	
@@ -40,9 +41,10 @@ public class SolGDX extends ApplicationAdapter {
 	private int tileHeight = 32;
 	private int tileWidthHalf = tileWidth / 2; 		// slight optimization
 	private int tileHeightHalf = tileHeight / 2; 	// slight optimization
-	
-	
+		
 	private BattleMap battleMap = new BattleMap();
+	private Creature creature = new Creature();
+		
 
 	@Override
 	public void create () {
@@ -69,8 +71,8 @@ public class SolGDX extends ApplicationAdapter {
         font.setColor(Color.BLACK);
         
         charRect = new Rectangle();
-        charRect.x = getIsoX(0,2) + 16; 
-        charRect.y = getIsoY(0,2) + 36; //XXX: sprite/tile sizes hack
+        charRect.x = getIsoX(0,0) + 16; 
+        charRect.y = getIsoY(0,0) + 36; //XXX: sprite/tile sizes hack
         charRect.width = 32;
         charRect.height = 64;
         
@@ -102,13 +104,7 @@ public class SolGDX extends ApplicationAdapter {
 				
 		getKeyboardInputs();	// keyboard controls handled at this point
 
-		moveCharRect(); 		// XXX: temp character turn-based keyboard movement
-	}
-	
-	private void setMoveDirection(TempDirection d) {
-    	chMovingDirection = d;
-    	chMoveFrame = 0;
-    	chAnimating = true;
+		moveCreature(); 		// XXX: temp character turn-based keyboard movement
 	}
 	
 	
@@ -133,17 +129,75 @@ public class SolGDX extends ApplicationAdapter {
        
 		if (chAnimating) return;
 		else {
-		    if(Gdx.input.isKeyPressed(Keys.UP))		setMoveDirection(TempDirection.NE);
-		    if(Gdx.input.isKeyPressed(Keys.DOWN))	setMoveDirection(TempDirection.SW);
-		    if(Gdx.input.isKeyPressed(Keys.LEFT))	setMoveDirection(TempDirection.NW);
-		    if(Gdx.input.isKeyPressed(Keys.RIGHT))	setMoveDirection(TempDirection.SE);
+			if(Gdx.input.isKeyPressed(Keys.UP)) {
+				setMoveDirection(TempDirection.NE);
+			} else if(Gdx.input.isKeyPressed(Keys.DOWN)) {
+				setMoveDirection(TempDirection.SW);
+			} else if(Gdx.input.isKeyPressed(Keys.LEFT)) {
+				setMoveDirection(TempDirection.NW);
+			} else if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
+				setMoveDirection(TempDirection.SE);
+			}
 		}
 	    
 	}
-	
+
+	// this fires only once per move
+	private void setMoveDirection(TempDirection d) {
+
+		boolean canMove = false;
+		chMovingDirection = d;
+		// check if creature can move to a tile
+		switch (chMovingDirection) {
+		case NE:
+			if (battleMap.getTile((creature.getX()-1), creature.getY()) == 1) canMove = true;
+			System.out.println("NE from (" + creature.getX() + "," + creature.getY() + ")->(" +
+					(creature.getX()-1) + "," + creature.getY() + ")");	// XXX: debug
+			break;
+		case SE:
+			if (battleMap.getTile(creature.getX(), (creature.getY())+1) == 1) canMove = true;
+			System.out.println("SE from (" + creature.getX() + "," + creature.getY() + ")->(" +
+					creature.getX() + "," + (creature.getY()+1) + ")");	// XXX: debug
+			break;
+		case SW:
+			if (battleMap.getTile((creature.getX()+1), creature.getY()) == 1) canMove = true;
+			System.out.println("SW from (" + creature.getX() + "," + creature.getY() + ")->(" +
+					(creature.getX()+1) + "," + creature.getY() + ")");	// XXX: debug
+			break;
+		case NW:
+			if (battleMap.getTile(creature.getX(), (creature.getY())-1) == 1) canMove = true;
+			System.out.println("NW from (" + creature.getX() + "," + creature.getY() + ")->(" +
+					creature.getX() + "," + (creature.getY()-1) + ")");	// XXX: debug
+			break;
+		default:
+			break;
+		}
+		
+		if (canMove) {
+			switch (chMovingDirection) {
+			case NE:
+				creature.setX(creature.getX()-1);
+				break;
+			case SE:
+				creature.setY(creature.getY()+1);
+				break;
+			case SW:
+				creature.setX(creature.getX()+1);
+				break;
+			case NW:
+				creature.setY(creature.getY()-1);
+				break;
+			default:
+				break;
+			}
+
+    		chMoveFrame = 0;
+    		chAnimating = true;
+		}
+	}
 	
 	//move rectangle/sprite
-	private void moveCharRect() {
+	private void moveCreature() {
 		
 		if (chAnimating) {
 			switch (chMovingDirection) {
