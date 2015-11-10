@@ -142,44 +142,40 @@ public class SolGDX extends ApplicationAdapter {
 	    
 	}
 
-	// this fires only once per move //FIXME: REFACTOR
+	// check if creature can move to a tile, this fires only once per move
 	private void setMoveDirection(TempDirection d) {
 
 		boolean canMove = false;
 		chMovingDirection = d;
-		// check if creature can move to a tile
+		
 		switch (chMovingDirection) {
 		case NE:
 			if (battleMap.getTile((creature.getX()-1), creature.getY()) == 1) {
 				canMove = true;
+				printMoveDebug("NE (-x)", -1, 0);
 				creature.setX(creature.getX()-1);
 			}
-			System.out.println("NE (-x) (" + creature.getX() + "," + creature.getY() + ") -> (" +
-					(creature.getX()-1) + "," + creature.getY() + ")");	// XXX: debug
 			break;
 		case SE:
 			if (battleMap.getTile(creature.getX(), (creature.getY())+1) == 1) {
 				canMove = true;
+				printMoveDebug("SE (+y)", 0, 1);
 				creature.setY(creature.getY()+1);
 			}
-			System.out.println("SE (+y) (" + creature.getX() + "," + creature.getY() + ") -> (" +
-					creature.getX() + "," + (creature.getY()+1) + ")");	// XXX: debug
 			break;
 		case SW:
 			if (battleMap.getTile((creature.getX()+1), creature.getY()) == 1) {
 				canMove = true;
+				printMoveDebug("SW (+x)", 1, 0);
 				creature.setX(creature.getX()+1);
 			}
-			System.out.println("SW (+x) (" + creature.getX() + "," + creature.getY() + ") -> (" +
-					(creature.getX()+1) + "," + creature.getY() + ")");	// XXX: debug
 			break;
 		case NW:
 			if (battleMap.getTile(creature.getX(), (creature.getY())-1) == 1) {
 				canMove = true;
+				printMoveDebug("NW (-y)", 0, -1);
 				creature.setY(creature.getY()-1);
 			}
-			System.out.println("NW (-y) (" + creature.getX() + "," + creature.getY() + ") -> (" +
-					creature.getX() + "," + (creature.getY()-1) + ")");	// XXX: debug
 			break;
 		default:
 			break;
@@ -189,6 +185,11 @@ public class SolGDX extends ApplicationAdapter {
     		chMoveFrame = 0;
     		chAnimating = true;
 		}
+	}
+	
+	public void printMoveDebug (String dir, int x, int y) {
+		System.out.println(dir + "(" + creature.getX() + "," + creature.getY() + ") -> (" +
+				(creature.getX()+x) + "," + (creature.getY()+y) + ")");
 	}
 	
 	//move rectangle/sprite
