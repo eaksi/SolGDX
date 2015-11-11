@@ -49,6 +49,14 @@ public class Creature {
 		
 	}
 	
+	public Creature(String pre, String nam, String suf) {
+		
+		this();
+		this.prefixName = pre;
+		this.name = nam;
+		this.suffixName = suf;
+
+	}
 	
 	// TODO: getters and setters
 	// TODO: spell id list of integers
