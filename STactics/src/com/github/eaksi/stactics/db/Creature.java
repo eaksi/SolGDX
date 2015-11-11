@@ -18,6 +18,7 @@ public class Creature {
 	
 	// x, y on battlemap
 	private int x, y;
+	private int delay;
 	
 	private Vector<Integer> knownSpells;
 	public Hashtable<Integer, Integer> skills; // XXX: temp public
@@ -37,12 +38,14 @@ public class Creature {
 		baseHP = 10;
 		baseMP = 10;
 		baseTP = 10;
-		baseDelay = 50;
+		baseDelay = 10;
 		
 		skills.put(1,2);
 		
+		// starting current stats
 		x = 0;
 		y = 0;
+		delay = 10;
 		
 	}
 	
@@ -65,6 +68,9 @@ public class Creature {
 		return fullName;
 	}
 
+	public String getName() {
+		return name;
+	}
 
 	public int getX() {
 		return x;
@@ -96,6 +102,16 @@ public class Creature {
 	//public int getMove()       // TODO: needs creature cclass id reference
 	//public int getSwim()       // TODO: needs creature cclass/skill id reference
 	
-	
+	public boolean isReady() {
+		
+		if (delay <= 0) {
+			delay += baseDelay;
+			System.out.println(name + ": action");
+			return true;
+		}
+		System.out.println(name + ": delay: " + delay);
+		delay--;
+		return false;
+	}
 	
 }

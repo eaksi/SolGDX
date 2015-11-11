@@ -60,7 +60,7 @@ public class SolGDX extends ApplicationAdapter {
 		flippedSheet = TextureRegion.split(spriteSheet, 32, 64);
 
 		// flip all sprites within sheet 
-		for (int i=0; i < 2; i++) {
+		for (int i=0; i<2; i++) {
 			for (int j=0; j<7; j++) {
 				flippedSheet[i][j].flip(true, false);
 			}
@@ -127,20 +127,29 @@ public class SolGDX extends ApplicationAdapter {
         if (Gdx.input.isKeyPressed(Keys.Q))			camera.rotate(-1f, 0, 0, 1);
         if (Gdx.input.isKeyPressed(Keys.E))			camera.rotate(1f, 0, 0, 1);
        
-		if (chAnimating) return;
-		else {
-			if(Gdx.input.isKeyPressed(Keys.UP)) {
-				setMoveDirection(TempDirection.NE);
-			} else if(Gdx.input.isKeyPressed(Keys.DOWN)) {
-				setMoveDirection(TempDirection.SW);
-			} else if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-				setMoveDirection(TempDirection.NW);
-			} else if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-				setMoveDirection(TempDirection.SE);
-			}
+        
+		if (chAnimating)	// if animation in progress, break 
+			return;
+		
+		if(Gdx.input.isKeyPressed(Keys.UP)) {
+			setMoveDirection(TempDirection.NE);
+			return;
+		}
+		if(Gdx.input.isKeyPressed(Keys.DOWN)) {
+			setMoveDirection(TempDirection.SW);
+			return;
+		}
+		if(Gdx.input.isKeyPressed(Keys.LEFT)) {
+			setMoveDirection(TempDirection.NW);
+			return;
+		}
+		if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
+			setMoveDirection(TempDirection.SE);
+			return;
 		}
 	    
 	}
+	
 
 	// check if creature can move to a tile, this fires only once per move
 	private void setMoveDirection(TempDirection d) {
@@ -270,6 +279,7 @@ public class SolGDX extends ApplicationAdapter {
     }
 
 	
+    // FIXME: this whole method
     private void drawCharacters() {
 		if (chMoveFrame == 3 || chMoveFrame == 11) { // XXX: temp simulate movement
 			charRect.y += 1;
@@ -293,7 +303,7 @@ public class SolGDX extends ApplicationAdapter {
 	    		batch.draw(splitSheet[0][3], charRect.x, charRect.y);
 	    		break;
 	    	default:
-	    		System.err.println("Warning: invalid direction of character!"); //FIXME: written 60 times per second
+	    		System.err.println("Warning: invalid direction of character!"); //XXX: written 60 times per second
 	    	}
     	    break;
     	case 2: case 3: case 4: case 5: case 6:	//walk 1
@@ -311,7 +321,7 @@ public class SolGDX extends ApplicationAdapter {
         		batch.draw(splitSheet[0][4], charRect.x, charRect.y);
         		break;
         	default:
-        		System.err.println("Warning: invalid direction of character!"); //FIXME: written 60 times per second
+        		System.err.println("Warning: invalid direction of character!"); //XXX: written 60 times per second
         	}
     		break;
     	case 10: case 11: case 12: case 13: case 14: // walk 2
@@ -329,11 +339,11 @@ public class SolGDX extends ApplicationAdapter {
         		batch.draw(splitSheet[0][5], charRect.x, charRect.y);
         		break;
         	default:
-        		System.err.println("Warning: invalid direction of character!"); //FIXME: written 60 times per second
+        		System.err.println("Warning: invalid direction of character!"); //XXX: written 60 times per second
         	}
     		break;
     	default:
-    		System.err.println("Warning: invalid animation frame!"); //FIXME: written 60 times per second
+    		System.err.println("Warning: invalid animation frame!"); //XXX: written 60 times per second
     			
     	}
     	
