@@ -8,17 +8,15 @@ public class STactics {
 	
 	public static void main(String[] args) {
 
-		//RulesLoader.tempLoad();
-		//RulesLoader.tempSave();
+		/*
+		RulesLoader.tempLoad();
+		RulesLoader.tempSave();
+		*/
 
 		World.initialize();
 		
-		Creature npc[] = {new Creature(), new Creature("","Zor","Edett")};
-		
-/*		Creature npc = new Creature();
-		System.out.println("Name: "+ npc.getFullName());
-		System.out.println("Skill id:1 level = " + World.getSkillName(1) + ": " + npc.skills.get(1));
-*/
+		Creature npc[] = {new Creature(), new Creature("","Zor","Edett"), new Creature("","Melen","Entil")};
+
 		// test delay system
 		for (int i = 0; i < 50; i++) {
 			System.out.println("*** TURN "+ (i+1) +" ***");
