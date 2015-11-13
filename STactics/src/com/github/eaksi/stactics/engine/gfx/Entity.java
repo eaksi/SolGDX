@@ -1,5 +1,6 @@
 package com.github.eaksi.stactics.engine.gfx;
 
+// XXX: CLASS NOT USED FOR ANYTHING YET
 // Entities are battlers in the combat engine, contain animation data and a link to db Creature
 public class Entity {
 	

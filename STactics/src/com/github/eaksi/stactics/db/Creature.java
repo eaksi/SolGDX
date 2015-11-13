@@ -28,8 +28,8 @@ public class Creature {
 		skills = new Hashtable<Integer,Integer>();
 		id = 1;
 		prefixName = "";
-		name = "Vahness";
-		suffixName = "Cormaian";
+		name = World.getRandomFName();
+		suffixName = World.getRandomLName();
 	
 		strength = 10;		// damage done
 		agility = 10;
@@ -52,9 +52,9 @@ public class Creature {
 	public Creature(String pre, String nam, String suf) {
 		
 		this();
-		this.prefixName = pre;
-		this.name = nam;
-		this.suffixName = suf;
+		prefixName = pre;
+		name = nam;
+		suffixName = suf;
 
 	}
 	
@@ -114,10 +114,10 @@ public class Creature {
 		
 		if (delay <= 0) {
 			delay += baseDelay;
-			System.out.println(name + ": action");
+			System.out.println(this.getFullName() + ": action");
 			return true;
 		}
-		System.out.println(name + ": delay: " + delay);
+		System.out.println(this.getFullName() + ": delay: " + delay);
 		delay--;
 		return false;
 	}

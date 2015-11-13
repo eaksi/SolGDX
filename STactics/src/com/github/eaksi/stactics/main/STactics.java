@@ -1,5 +1,7 @@
 package com.github.eaksi.stactics.main;
 
+import java.util.Vector;
+
 import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.db.World;
 import com.github.eaksi.stactics.tools.RulesLoader;
@@ -15,13 +17,19 @@ public class STactics {
 
 		World.initialize();
 		
-		Creature npc[] = {new Creature(), new Creature("","Zor","Edett"), new Creature("","Melen","Entil")};
+		Vector<Creature> npcs = new Vector<Creature>();
+		npcs.add(new Creature());
+		npcs.add(new Creature());
+		npcs.add(new Creature());
+		npcs.add(new Creature());
+		npcs.add(new Creature());
 
+		
 		// test delay system
 		for (int i = 0; i < 50; i++) {
 			System.out.println("*** TURN "+ (i+1) +" ***");
-			for (int j=0; j < npc.length; j++) {
-				npc[j].isReady();
+			for (Creature npc: npcs) {
+				npc.isReady();
 			}
 		}
 		
