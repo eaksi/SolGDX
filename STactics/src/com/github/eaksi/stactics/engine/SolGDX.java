@@ -347,8 +347,6 @@ public class SolGDX extends ApplicationAdapter {
     			
     	}
     	
-
-    	
     }    
 	@Override
 	public void dispose() {
@@ -357,6 +355,5 @@ public class SolGDX extends ApplicationAdapter {
 		spriteSheet.dispose();
 		font.dispose();
 	}
-
 	
 }
