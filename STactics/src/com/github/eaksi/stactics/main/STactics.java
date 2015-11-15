@@ -4,16 +4,10 @@ import java.util.Vector;
 
 import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.db.World;
-import com.github.eaksi.stactics.tools.RulesLoader;
 
 public class STactics {
 	
 	public static void main(String[] args) {
-
-		/*
-		RulesLoader.tempLoad();
-		RulesLoader.tempSave();
-		*/
 
 		World.initialize();
 		

@@ -6,7 +6,9 @@ import com.github.eaksi.stactics.db.World;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
+	
 		World.initialize();
+		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		
         config.title = "SolTactics";
