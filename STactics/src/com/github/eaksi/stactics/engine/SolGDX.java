@@ -8,9 +8,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Align;
 import com.github.eaksi.stactics.db.BattleMap;
 import com.github.eaksi.stactics.db.Creature;
 
@@ -23,6 +27,7 @@ public class SolGDX extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private BitmapFont font;
+    private GlyphLayout layout = new GlyphLayout();	// XXX: temp
 	
 	private Texture tempTile;
 	
@@ -67,7 +72,15 @@ public class SolGDX extends ApplicationAdapter {
 		}
 		
 		tempTile = new Texture("data/64px_tile_placeholder.png");
-		font = new BitmapFont();
+		
+		// generate fonts
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/MyMedieval.ttf"));
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = 24;
+		font =  generator.generateFont(parameter);
+		generator.dispose();		// generator no longer needed
+
+		//font = new BitmapFont();
         font.setColor(Color.BLACK);
         
         charRect = new Rectangle();
@@ -336,8 +349,17 @@ public class SolGDX extends ApplicationAdapter {
     
     // Draw the user interface
     private void drawGUI() {
-    	font.setColor(0.4f, 0.4f, 0.8f, 1f);
-    	font.draw(batch, "NPC name: "+ creature.getFullName(), 10, screenHeight-10);
+ 
+    	
+    	
+     	font.setColor(0.4f, 0.4f, 0.8f, 1f);
+    	font.draw(batch, "meow", 10, screenHeight-30);
+    	font.draw(batch, "meow\nmeow", 10, screenHeight-50);
+    	font.draw(batch, "meow meow meow meow meow meow", 10, screenHeight-80, screenWidth-20, Align.right, true);
+
+    	layout.setText(font, "meoow");
+    	font.draw(batch, layout, 200 + layout.width / 3, 200 + layout.height / 3);
+    	//font.draw(batch, "NPC: "+ creature.getFullName(), 10, screenHeight-10);
     }
     
     
