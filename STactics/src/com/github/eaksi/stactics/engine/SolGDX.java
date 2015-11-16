@@ -96,6 +96,7 @@ public class SolGDX extends ApplicationAdapter {
 	    batch.begin();
 	    drawTiles();
 	    drawCharacters();
+	    drawGUI();
 	    drawDebug();
 	    batch.end();
 		
@@ -235,36 +236,9 @@ public class SolGDX extends ApplicationAdapter {
 		}
 	}
 	
-	// Draw the needed stuff for debug (for quick testing)
-	private void drawDebug() {
-		
-		// draw the original sprite sheet by region
-		for (int i=0; i<2; i++) {
-			for (int j=0; j<7; j++) {
-				batch.draw(splitSheet[i][j],240+j*32,64-i*64);
-			}
-		}
-		
-		// draw the flipped sprite sheet by region
-	    for (int i=0; i<2; i++) {
-			for (int j=0; j<7; j++) {
-				batch.draw(flippedSheet[i][j],j*32,64-i*64);
-			}
-		}
 
-	}
 	
-	// Draw the tile map
-	private void drawTiles() {
 
-    	for (int i = 0; i < battleMap.getWidth(); i++) {
-        	for (int j = 0; j < battleMap.getHeight(); j++) {
-    			if (battleMap.getTile(i,j) != 0 ) {
-    				batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i) + 16));	
-    			}
-    		}
-    	}
-    }
 	
 	// Get the isometric projection coordinate X, given tilemap X and Y as parameters.
     private int getIsoX(int mapx, int mapy) {
@@ -278,6 +252,17 @@ public class SolGDX extends ApplicationAdapter {
     			
     }
 
+	// Draw the tile map
+	private void drawTiles() {
+
+    	for (int i = 0; i < battleMap.getWidth(); i++) {
+        	for (int j = 0; j < battleMap.getHeight(); j++) {
+    			if (battleMap.getTile(i,j) != 0 ) {
+    				batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+16));	
+    			}
+    		}
+    	}
+    }
 	
     // FIXME: this whole method
     private void drawCharacters() {
@@ -347,7 +332,33 @@ public class SolGDX extends ApplicationAdapter {
     			
     	}
     	
-    }    
+    }
+    
+    // Draw the user interface
+    private void drawGUI() {
+    	font.setColor(0.4f, 0.4f, 0.8f, 1f);
+    	font.draw(batch, "NPC name: "+ creature.getFullName(), 10, screenHeight-10);
+    }
+    
+    
+	// Draw the needed stuff for debug (for quick testing)
+	private void drawDebug() {
+		
+		// draw the original sprite sheet by region
+		for (int i=0; i<2; i++) {
+			for (int j=0; j<7; j++) {
+				batch.draw(splitSheet[i][j], 240+j*32 , 64-i*64);
+			}
+		}
+		
+		// draw the flipped sprite sheet by region
+	    for (int i=0; i<2; i++) {
+			for (int j=0; j<7; j++) {
+				batch.draw(flippedSheet[i][j], j*32, 64-i*64);
+			}
+		}
+
+	}
 	@Override
 	public void dispose() {
 		batch.dispose();
