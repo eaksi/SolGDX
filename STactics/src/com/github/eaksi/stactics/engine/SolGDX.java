@@ -348,6 +348,7 @@ public class SolGDX extends ApplicationAdapter {
     }
     
     // Draw the user interface
+    // FIXME: user interface moves with camera
     private void drawGUI() {
  
     	

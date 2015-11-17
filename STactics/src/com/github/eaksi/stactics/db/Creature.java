@@ -9,11 +9,8 @@ public class Creature {
 	
 	private String name;
 	private String prefixName, suffixName; // titles and descriptors
-
-	//private int race, cclass, alignment;	
 	
 	// base stats
-	private int strength, agility, mind;
 	private int baseHP, baseMP, baseTP, baseDelay;
 	
 	// x, y on battlemap
@@ -31,10 +28,6 @@ public class Creature {
 		name = World.getRandomFName();
 		suffixName = World.getRandomLName();
 	
-		strength = 10;		// damage done
-		agility = 10;
-		mind = 10;
-				
 		baseHP = 10;
 		baseMP = 10;
 		baseTP = 10;
