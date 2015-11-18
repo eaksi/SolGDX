@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.db.World;
+import com.github.eaksi.stactics.engine.gfx.Entity;
 
 public class STactics {
 	
@@ -18,7 +19,6 @@ public class STactics {
 		npcs.add(new Creature());
 		npcs.add(new Creature());
 
-		
 		// test delay system
 		for (int i = 0; i < 50; i++) {
 			System.out.println("*** TURN "+ (i+1) +" ***");

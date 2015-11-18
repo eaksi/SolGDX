@@ -11,7 +11,7 @@ public class Creature {
 	private String prefixName, suffixName; // titles and descriptors
 	
 	// base stats
-	private int baseHP, baseMP, baseTP, baseDelay;
+	private int baseHP, baseDelay;
 	
 	// x, y on battlemap
 	private int x, y;
@@ -29,8 +29,7 @@ public class Creature {
 		suffixName = World.getRandomLName();
 	
 		baseHP = 10;
-		baseMP = 10;
-		baseTP = 10;
+
 		baseDelay = 10;
 		
 		skills.put(1,2);
@@ -92,12 +91,6 @@ public class Creature {
 		this.y = currentY;
 	}
 	
-	//Derived stats
-	/*public int getMeleeAttack() { return str*2 + dex + agil; }
-	public int getRangedAttack() { return dex*2 + str + agil; }
-	public int getMagicAttack() { return intl*3 + mind; }
-	public int getPhysicalDefense() { return vit*2 + avd*2; }
-	public int getMagicDefense() { return res*3 + mind; }*/
 	
 	//public int getJumpHeight() // TODO: needs creature cclass id reference
 	//public int getMove()       // TODO: needs creature cclass id reference

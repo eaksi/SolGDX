@@ -1,5 +1,7 @@
 package com.github.eaksi.stactics.engine.gfx;
 
+import com.github.eaksi.stactics.db.Creature;
+
 // XXX: CLASS NOT USED FOR ANYTHING YET
 // Entities are battlers in the combat engine, contain animation data and a link to db Creature
 public class Entity {
@@ -13,28 +15,36 @@ public class Entity {
 	}
 	
 	private int id;			// id inside animation framework
-	private int creatureId;	// id of the creature in db //XXX: maybe just make this a Creature class reference
+	public Creature cr;	// reference to creature
 	private int spriteId;
-	
+
 	private Animation currentAnimation;
 	private int framesLeft;
 	private Direction heading;
 	
 	private int isoX, isoY;
+	private int delay;
 	
-	private int tileX, tileY;
+	public int tileX, tileY;
 	
 	
-	public Entity() {
+	public Entity(Creature creat) {
+		
+		cr = creat;
 		
 		currentAnimation = Animation.IDLE;
 		framesLeft = 16;
 		heading = Direction.NE;
 		
-		tileX = 0;
+		tileX = 1;
 		tileY = 0;
 		
 	}
-	
+		
+	// getters and setters
+	public int getIsoX() {return isoX;}
+	public void setIsoX(int isoX) {this.isoX = isoX;}
+	public int getIsoY() {return isoY;}
+	public void setIsoY(int isoY) {this.isoY = isoY;}
 	
 }

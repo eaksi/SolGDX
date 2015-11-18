@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Align;
 import com.github.eaksi.stactics.db.BattleMap;
 import com.github.eaksi.stactics.db.Creature;
+import com.github.eaksi.stactics.engine.gfx.Entity;
 
 public class SolGDX extends ApplicationAdapter {
 	
@@ -47,12 +48,17 @@ public class SolGDX extends ApplicationAdapter {
 	private int tileWidthHalf = tileWidth / 2; 		// slight optimization
 	private int tileHeightHalf = tileHeight / 2; 	// slight optimization
 		
-	private BattleMap battleMap = new BattleMap();
-	private Creature creature = new Creature();
+	private BattleMap battleMap;
+	private Creature creature;
+	private Entity entity;
 		
 
 	@Override
 	public void create () {
+
+		battleMap = new BattleMap();
+		creature = new Creature();	// kind of a redundant line, but trying to prevent a future bug
+		entity = new Entity(new Creature());
 		
 		// setup camera
 		camera = new OrthographicCamera();
@@ -84,8 +90,8 @@ public class SolGDX extends ApplicationAdapter {
         font.setColor(Color.BLACK);
         
         charRect = new Rectangle();
-        charRect.x = getIsoX(0,0) + 16; 
-        charRect.y = getIsoY(0,0) + 36; //XXX: sprite/tile sizes hack
+        charRect.x = getIsoX(entity.tileY, entity.tileX) + 16; 
+        charRect.y = getIsoY(entity.tileY, entity.tileX) + 36; //XXX: sprite/tile sizes hack
         charRect.width = 32;
         charRect.height = 64;
         
@@ -173,31 +179,31 @@ public class SolGDX extends ApplicationAdapter {
 		
 		switch (chMovingDirection) {
 		case NE:
-			if (battleMap.getTile((creature.getX()-1), creature.getY()) == 1) {
+			if (battleMap.getTile((entity.tileX-1), entity.tileY) == 1) {
 				canMove = true;
 				printMoveDebug("NE (-x)", -1, 0);
-				creature.setX(creature.getX()-1);
+				entity.tileX--;
 			}
 			break;
 		case SE:
-			if (battleMap.getTile(creature.getX(), (creature.getY())+1) == 1) {
+			if (battleMap.getTile(entity.tileX, (entity.tileY+1)) == 1) {
 				canMove = true;
 				printMoveDebug("SE (+y)", 0, 1);
-				creature.setY(creature.getY()+1);
+				entity.tileY++;
 			}
 			break;
 		case SW:
-			if (battleMap.getTile((creature.getX()+1), creature.getY()) == 1) {
+			if (battleMap.getTile((entity.tileX+1), entity.tileY) == 1) {
 				canMove = true;
 				printMoveDebug("SW (+x)", 1, 0);
-				creature.setX(creature.getX()+1);
+				entity.tileX++;
 			}
 			break;
 		case NW:
-			if (battleMap.getTile(creature.getX(), (creature.getY())-1) == 1) {
+			if (battleMap.getTile(entity.tileX, (entity.tileY-1)) == 1) {
 				canMove = true;
 				printMoveDebug("NW (-y)", 0, -1);
-				creature.setY(creature.getY()-1);
+				entity.tileY--;
 			}
 			break;
 		default:
@@ -211,8 +217,8 @@ public class SolGDX extends ApplicationAdapter {
 	}
 	
 	public void printMoveDebug (String dir, int x, int y) {
-		System.out.println(dir + "(" + creature.getX() + "," + creature.getY() + ") -> (" +
-				(creature.getX()+x) + "," + (creature.getY()+y) + ")");
+		System.out.println(dir + "(" + entity.tileX + "," + entity.tileY + ") -> (" +
+				(entity.tileX + x) + "," + (entity.tileY + y) + ")");
 	}
 	
 	//move rectangle/sprite
@@ -354,13 +360,11 @@ public class SolGDX extends ApplicationAdapter {
     	
     	
      	font.setColor(0.4f, 0.4f, 0.8f, 1f);
-    	font.draw(batch, "meow", 10, screenHeight-30);
-    	font.draw(batch, "meow\nmeow", 10, screenHeight-50);
-    	font.draw(batch, "meow meow meow meow meow meow", 10, screenHeight-80, screenWidth-20, Align.right, true);
+    	font.draw(batch, "align test align test align test", 10, screenHeight-80, screenWidth-20, Align.right, true);
 
-    	layout.setText(font, "meoow");
+    	layout.setText(font, "layout test");
     	font.draw(batch, layout, 200 + layout.width / 3, 200 + layout.height / 3);
-    	//font.draw(batch, "NPC: "+ creature.getFullName(), 10, screenHeight-10);
+    	font.draw(batch, "NPC: "+ entity.cr.getFullName(), 10, screenHeight-10);
     }
     
     
