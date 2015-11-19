@@ -18,6 +18,7 @@ public class STactics {
 		npcs.add(new Creature());
 		npcs.add(new Creature());
 		npcs.add(new Creature());
+		npcs.add(new Creature());
 
 		// test delay system
 		for (int i = 0; i < 50; i++) {

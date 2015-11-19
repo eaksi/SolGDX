@@ -43,6 +43,13 @@ public class SolGDX extends ApplicationAdapter {
 	private TempDirection chMovingDirection = TempDirection.NE;
 	private int chMoveFrame = -1;
 	
+	private boolean zoomingIn = false;	 
+	private boolean zoomingOut = false;
+	private int zoomFrame = 0;			// current frame of zoom
+	private int zoomLevel = 0;			// current zoom level
+	private final int maxZoom = 10;		// how close you can zoom in
+	private final int minZoom = -20;	// how far can you zoom out
+	
 	private int tileWidth = 64;
 	private int tileHeight = 32;
 	private int tileWidthHalf = tileWidth / 2; 		// slight optimization
@@ -115,18 +122,50 @@ public class SolGDX extends ApplicationAdapter {
 	    batch.begin();
 	    drawTiles();
 	    drawCharacters();
-	    drawGUI();
-	    drawDebug();
+	    //drawGUI();
+	    //drawDebug();
+	    updateZoom();
 	    batch.end();
 		
 	    // update FPS counter on window title
-	    Gdx.graphics.setTitle("SolGDX     FPS: " + Gdx.graphics.getFramesPerSecond());
+	    Gdx.graphics.setTitle("SolGDX     FPS: " + Gdx.graphics.getFramesPerSecond() + " Zoom: " + zoomLevel);
 				
 		getKeyboardInputs();	// keyboard controls handled at this point
 
 		moveCreature(); 		// XXX: temp character turn-based keyboard movement
 	}
+
+	// This method is called from keyboard controls, sets the zoom going
+	public void setZoom(boolean in) {
+		if (in && zoomLevel < maxZoom) {
+			zoomingIn = true;
+			zoomFrame = 10;
+		}
+		if (!in && zoomLevel > minZoom) {
+			zoomingOut = true;
+			zoomFrame = 10;
+		}
+	}
 	
+	// This is called every update, zooms a small amount
+	public void updateZoom() {
+		if (zoomingIn) {
+			zoomFrame--;
+			zoomLevel++;
+			camera.zoom -= 0.05;
+			if (zoomFrame <= 0) {
+				zoomingIn = false;
+			}
+		}
+		if (zoomingOut) {
+			zoomFrame--;
+			zoomLevel--;
+			camera.zoom += 0.05;
+			if (zoomFrame <= 0) {
+				zoomingOut = false;
+			}
+		}
+	}
 	
 	public void getKeyboardInputs() {
 
@@ -140,9 +179,14 @@ public class SolGDX extends ApplicationAdapter {
         if (Gdx.input.isKeyPressed(Keys.W))			camera.translate(0, 5, 0);
 		
 		// Zooming the view
-		if (Gdx.input.isKeyPressed(Keys.Z))			camera.zoom += 0.05;
-        if (Gdx.input.isKeyPressed(Keys.X))			camera.zoom -= 0.05;
-
+		if (!zoomingIn && !zoomingOut) {
+			if (Gdx.input.isKeyPressed(Keys.Z)) {
+				setZoom(true);
+			} else if (Gdx.input.isKeyPressed(Keys.X)) {
+				setZoom(false);
+			}
+		}
+		
         // Rotating the view    
         if (Gdx.input.isKeyPressed(Keys.Q))			camera.rotate(-1f, 0, 0, 1);
         if (Gdx.input.isKeyPressed(Keys.E))			camera.rotate(1f, 0, 0, 1);
@@ -262,6 +306,7 @@ public class SolGDX extends ApplicationAdapter {
 	// Get the isometric projection coordinate X, given tilemap X and Y as parameters.
     private int getIsoX(int mapx, int mapy) {
     	return (screenWidth - ((battleMap.getWidth() * 32 - 32) + (mapy - mapx) * tileWidthHalf));
+    	//return (screenWidth - ((battleMap.getWidth() * 32 - 32) + (mapx - mapy) * tileWidthHalf));
     			
     }
 
