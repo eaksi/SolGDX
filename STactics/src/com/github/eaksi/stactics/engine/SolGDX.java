@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -14,7 +13,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Align;
 import com.github.eaksi.stactics.db.BattleMap;
 import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.engine.gfx.Entity;
@@ -63,8 +61,9 @@ public class SolGDX extends ApplicationAdapter {
 		
 		// setup camera
 		camera = new Camera(screenWidth, screenHeight);
-
-
+		
+		loadFonts();
+		
 		batch = new SpriteBatch();
 		
 		spriteSheet = new Texture("data/farcher_placeholder.png");
@@ -79,16 +78,6 @@ public class SolGDX extends ApplicationAdapter {
 		}
 		
 		tempTile = new Texture("data/64px_tile_placeholder.png");
-		
-		// generate fonts
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/MyMedieval.ttf"));
-		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 24;
-		font =  generator.generateFont(parameter);
-		generator.dispose();		// generator no longer needed
-
-		//font = new BitmapFont();
-        font.setColor(Color.BLACK);
         
         charRect = new Rectangle();
         charRect.x = getIsoX(entity.tileY, entity.tileX) + 16; 
@@ -100,6 +89,17 @@ public class SolGDX extends ApplicationAdapter {
         		"  difference = " + (battleMap.getWidth()-battleMap.getHeight()));
 	}
 
+	private void loadFonts() {
+		// generate fonts
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/MyMedieval.ttf"));
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = 24;
+		font =  generator.generateFont(parameter);
+		generator.dispose();		// generator no longer needed
+
+		//font = new BitmapFont();
+        font.setColor(Color.BLACK);		// set default color
+	}
 	
 	@Override
 	public void render () {
@@ -129,7 +129,7 @@ public class SolGDX extends ApplicationAdapter {
 		moveCreature(); 		// XXX: temp character turn-based keyboard movement
 	}
 
-	public void getKeyboardInputs() {
+	private void getKeyboardInputs() {
 
 		// Quit the application
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE))		Gdx.app.exit();
@@ -220,7 +220,7 @@ public class SolGDX extends ApplicationAdapter {
 		}
 	}
 	
-	public void printMoveDebug (String dir, int x, int y) {
+	private void printMoveDebug (String dir, int x, int y) {
 		System.out.println(dir + "(" + entity.tileX + "," + entity.tileY + ") -> (" +
 				(entity.tileX + x) + "," + (entity.tileY + y) + ")");
 	}

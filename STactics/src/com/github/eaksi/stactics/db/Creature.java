@@ -14,7 +14,6 @@ public class Creature {
 	private int baseHP, baseDelay;
 	
 	// x, y on battlemap
-	private int x, y;
 	private int delay;
 	
 	private Vector<Integer> knownSpells;
@@ -35,8 +34,6 @@ public class Creature {
 		skills.put(1,2);
 		
 		// starting current stats
-		x = 0;
-		y = 0;
 		delay = 10;
 		
 	}
@@ -50,8 +47,17 @@ public class Creature {
 
 	}
 	
-	// TODO: getters and setters
-	// TODO: spell id list of integers
+	public boolean isReady() {
+		
+		if (delay <= 0) {
+			delay += baseDelay;
+			System.out.println(this.getFullName() + ": action");
+			return true;
+		}
+		System.out.println(this.getFullName() + ": delay: " + delay);
+		delay--;
+		return false;
+	}
 	
 	public String getFullName() {
 		String fullName = "";
@@ -71,41 +77,11 @@ public class Creature {
 	public String getName() {
 		return name;
 	}
-
-	public int getX() {
-		return x;
-	}
-
-
-	public void setX(int currentX) {
-		this.x = currentX;
-	}
-
-
-	public int getY() {
-		return y;
-	}
-
-
-	public void setY(int currentY) {
-		this.y = currentY;
-	}
 	
 	
 	//public int getJumpHeight() // TODO: needs creature cclass id reference
 	//public int getMove()       // TODO: needs creature cclass id reference
 	//public int getSwim()       // TODO: needs creature cclass/skill id reference
-	
-	public boolean isReady() {
-		
-		if (delay <= 0) {
-			delay += baseDelay;
-			System.out.println(this.getFullName() + ": action");
-			return true;
-		}
-		System.out.println(this.getFullName() + ": delay: " + delay);
-		delay--;
-		return false;
-	}
+
 	
 }
