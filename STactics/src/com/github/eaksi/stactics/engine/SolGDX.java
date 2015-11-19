@@ -25,10 +25,10 @@ public class SolGDX extends ApplicationAdapter {
 		NE, SE, SW, NW
 	}
 	
-	private OrthographicCamera camera;
+	private Camera camera;
 	private SpriteBatch batch;
 	private BitmapFont font;
-    private GlyphLayout layout = new GlyphLayout();	// XXX: temp
+    private GlyphLayout layout = new GlyphLayout();	// XXX: temp GUI testing
 	
 	private Texture tempTile;
 	
@@ -42,13 +42,7 @@ public class SolGDX extends ApplicationAdapter {
 	private boolean chAnimating = false;
 	private TempDirection chMovingDirection = TempDirection.NE;
 	private int chMoveFrame = -1;
-	
-	private boolean zoomingIn = false;	 
-	private boolean zoomingOut = false;
-	private int zoomFrame = 0;			// current frame of zoom
-	private int zoomLevel = 0;			// current zoom level
-	private final int maxZoom = 10;		// how close you can zoom in
-	private final int minZoom = -20;	// how far can you zoom out
+
 	
 	private int tileWidth = 64;
 	private int tileHeight = 32;
@@ -65,11 +59,11 @@ public class SolGDX extends ApplicationAdapter {
 
 		battleMap = new BattleMap();
 		creature = new Creature();	// kind of a redundant line, but trying to prevent a future bug
-		entity = new Entity(new Creature());
+		entity = new Entity(creature);
 		
 		// setup camera
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, screenWidth, screenHeight);
+		camera = new Camera(screenWidth, screenHeight);
+
 
 		batch = new SpriteBatch();
 		
@@ -122,74 +116,40 @@ public class SolGDX extends ApplicationAdapter {
 	    batch.begin();
 	    drawTiles();
 	    drawCharacters();
-	    //drawGUI();
+	    drawGUI();
 	    //drawDebug();
-	    updateZoom();
+	    camera.updateZoom();
 	    batch.end();
 		
 	    // update FPS counter on window title
-	    Gdx.graphics.setTitle("SolGDX     FPS: " + Gdx.graphics.getFramesPerSecond() + " Zoom: " + zoomLevel);
+	    Gdx.graphics.setTitle("SolGDX     FPS: " + Gdx.graphics.getFramesPerSecond() + " Zoom: " + camera.getZoomLevel());
 				
 		getKeyboardInputs();	// keyboard controls handled at this point
 
 		moveCreature(); 		// XXX: temp character turn-based keyboard movement
 	}
 
-	// This method is called from keyboard controls, sets the zoom going
-	public void setZoom(boolean in) {
-		if (in && zoomLevel < maxZoom) {
-			zoomingIn = true;
-			zoomFrame = 10;
-		}
-		if (!in && zoomLevel > minZoom) {
-			zoomingOut = true;
-			zoomFrame = 10;
-		}
-	}
-	
-	// This is called every update, zooms a small amount
-	public void updateZoom() {
-		if (zoomingIn) {
-			zoomFrame--;
-			zoomLevel++;
-			camera.zoom -= 0.05;
-			if (zoomFrame <= 0) {
-				zoomingIn = false;
-			}
-		}
-		if (zoomingOut) {
-			zoomFrame--;
-			zoomLevel--;
-			camera.zoom += 0.05;
-			if (zoomFrame <= 0) {
-				zoomingOut = false;
-			}
-		}
-	}
-	
 	public void getKeyboardInputs() {
 
 		// Quit the application
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE))		Gdx.app.exit();
 
         // Moving the view
-        if (Gdx.input.isKeyPressed(Keys.A))			camera.translate(-5, 0, 0);
-        if (Gdx.input.isKeyPressed(Keys.D))			camera.translate(5, 0, 0);
-        if (Gdx.input.isKeyPressed(Keys.S))			camera.translate(0, -5, 0);
-        if (Gdx.input.isKeyPressed(Keys.W))			camera.translate(0, 5, 0);
+        if (Gdx.input.isKeyPressed(Keys.A))	camera.moveLeft();
+        if (Gdx.input.isKeyPressed(Keys.D))	camera.moveRight();
+        if (Gdx.input.isKeyPressed(Keys.S))	camera.moveDown();
+        if (Gdx.input.isKeyPressed(Keys.W))	camera.moveUp();
 		
 		// Zooming the view
-		if (!zoomingIn && !zoomingOut) {
-			if (Gdx.input.isKeyPressed(Keys.Z)) {
-				setZoom(true);
-			} else if (Gdx.input.isKeyPressed(Keys.X)) {
-				setZoom(false);
-			}
+		if (Gdx.input.isKeyPressed(Keys.Z)) {
+				camera.setZoom(true);
+		} else if (Gdx.input.isKeyPressed(Keys.X)) {
+				camera.setZoom(false);
 		}
 		
-        // Rotating the view    
-        if (Gdx.input.isKeyPressed(Keys.Q))			camera.rotate(-1f, 0, 0, 1);
-        if (Gdx.input.isKeyPressed(Keys.E))			camera.rotate(1f, 0, 0, 1);
+        // Rotating the camera (disabled)    
+        //if (Gdx.input.isKeyPressed(Keys.Q))			camera.rotate(-1f, 0, 0, 1);
+        //if (Gdx.input.isKeyPressed(Keys.E))			camera.rotate(1f, 0, 0, 1);
        
         
 		if (chAnimating)	// if animation in progress, break 
@@ -405,10 +365,10 @@ public class SolGDX extends ApplicationAdapter {
     	
     	
      	font.setColor(0.4f, 0.4f, 0.8f, 1f);
-    	font.draw(batch, "align test align test align test", 10, screenHeight-80, screenWidth-20, Align.right, true);
+    	//font.draw(batch, "align test align test align test", 10, screenHeight-80, screenWidth-20, Align.right, true);
 
-    	layout.setText(font, "layout test");
-    	font.draw(batch, layout, 200 + layout.width / 3, 200 + layout.height / 3);
+    	//layout.setText(font, "layout test");
+    	//font.draw(batch, layout, 200 + layout.width / 3, 200 + layout.height / 3);
     	font.draw(batch, "NPC: "+ entity.cr.getFullName(), 10, screenHeight-10);
     }
     
@@ -438,5 +398,7 @@ public class SolGDX extends ApplicationAdapter {
 		spriteSheet.dispose();
 		font.dispose();
 	}
+
+
 	
 }
