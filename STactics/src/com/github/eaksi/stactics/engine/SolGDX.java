@@ -23,7 +23,7 @@ public class SolGDX extends ApplicationAdapter {
 		NE, SE, SW, NW
 	}
 	
-	private Camera camera;
+	Camera camera;
 	private SpriteBatch batch;
 	private BitmapFont font;
     private GlyphLayout layout = new GlyphLayout();	// XXX: temp GUI testing
@@ -37,7 +37,7 @@ public class SolGDX extends ApplicationAdapter {
 	private final int screenWidth = 640;
 	private final int screenHeight = 480;
 	
-	private boolean chAnimating = false;
+	boolean chAnimating = false;
 	private TempDirection chMovingDirection = TempDirection.NE;
 	private int chMoveFrame = -1;
 
@@ -94,7 +94,7 @@ public class SolGDX extends ApplicationAdapter {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/MyMedieval.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.size = 24;
-		font =  generator.generateFont(parameter);
+		font = generator.generateFont(parameter);
 		generator.dispose();		// generator no longer needed
 
 		//font = new BitmapFont();
@@ -110,10 +110,12 @@ public class SolGDX extends ApplicationAdapter {
 		
  		camera.update();
 
+ 		Keyboard.getInput(this);		// keyboard controls handled at this point
+ 		
 		batch.setProjectionMatrix(camera.combined);
 	    
-	    // draw everything
-	    batch.begin();
+		// draw everything
+		batch.begin();
 	    drawTiles();
 	    drawCharacters();
 	    drawGUI();
@@ -123,60 +125,15 @@ public class SolGDX extends ApplicationAdapter {
 		
 	    // update FPS counter on window title
 	    Gdx.graphics.setTitle("SolGDX     FPS: " + Gdx.graphics.getFramesPerSecond() + " Zoom: " + camera.getZoomLevel());
-				
-		getKeyboardInputs();	// keyboard controls handled at this point
-
+		
 		moveCreature(); 		// XXX: temp character turn-based keyboard movement
 	}
 
-	private void getKeyboardInputs() {
 
-		// Quit the application
-		if(Gdx.input.isKeyPressed(Keys.ESCAPE))		Gdx.app.exit();
 
-        // Moving the view
-        if (Gdx.input.isKeyPressed(Keys.A))	camera.moveLeft();
-        if (Gdx.input.isKeyPressed(Keys.D))	camera.moveRight();
-        if (Gdx.input.isKeyPressed(Keys.S))	camera.moveDown();
-        if (Gdx.input.isKeyPressed(Keys.W))	camera.moveUp();
-		
-		// Zooming the view
-		if (Gdx.input.isKeyPressed(Keys.Z)) {
-				camera.setZoom(true);
-		} else if (Gdx.input.isKeyPressed(Keys.X)) {
-				camera.setZoom(false);
-		}
-		
-        // Rotating the camera (disabled)    
-        //if (Gdx.input.isKeyPressed(Keys.Q))			camera.rotate(-1f, 0, 0, 1);
-        //if (Gdx.input.isKeyPressed(Keys.E))			camera.rotate(1f, 0, 0, 1);
-       
-        
-		if (chAnimating)	// if animation in progress, break 
-			return;
-		
-		if(Gdx.input.isKeyPressed(Keys.UP)) {
-			setMoveDirection(TempDirection.NE);
-			return;
-		}
-		if(Gdx.input.isKeyPressed(Keys.DOWN)) {
-			setMoveDirection(TempDirection.SW);
-			return;
-		}
-		if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-			setMoveDirection(TempDirection.NW);
-			return;
-		}
-		if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			setMoveDirection(TempDirection.SE);
-			return;
-		}
-	    
-	}
-	
 
 	// check if creature can move to a tile, this fires only once per move
-	private void setMoveDirection(TempDirection d) {
+	void setMoveDirection(TempDirection d) {
 
 		boolean canMove = false;
 		chMovingDirection = d;
