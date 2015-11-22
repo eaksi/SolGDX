@@ -40,7 +40,6 @@ public class SolGDX extends ApplicationAdapter {
 	boolean chAnimating = false;
 	private TempDirection chMovingDirection = TempDirection.NE;
 	private int chMoveFrame = -1;
-
 	
 	private int tileWidth = 64;
 	private int tileHeight = 32;
@@ -319,8 +318,6 @@ public class SolGDX extends ApplicationAdapter {
     // FIXME: user interface moves with camera
     private void drawGUI() {
  
-    	
-    	
      	font.setColor(0.4f, 0.4f, 0.8f, 1f);
     	//font.draw(batch, "align test align test align test", 10, screenHeight-80, screenWidth-20, Align.right, true);
 
