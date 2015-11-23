@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.github.eaksi.stactics.db.BattleMap;
 import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.engine.gfx.Entity;
+import com.github.eaksi.stactics.engine.gfx.FontLoader;
 
 public class SolGDX extends ApplicationAdapter {
 	
@@ -61,7 +62,7 @@ public class SolGDX extends ApplicationAdapter {
 		// setup camera
 		camera = new Camera(screenWidth, screenHeight);
 		
-		loadFonts();
+		font = FontLoader.getFont();
 		
 		batch = new SpriteBatch();
 		
@@ -86,18 +87,6 @@ public class SolGDX extends ApplicationAdapter {
         
         System.out.println("battleMap.getWidth() = " + battleMap.getWidth() + "  battleMap.getHeight() = " + battleMap.getHeight() + 
         		"  difference = " + (battleMap.getWidth()-battleMap.getHeight()));
-	}
-
-	private void loadFonts() {
-		// generate fonts
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/MyMedieval.ttf"));
-		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 24;
-		font = generator.generateFont(parameter);
-		generator.dispose();		// generator no longer needed
-
-		//font = new BitmapFont();
-        font.setColor(Color.BLACK);		// set default color
 	}
 	
 	@Override
