@@ -2,16 +2,12 @@ package com.github.eaksi.stactics.engine;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Rectangle;
 import com.github.eaksi.stactics.db.BattleMap;
 import com.github.eaksi.stactics.db.Creature;
@@ -26,6 +22,7 @@ public class SolGDX extends ApplicationAdapter {
 	
 	Camera camera;
 	private SpriteBatch batch;
+	private SpriteBatch guiBatch;
 	private BitmapFont font;
     private GlyphLayout layout = new GlyphLayout();	// XXX: temp GUI testing
 	
@@ -65,6 +62,7 @@ public class SolGDX extends ApplicationAdapter {
 		font = FontLoader.getFont();
 		
 		batch = new SpriteBatch();
+		guiBatch = new SpriteBatch();
 		
 		spriteSheet = new Texture("data/farcher_placeholder.png");
 		splitSheet = TextureRegion.split(spriteSheet, 32, 64);
@@ -106,11 +104,16 @@ public class SolGDX extends ApplicationAdapter {
 		batch.begin();
 	    drawTiles();
 	    drawCharacters();
-	    drawGUI();
 	    //drawDebug();
 	    camera.updateZoom();
+	    
+
+    	guiBatch.begin();
+	    drawGUI();
 	    batch.end();
-		
+	    guiBatch.end();
+	    
+    	
 	    // update FPS counter on window title
 	    Gdx.graphics.setTitle("SolGDX     FPS: " + Gdx.graphics.getFramesPerSecond() + " Zoom: " + camera.getZoomLevel());
 		
@@ -307,12 +310,13 @@ public class SolGDX extends ApplicationAdapter {
     // FIXME: user interface moves with camera
     private void drawGUI() {
  
+
      	font.setColor(0.4f, 0.4f, 0.8f, 1f);
     	//font.draw(batch, "align test align test align test", 10, screenHeight-80, screenWidth-20, Align.right, true);
 
     	//layout.setText(font, "layout test");
     	//font.draw(batch, layout, 200 + layout.width / 3, 200 + layout.height / 3);
-    	font.draw(batch, "NPC: "+ entity.cr.getFullName(), 10, screenHeight-10);
+     	font.draw(batch, "NPC: "+ entity.cr.getFullName(), 10, screenHeight-10);
     }
     
     
@@ -337,6 +341,7 @@ public class SolGDX extends ApplicationAdapter {
 	@Override
 	public void dispose() {
 		batch.dispose();
+		guiBatch.dispose();
 		tempTile.dispose();
 		spriteSheet.dispose();
 		font.dispose();
