@@ -27,7 +27,7 @@ public class Entity {
 	private int framesLeft;				// frames left in animation
 	private Direction heading;
 	
-	private int isoX, isoY;		// used by graphics engine
+	public int isoX, isoY;		// used by graphics engine
 	private int delay;			
 	
 	public int tileX, tileY;	// used by AI, graphics engine
@@ -47,9 +47,9 @@ public class Entity {
 	}
 		
 	// getters and setters
-	public int getIsoX() {return isoX;}
+	/*public int getIsoX() {return isoX;}
 	public void setIsoX(int isoX) {this.isoX = isoX;}
 	public int getIsoY() {return isoY;}
 	public void setIsoY(int isoY) {this.isoY = isoY;}
-	
+	*/
 }
