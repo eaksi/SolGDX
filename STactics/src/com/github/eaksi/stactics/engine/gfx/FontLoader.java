@@ -8,11 +8,33 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 
 public class FontLoader {
 
-	public static BitmapFont getFont() {
+	public enum Type {
+		MAIN,
+		SMALL
+	}
+	
+	public static BitmapFont getFont(Type type) {
 
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/Klill-Light.ttf"));
+		String fontPath = "";
+		int size = 10;
+		
+		switch (type) {
+		case MAIN:
+			fontPath = "data/Klill-Light.ttf";
+			size = 20;
+			break;
+		case SMALL:
+			fontPath = "data/Klill-Light.ttf";
+			size = 14;
+			break;
+		default:
+			System.err.println("Error: Invalid font type");
+			break;
+		}
+		
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 20;
+		parameter.size = size;
 		BitmapFont font = generator.generateFont(parameter);
 		generator.dispose();		// generator no longer needed
 	
@@ -21,4 +43,6 @@ public class FontLoader {
 	    
 	    return font;
 	}
+
+
 }

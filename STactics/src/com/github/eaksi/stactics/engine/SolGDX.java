@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Align;
 import com.github.eaksi.stactics.db.BattleMap;
 import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.engine.gfx.Entity;
@@ -24,6 +25,7 @@ public class SolGDX extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private SpriteBatch guiBatch;
 	private BitmapFont font;
+	private BitmapFont smallFont;
     private GlyphLayout layout = new GlyphLayout();	// XXX: temp GUI testing
 	
 	private Texture tempTile;
@@ -58,7 +60,8 @@ public class SolGDX extends ApplicationAdapter {
 		// setup camera
 		camera = new Camera(screenWidth, screenHeight);
 		
-		font = FontLoader.getFont();
+		font = FontLoader.getFont(FontLoader.Type.MAIN);
+		smallFont = FontLoader.getFont(FontLoader.Type.SMALL);
 		
 		batch = new SpriteBatch();
 		guiBatch = new SpriteBatch();
@@ -101,15 +104,14 @@ public class SolGDX extends ApplicationAdapter {
 		batch.begin();
 	    drawTiles();
 	    drawCharacters();
-	    //drawDebug();
-	    camera.updateZoom();
 	    
+	    camera.updateZoom();
 	    batch.end();  
-    	guiBatch.begin();
-	    drawGUI();
-	    guiBatch.end();
 
-	  
+	    guiBatch.begin();
+	    drawGUI();
+	  //drawDebug();
+	    guiBatch.end();
     	
 	    // update FPS counter on window title
 	    Gdx.graphics.setTitle("SolGDX     FPS: " + Gdx.graphics.getFramesPerSecond() + " Zoom: " + camera.getZoomLevel());
@@ -306,15 +308,20 @@ public class SolGDX extends ApplicationAdapter {
     // Draw the user interface
     // FIXME: user interface moves with camera
     private void drawGUI() {
- 
 
-     	font.setColor(0.4f, 0.4f, 0.8f, 1f);
-    	//font.draw(batch, "align test align test align test", 10, screenHeight-80, screenWidth-20, Align.right, true);
+     	font.setColor(0.2f, 0.2f, 0.9f, 1f);
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 10, screenHeight-10);
+     	
+     	smallFont.setColor(0f, 0f, 0f, 1f);
+    	smallFont.draw(guiBatch, ("isoX: "+entity.isoX), 10, screenHeight-15, screenWidth-20, Align.right, true);
+    	smallFont.draw(guiBatch, ("isoY: "+entity.isoY), 10, screenHeight-30, screenWidth-20, Align.right, true);
+    	smallFont.draw(guiBatch, ("tileX: "+entity.tileX), 10, screenHeight-45, screenWidth-20, Align.right, true);
+    	smallFont.draw(guiBatch, ("tileY: "+entity.tileY), 10, screenHeight-60, screenWidth-20, Align.right, true);
 
     	//layout.setText(font, "layout test");
-    	//font.draw(batch, layout, 200 + layout.width / 3, 200 + layout.height / 3);
-     	font.draw(guiBatch
-     			, "NPC: "+ entity.cr.getFullName(), 10, screenHeight-10);
+    	//font.draw(guiBatch, layout, 200 + layout.width / 3, 200 + layout.height / 3);
+
+
     }
     
     
@@ -345,6 +352,7 @@ public class SolGDX extends ApplicationAdapter {
 		tempTile.dispose();
 		spriteSheet.dispose();
 		font.dispose();
+		smallFont.dispose();
 	}
 
 
