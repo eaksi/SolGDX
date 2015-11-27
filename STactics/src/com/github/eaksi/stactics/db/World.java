@@ -41,7 +41,7 @@ public class World {
 			filein = new BufferedReader(new FileReader(fileName));
 			line = filein.readLine();
 			while (line!=null) {
-				if (line != "") names.addElement(line);
+				if (!line.equals("")) names.addElement(line);
 				line = filein.readLine();
 			}
 		
