@@ -311,8 +311,15 @@ public class SolGDX extends ApplicationAdapter {
     // FIXME: user interface moves with camera
     private void drawGUI() {
 
-     	font.setColor(0.2f, 0.2f, 0.9f, 1f);
+     	font.setColor(1f, 1f, 1f, 1f);
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 9, screenHeight-9);
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 9, screenHeight-11);
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 11, screenHeight-9);
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 11, screenHeight-11);
+
+    	font.setColor(0.2f, 0.2f, 0.9f, 1f);
      	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 10, screenHeight-10);
+     	//HACK
      	
      	// debug info
      	smallFont.setColor(0f, 0f, 0f, 1f);
