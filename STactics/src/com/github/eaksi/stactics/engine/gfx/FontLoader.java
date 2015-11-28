@@ -17,10 +17,13 @@ public class FontLoader {
 
 		String fontPath = "";
 		int size = 10;
+		FreeTypeFontGenerator generator;
+		FreeTypeFontParameter parameter;
 		
 		switch (type) {
 		case MAIN:
 			fontPath = "data/Klill-Light.ttf";
+			
 			size = 20;
 			break;
 		case SMALL:
@@ -32,9 +35,13 @@ public class FontLoader {
 			break;
 		}
 		
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
-		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		generator = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
+		parameter = new FreeTypeFontParameter();
 		parameter.size = size;
+		//parameter.borderWidth = 2;
+		//parameter.borderColor = Color.BLUE;	// doesn't work for some reason
+		//parameter.borderStraight = true;
+		//parameter.color = Color.BLACK;
 		BitmapFont font = generator.generateFont(parameter);
 		generator.dispose();		// generator no longer needed
 	

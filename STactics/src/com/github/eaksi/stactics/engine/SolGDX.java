@@ -308,22 +308,27 @@ public class SolGDX extends ApplicationAdapter {
     
     
     // Draw the user interface
-    // FIXME: user interface moves with camera
     private void drawGUI() {
 
-     	font.setColor(1f, 1f, 1f, 1f);
+     	/*// FIXME: quick hack for white text outline
+    	font.setColor(1f, 1f, 1f, 1f);
      	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 9, screenHeight-9);
      	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 9, screenHeight-11);
      	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 11, screenHeight-9);
      	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 11, screenHeight-11);
-
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 10, screenHeight-9);
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 10, screenHeight-11);
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 11, screenHeight-10);
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 9, screenHeight-10);
+     	 */
+     	
     	font.setColor(0.2f, 0.2f, 0.9f, 1f);
      	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 10, screenHeight-10);
-     	//HACK
+
      	
      	// debug info
      	smallFont.setColor(0f, 0f, 0f, 1f);
-    	smallFont.draw(guiBatch, ("entity.isoX: "+entity.isoX), 10, screenHeight-15, screenWidth-20, Align.right, true);
+     	smallFont.draw(guiBatch, ("entity.isoX: "+entity.isoX), 10, screenHeight-15, screenWidth-20, Align.right, true);
     	smallFont.draw(guiBatch, ("entity.isoY: "+entity.isoY), 10, screenHeight-30, screenWidth-20, Align.right, true);
     	smallFont.draw(guiBatch, ("entity.tileX: "+entity.tileX), 10, screenHeight-45, screenWidth-20, Align.right, true);
     	smallFont.draw(guiBatch, ("entity.tileY: "+entity.tileY), 10, screenHeight-60, screenWidth-20, Align.right, true);
