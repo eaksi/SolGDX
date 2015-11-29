@@ -79,6 +79,7 @@ public class Creature {
 	}
 	
 	
+	
 	//public int getJumpHeight() // TODO: needs creature cclass id reference
 	//public int getMove()       // TODO: needs creature cclass id reference
 	//public int getSwim()       // TODO: needs creature cclass/skill id reference

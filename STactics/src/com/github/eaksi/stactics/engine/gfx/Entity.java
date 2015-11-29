@@ -45,6 +45,10 @@ public class Entity {
 		tileY = 0;
 		
 	}
+	
+	public int getFramesLeft() {
+		return framesLeft;
+	}
 		
 	// getters and setters
 	/*public int getIsoX() {return isoX;}

@@ -322,8 +322,11 @@ public class SolGDX extends ApplicationAdapter {
      	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 9, screenHeight-10);
      	 */
      	
-    	font.setColor(0.2f, 0.2f, 0.9f, 1f);
-     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 10, screenHeight-10);
+    	font.setColor(0.6f, 0.6f, 0.6f, 1f);
+     	font.draw(guiBatch, "name: "+ entity.cr.getFullName(), 10, screenHeight-10);
+     	smallFont.setColor(0.6f, 0.6f, 0.6f, 1f);
+     	smallFont.draw(guiBatch, "framesLeft: "+ entity.getFramesLeft(), 10, screenHeight-30);
+     	
 
      	
      	// debug info
