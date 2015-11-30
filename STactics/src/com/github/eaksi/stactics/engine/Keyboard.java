@@ -2,7 +2,7 @@ package com.github.eaksi.stactics.engine;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.github.eaksi.stactics.engine.SolGDX.TempDirection;
+import com.github.eaksi.stactics.engine.gfx.Entity.Direction;
 
 public class Keyboard {
 	protected static void getInput(SolGDX sol) {
@@ -32,19 +32,19 @@ public class Keyboard {
 			return;
 		
 		if(Gdx.input.isKeyPressed(Keys.UP)) {
-			sol.setMoveDirection(TempDirection.NE);
+			sol.setMoveDirection(Direction.NE);
 			return;
 		}
 		if(Gdx.input.isKeyPressed(Keys.DOWN)) {
-			sol.setMoveDirection(TempDirection.SW);
+			sol.setMoveDirection(Direction.SW);
 			return;
 		}
 		if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-			sol.setMoveDirection(TempDirection.NW);
+			sol.setMoveDirection(Direction.NW);
 			return;
 		}
 		if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			sol.setMoveDirection(TempDirection.SE);
+			sol.setMoveDirection(Direction.SE);
 			return;
 		}
 	    

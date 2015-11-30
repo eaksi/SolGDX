@@ -46,6 +46,14 @@ public class Entity {
 		
 	}
 	
+	public Direction getHeading() {
+		return heading;
+	}
+	
+	public void setHeading(Direction dir) {
+		this.heading = dir;
+	}
+	
 	public int getFramesLeft() {
 		return framesLeft;
 	}

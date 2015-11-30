@@ -8,18 +8,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Align;
 import com.github.eaksi.stactics.db.BattleMap;
 import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.engine.gfx.Entity;
+import com.github.eaksi.stactics.engine.gfx.Entity.Direction;
 import com.github.eaksi.stactics.engine.gfx.FontLoader;
 
 public class SolGDX extends ApplicationAdapter {
-	
-	public enum TempDirection {
-		NE, SE, SW, NW
-	}
 	
 	private boolean debugFlag = false;
 	
@@ -39,7 +35,6 @@ public class SolGDX extends ApplicationAdapter {
 	private final int screenHeight = 480;
 	
 	boolean chAnimating = false;
-	private TempDirection chMovingDirection = TempDirection.NE;
 	private int chMoveFrame = -1;
 	
 	private int tileWidth = 64;
@@ -123,12 +118,12 @@ public class SolGDX extends ApplicationAdapter {
 
 
 	// check if creature can move to a tile, this fires only once per move
-	void setMoveDirection(TempDirection d) {
+	void setMoveDirection(Direction d) {
 
 		boolean canMove = false;
-		chMovingDirection = d;
+		entity.setHeading(d);
 		
-		switch (chMovingDirection) {
+		switch (entity.getHeading()) {
 		case NE:
 			if (battleMap.getTile((entity.tileX-1), entity.tileY) == 1) {
 				canMove = true;
@@ -177,7 +172,7 @@ public class SolGDX extends ApplicationAdapter {
 	private void moveCreature() {
 		
 		if (chAnimating) {
-			switch (chMovingDirection) {
+			switch (entity.getHeading()) {
 			case NE:
 		    	entity.isoX += 2;
 		    	entity.isoY += 1;
@@ -246,7 +241,7 @@ public class SolGDX extends ApplicationAdapter {
     	
     	switch(chMoveFrame) {
     	case -1: case 0: case 1: case 7: case 8: case 9: case 15:
-    	    switch(chMovingDirection) {
+    	    switch(entity.getHeading()) {
 	    	case NE:
 	    		batch.draw(flippedSheet[0][3], entity.isoX, entity.isoY);
 	    		break;
@@ -264,7 +259,7 @@ public class SolGDX extends ApplicationAdapter {
 	    	}
     	    break;
     	case 2: case 3: case 4: case 5: case 6:	//walk 1
-        	switch(chMovingDirection) {
+        	switch(entity.getHeading()) {
         	case NE:
         		batch.draw(flippedSheet[0][4], entity.isoX, entity.isoY);
         		break;
@@ -282,7 +277,7 @@ public class SolGDX extends ApplicationAdapter {
         	}
     		break;
     	case 10: case 11: case 12: case 13: case 14: // walk 2
-        	switch(chMovingDirection) {
+        	switch(entity.getHeading()) {
         	case NE:
         		batch.draw(flippedSheet[0][5], entity.isoX, entity.isoY);
         		break;
