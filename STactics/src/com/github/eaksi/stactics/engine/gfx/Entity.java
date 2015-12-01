@@ -10,10 +10,10 @@ public class Entity {
 	}
 	
 	public enum Animation {
-		IDLE, STAND, STILL, KO, ATTACK, HIT
+		IDLE, STAND, WALK, KO, ATTACK, HIT
 	}
 	
-	public enum AnimFrame {
+	public enum SpriteType {
 		NE_STAND, SE_STAND, SW_STAND, NW_STAND,
 		NE_WALK1, SE_WALK1, SW_WALK1, NW_WALK1,
 		NE_WALK2, SE_WALK2, SW_WALK2, NW_WALK2
@@ -24,7 +24,7 @@ public class Entity {
 	//private int spriteId;
 
 	private Animation currentAnimation;
-	private int framesLeft;				// frames left in animation
+	public int animFrame;				// frames left in animation
 	private Direction heading;
 	
 	public int isoX, isoY;		// used by graphics engine
@@ -38,14 +38,22 @@ public class Entity {
 		cr = creat;
 		
 		currentAnimation = Animation.IDLE;
-		framesLeft = 16;
+		animFrame = -1;
 		heading = Direction.NE;
 		
 		tileX = 1;
 		tileY = 0;
 		
 	}
-	
+
+	public Animation getAnimation() {
+		return currentAnimation;
+	}
+
+	public void setAnimation(Animation currentAnimation) {
+		this.currentAnimation = currentAnimation;
+	}
+
 	public Direction getHeading() {
 		return heading;
 	}
@@ -55,7 +63,11 @@ public class Entity {
 	}
 	
 	public int getFramesLeft() {
-		return framesLeft;
+		return animFrame;
+	}
+
+	public String getAnimString() {
+		return currentAnimation.toString();
 	}
 		
 	// getters and setters

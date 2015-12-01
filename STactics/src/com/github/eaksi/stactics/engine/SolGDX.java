@@ -20,22 +20,21 @@ public class SolGDX extends ApplicationAdapter {
 	private boolean debugFlag = false;
 	
 	Camera camera;
-	private SpriteBatch batch;
-	private SpriteBatch guiBatch;
-	private BitmapFont font;
-	private BitmapFont smallFont;
+	private SpriteBatch batch;			// primary SpriteBatch for graphics
+	private SpriteBatch guiBatch;		// GUI SpriteBatch, does not move with camera
+	private BitmapFont font;			// test font
+	private BitmapFont smallFont;		// test font 2
     private GlyphLayout layout = new GlyphLayout();	// XXX: temp GUI testing
 	
-	private Texture tempTile;
+	private Texture tempTile;			// test tile
 	
 	private Texture spriteSheet;
-	private TextureRegion[][] splitSheet;
-	private TextureRegion[][] flippedSheet;
+	private TextureRegion[][] splitSheet;		// sprite sheet divided into regions
+	private TextureRegion[][] flippedSheet;		// same as splitSheet, but regions individually flipped
 	private final int screenWidth = 640;
 	private final int screenHeight = 480;
 	
-	boolean chAnimating = false;
-	private int chMoveFrame = -1;
+	boolean chAnimating = false;				// temp: is the engine animating movement, move keys disabled  
 	
 	private int tileWidth = 64;
 	private int tileHeight = 32;
@@ -157,7 +156,8 @@ public class SolGDX extends ApplicationAdapter {
 		}
 		
 		if (canMove) {
-    		chMoveFrame = 0;
+    		entity.animFrame = 0;
+    		entity.setAnimation(Entity.Animation.WALK);
     		chAnimating = true;
 		}
 	}
@@ -193,11 +193,12 @@ public class SolGDX extends ApplicationAdapter {
 				break;
 			}
 
-			chMoveFrame++;
+			entity.animFrame++;
 			
-			if (chMoveFrame >= 16) {
-				chMoveFrame = -1;
+			if (entity.animFrame >= 16) {
+				entity.animFrame = -1;
 				chAnimating = false;
+				entity.setAnimation(Entity.Animation.IDLE);
 			}
 		}
 	}
@@ -233,13 +234,13 @@ public class SolGDX extends ApplicationAdapter {
 	
     // FIXME: this whole method
     private void drawCharacters() {
-		if (chMoveFrame == 3 || chMoveFrame == 11) { // XXX: temp simulate movement
+		if (entity.animFrame == 3 || entity.animFrame == 11) { // XXX: temp simulate movement
 			entity.isoY += 1;
-		} else if (chMoveFrame == 5 || chMoveFrame == 14) {
+		} else if (entity.animFrame == 5 || entity.animFrame == 14) {
 			entity.isoY -= 1;
 		}
     	
-    	switch(chMoveFrame) {
+    	switch(entity.animFrame) {
     	case -1: case 0: case 1: case 7: case 8: case 9: case 15:
     	    switch(entity.getHeading()) {
 	    	case NE:
@@ -321,6 +322,7 @@ public class SolGDX extends ApplicationAdapter {
      	font.draw(guiBatch, "name: "+ entity.cr.getFullName(), 10, screenHeight-10);
      	smallFont.setColor(0.6f, 0.6f, 0.6f, 1f);
      	smallFont.draw(guiBatch, "framesLeft: "+ entity.getFramesLeft(), 10, screenHeight-30);
+     	smallFont.draw(guiBatch, "animation: "+ entity.getAnimString(), 10, screenHeight-45);
      	
 
      	
