@@ -1,0 +1,43 @@
+package com.github.eaksi.stactics.engine;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Align;
+
+public class GUI {
+
+	protected static void draw(SolGDX sol, SpriteBatch guiBatch) {
+       	/*// FIXME: quick hack for white text outline
+       	  
+    	font.setColor(1f, 1f, 1f, 1f);
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 9, screenHeight-9);
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 9, screenHeight-11);
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 11, screenHeight-9);
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 11, screenHeight-11);
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 10, screenHeight-9);
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 10, screenHeight-11);
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 11, screenHeight-10);
+     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 9, screenHeight-10);
+     	 */
+     	
+    	sol.font.setColor(0.6f, 0.6f, 0.6f, 1f);
+    	sol.font.draw(guiBatch, "name: "+ sol.entity.cr.getFullName(), 10, sol.screenHeight-10);
+    	sol.smallFont.setColor(0.6f, 0.6f, 0.6f, 1f);
+    	sol.smallFont.draw(guiBatch, "framesLeft: "+ sol.entity.getFramesLeft(), 10, sol.screenHeight-30);
+     	sol.smallFont.draw(guiBatch, "animation: "+ sol.entity.getAnimString(), 10, sol.screenHeight-45);
+     	
+
+     	
+     	// debug info
+     	sol.smallFont.setColor(0f, 0f, 0f, 1f);
+     	sol.smallFont.draw(guiBatch, ("entity.isoX: "+sol.entity.isoX), 10, sol.screenHeight-15, sol.screenWidth-20, Align.right, true);
+     	sol.smallFont.draw(guiBatch, ("entity.isoY: "+sol.entity.isoY), 10, sol.screenHeight-30, sol.screenWidth-20, Align.right, true);
+     	sol.smallFont.draw(guiBatch, ("entity.tileX: "+sol.entity.tileX), 10, sol.screenHeight-45, sol.screenWidth-20, Align.right, true);
+     	sol.smallFont.draw(guiBatch, ("entity.tileY: "+sol.entity.tileY), 10, sol.screenHeight-60, sol.screenWidth-20, Align.right, true);
+
+    	//layout.setText(font, "layout test");
+    	//font.draw(guiBatch, layout, 200 + layout.width / 3, 200 + layout.height / 3);
+
+
+    }
+}
+

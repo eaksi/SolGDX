@@ -17,13 +17,13 @@ import com.github.eaksi.stactics.engine.gfx.FontLoader;
 
 public class SolGDX extends ApplicationAdapter {
 	
-	private boolean debugFlag = false;
+	private boolean debugFlag = false;	// *****DEBUG*****
 	
 	Camera camera;
 	private SpriteBatch batch;			// primary SpriteBatch for graphics
 	private SpriteBatch guiBatch;		// GUI SpriteBatch, does not move with camera
-	private BitmapFont font;			// test font
-	private BitmapFont smallFont;		// test font 2
+	BitmapFont font;			// test font
+	BitmapFont smallFont;		// test font 2
     private GlyphLayout layout = new GlyphLayout();	// XXX: temp GUI testing
 	
 	private Texture tempTile;			// test tile
@@ -31,8 +31,8 @@ public class SolGDX extends ApplicationAdapter {
 	private Texture spriteSheet;
 	private TextureRegion[][] splitSheet;		// sprite sheet divided into regions
 	private TextureRegion[][] flippedSheet;		// same as splitSheet, but regions individually flipped
-	private final int screenWidth = 640;
-	private final int screenHeight = 480;
+	final int screenWidth = 640;
+	final int screenHeight = 480;
 	
 	boolean chAnimating = false;				// temp: is the engine animating movement, move keys disabled  
 	
@@ -43,7 +43,7 @@ public class SolGDX extends ApplicationAdapter {
 		
 	private BattleMap battleMap;
 	private Creature creature;
-	private Entity entity;
+	Entity entity;
 		
 
 	@Override
@@ -100,12 +100,11 @@ public class SolGDX extends ApplicationAdapter {
 		batch.begin();
 	    drawTiles();
 	    drawCharacters();
-	    
-	    camera.updateZoom();
+	    camera.updateZoom();	 //TODO: move
 	    batch.end();  
 
 	    guiBatch.begin();
-	    drawGUI();
+	    GUI.draw(this, guiBatch);
 	    if (debugFlag) drawDebug();
 	    guiBatch.end();
     	
@@ -300,43 +299,6 @@ public class SolGDX extends ApplicationAdapter {
     			
     	}
     	
-    }
-    
-    
-    // Draw the user interface
-    private void drawGUI() {
-
-     	/*// FIXME: quick hack for white text outline
-    	font.setColor(1f, 1f, 1f, 1f);
-     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 9, screenHeight-9);
-     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 9, screenHeight-11);
-     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 11, screenHeight-9);
-     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 11, screenHeight-11);
-     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 10, screenHeight-9);
-     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 10, screenHeight-11);
-     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 11, screenHeight-10);
-     	font.draw(guiBatch, "NPC: "+ entity.cr.getFullName(), 9, screenHeight-10);
-     	 */
-     	
-    	font.setColor(0.6f, 0.6f, 0.6f, 1f);
-     	font.draw(guiBatch, "name: "+ entity.cr.getFullName(), 10, screenHeight-10);
-     	smallFont.setColor(0.6f, 0.6f, 0.6f, 1f);
-     	smallFont.draw(guiBatch, "framesLeft: "+ entity.getFramesLeft(), 10, screenHeight-30);
-     	smallFont.draw(guiBatch, "animation: "+ entity.getAnimString(), 10, screenHeight-45);
-     	
-
-     	
-     	// debug info
-     	smallFont.setColor(0f, 0f, 0f, 1f);
-     	smallFont.draw(guiBatch, ("entity.isoX: "+entity.isoX), 10, screenHeight-15, screenWidth-20, Align.right, true);
-    	smallFont.draw(guiBatch, ("entity.isoY: "+entity.isoY), 10, screenHeight-30, screenWidth-20, Align.right, true);
-    	smallFont.draw(guiBatch, ("entity.tileX: "+entity.tileX), 10, screenHeight-45, screenWidth-20, Align.right, true);
-    	smallFont.draw(guiBatch, ("entity.tileY: "+entity.tileY), 10, screenHeight-60, screenWidth-20, Align.right, true);
-
-    	//layout.setText(font, "layout test");
-    	//font.draw(guiBatch, layout, 200 + layout.width / 3, 200 + layout.height / 3);
-
-
     }
     
     
