@@ -28,7 +28,7 @@ public class Entity {
 	private Direction heading;
 	
 	public int isoX, isoY;		// used by graphics engine
-	private int delay;			
+	private int delay;
 	
 	public int tileX, tileY;	// used by AI, graphics engine
 	

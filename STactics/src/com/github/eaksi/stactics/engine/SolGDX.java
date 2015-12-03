@@ -1,5 +1,7 @@
 package com.github.eaksi.stactics.engine;
 
+import java.util.Vector;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -43,15 +45,17 @@ public class SolGDX extends ApplicationAdapter {
 		
 	private BattleMap battleMap;
 	private Creature creature;
-	Entity entity;
-		
+	
+	Vector<Entity> entities;
+	int nr = 0;	// current entity Number
 
 	@Override
 	public void create () {
 
 		battleMap = new BattleMap();
 		creature = new Creature();	// kind of a redundant line, but trying to prevent a future bug
-		entity = new Entity(creature);
+		entities = new Vector<Entity>();
+		entities.add(new Entity(creature));
 		
 		// setup camera
 		camera = new Camera(screenWidth, screenHeight);
@@ -75,8 +79,8 @@ public class SolGDX extends ApplicationAdapter {
 		
 		tempTile = new Texture("data/64px_tile_placeholder.png");
         
-        entity.isoX = getIsoX(entity.tileY, entity.tileX) + 16; 
-        entity.isoY = getIsoY(entity.tileY, entity.tileX) + 36; //XXX: sprite/tile sizes hack
+        entities.get(nr).isoX = getIsoX(entities.get(nr).tileY, entities.get(nr).tileX) + 16; 
+        entities.get(nr).isoY = getIsoY(entities.get(nr).tileY, entities.get(nr).tileX) + 36; //XXX: sprite/tile sizes hack
         
         System.out.println("battleMap.getWidth() = " + battleMap.getWidth() + "  battleMap.getHeight() = " + battleMap.getHeight() + 
         		"  difference = " + (battleMap.getWidth()-battleMap.getHeight()));
@@ -119,35 +123,35 @@ public class SolGDX extends ApplicationAdapter {
 	void setMoveDirection(Direction d) {
 
 		boolean canMove = false;
-		entity.setHeading(d);
+		entities.get(nr).setHeading(d);
 		
-		switch (entity.getHeading()) {
+		switch (entities.get(nr).getHeading()) {
 		case NE:
-			if (battleMap.getTile((entity.tileX-1), entity.tileY) == 1) {
+			if (battleMap.getTile((entities.get(nr).tileX-1), entities.get(nr).tileY) == 1) {
 				canMove = true;
 				printMoveDebug("NE (-x)", -1, 0);
-				entity.tileX--;
+				entities.get(nr).tileX--;
 			}
 			break;
 		case SE:
-			if (battleMap.getTile(entity.tileX, (entity.tileY+1)) == 1) {
+			if (battleMap.getTile(entities.get(nr).tileX, (entities.get(nr).tileY+1)) == 1) {
 				canMove = true;
 				printMoveDebug("SE (+y)", 0, 1);
-				entity.tileY++;
+				entities.get(nr).tileY++;
 			}
 			break;
 		case SW:
-			if (battleMap.getTile((entity.tileX+1), entity.tileY) == 1) {
+			if (battleMap.getTile((entities.get(nr).tileX+1), entities.get(nr).tileY) == 1) {
 				canMove = true;
 				printMoveDebug("SW (+x)", 1, 0);
-				entity.tileX++;
+				entities.get(nr).tileX++;
 			}
 			break;
 		case NW:
-			if (battleMap.getTile(entity.tileX, (entity.tileY-1)) == 1) {
+			if (battleMap.getTile(entities.get(nr).tileX, (entities.get(nr).tileY-1)) == 1) {
 				canMove = true;
 				printMoveDebug("NW (-y)", 0, -1);
-				entity.tileY--;
+				entities.get(nr).tileY--;
 			}
 			break;
 		default:
@@ -155,49 +159,49 @@ public class SolGDX extends ApplicationAdapter {
 		}
 		
 		if (canMove) {
-    		entity.animFrame = 0;
-    		entity.setAnimation(Entity.Animation.WALK);
+    		entities.get(nr).animFrame = 0;
+    		entities.get(nr).setAnimation(Entity.Animation.WALK);
     		chAnimating = true;
 		}
 	}
 
 	
 	private void printMoveDebug (String dir, int x, int y) {
-		System.out.println(dir + "(" + entity.tileX + "," + entity.tileY + ") -> (" +
-				(entity.tileX + x) + "," + (entity.tileY + y) + ")");
+		System.out.println(dir + "(" + entities.get(nr).tileX + "," + entities.get(nr).tileY + ") -> (" +
+				(entities.get(nr).tileX + x) + "," + (entities.get(nr).tileY + y) + ")");
 	}
 	
 	//move rectangle/sprite
 	private void moveCreature() {
 		
 		if (chAnimating) {
-			switch (entity.getHeading()) {
+			switch (entities.get(nr).getHeading()) {
 			case NE:
-		    	entity.isoX += 2;
-		    	entity.isoY += 1;
+		    	entities.get(nr).isoX += 2;
+		    	entities.get(nr).isoY += 1;
 				break;
 			case SE:
-		    	entity.isoX += 2;
-		    	entity.isoY -= 1;
+		    	entities.get(nr).isoX += 2;
+		    	entities.get(nr).isoY -= 1;
 				break;
 			case SW:
-		    	entity.isoX -= 2;
-		    	entity.isoY -= 1;
+		    	entities.get(nr).isoX -= 2;
+		    	entities.get(nr).isoY -= 1;
 				break;
 			case NW:
-		    	entity.isoX -= 2;
-		    	entity.isoY += 1;
+		    	entities.get(nr).isoX -= 2;
+		    	entities.get(nr).isoY += 1;
 				break;
 			default:
 				break;
 			}
 
-			entity.animFrame++;
+			entities.get(nr).animFrame++;
 			
-			if (entity.animFrame >= 16) {
-				entity.animFrame = -1;
+			if (entities.get(nr).animFrame >= 16) {
+				entities.get(nr).animFrame = -1;
 				chAnimating = false;
-				entity.setAnimation(Entity.Animation.IDLE);
+				entities.get(nr).setAnimation(Entity.Animation.IDLE);
 			}
 		}
 	}
@@ -233,62 +237,64 @@ public class SolGDX extends ApplicationAdapter {
 	
     // FIXME: this whole method
     private void drawCharacters() {
-		if (entity.animFrame == 3 || entity.animFrame == 11) { // XXX: temp simulate movement
-			entity.isoY += 1;
-		} else if (entity.animFrame == 5 || entity.animFrame == 14) {
-			entity.isoY -= 1;
+		
+    	
+    	if (entities.get(nr).animFrame == 3 || entities.get(nr).animFrame == 11) { // XXX: temp simulate movement
+			entities.get(nr).isoY += 1;
+		} else if (entities.get(nr).animFrame == 5 || entities.get(nr).animFrame == 14) {
+			entities.get(nr).isoY -= 1;
 		}
     	
-    	switch(entity.animFrame) {
+    	switch(entities.get(nr).animFrame) {
     	case -1: case 0: case 1: case 7: case 8: case 9: case 15:
-    	    switch(entity.getHeading()) {
+    	    switch(entities.get(nr).getHeading()) {
 	    	case NE:
-	    		batch.draw(flippedSheet[0][3], entity.isoX, entity.isoY);
+	    		batch.draw(flippedSheet[0][3], entities.get(nr).isoX, entities.get(nr).isoY);
 	    		break;
 	    	case SE:
-	    		batch.draw(splitSheet[0][0], entity.isoX, entity.isoY);
+	    		batch.draw(splitSheet[0][0], entities.get(nr).isoX, entities.get(nr).isoY);
 	    		break;
 	    	case SW:
-	    		batch.draw(flippedSheet[0][0], entity.isoX, entity.isoY);
+	    		batch.draw(flippedSheet[0][0], entities.get(nr).isoX, entities.get(nr).isoY);
 	    		break;
 	    	case NW:
-	    		batch.draw(splitSheet[0][3], entity.isoX, entity.isoY);
+	    		batch.draw(splitSheet[0][3], entities.get(nr).isoX, entities.get(nr).isoY);
 	    		break;
 	    	default:
 	    		System.err.println("Warning: invalid direction of character!"); //XXX: written 60 times per second
 	    	}
     	    break;
     	case 2: case 3: case 4: case 5: case 6:	//walk 1
-        	switch(entity.getHeading()) {
+        	switch(entities.get(nr).getHeading()) {
         	case NE:
-        		batch.draw(flippedSheet[0][4], entity.isoX, entity.isoY);
+        		batch.draw(flippedSheet[0][4], entities.get(nr).isoX, entities.get(nr).isoY);
         		break;
         	case SE:
-        		batch.draw(splitSheet[0][1], entity.isoX, entity.isoY);
+        		batch.draw(splitSheet[0][1], entities.get(nr).isoX, entities.get(nr).isoY);
         		break;
         	case SW:
-        		batch.draw(flippedSheet[0][1], entity.isoX, entity.isoY);
+        		batch.draw(flippedSheet[0][1], entities.get(nr).isoX, entities.get(nr).isoY);
         		break;
         	case NW:
-        		batch.draw(splitSheet[0][4], entity.isoX, entity.isoY);
+        		batch.draw(splitSheet[0][4], entities.get(nr).isoX, entities.get(nr).isoY);
         		break;
         	default:
         		System.err.println("Warning: invalid direction of character!"); //XXX: written 60 times per second
         	}
     		break;
     	case 10: case 11: case 12: case 13: case 14: // walk 2
-        	switch(entity.getHeading()) {
+        	switch(entities.get(nr).getHeading()) {
         	case NE:
-        		batch.draw(flippedSheet[0][5], entity.isoX, entity.isoY);
+        		batch.draw(flippedSheet[0][5], entities.get(nr).isoX, entities.get(nr).isoY);
         		break;
         	case SE:
-        		batch.draw(splitSheet[0][2], entity.isoX, entity.isoY);
+        		batch.draw(splitSheet[0][2], entities.get(nr).isoX, entities.get(nr).isoY);
         		break;
         	case SW:
-        		batch.draw(flippedSheet[0][2], entity.isoX, entity.isoY);
+        		batch.draw(flippedSheet[0][2], entities.get(nr).isoX, entities.get(nr).isoY);
         		break;
         	case NW:
-        		batch.draw(splitSheet[0][5], entity.isoX, entity.isoY);
+        		batch.draw(splitSheet[0][5], entities.get(nr).isoX, entities.get(nr).isoY);
         		break;
         	default:
         		System.err.println("Warning: invalid direction of character!"); //XXX: written 60 times per second
