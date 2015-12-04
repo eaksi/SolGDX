@@ -19,7 +19,7 @@ import com.github.eaksi.stactics.engine.gfx.FontLoader;
 
 public class SolGDX extends ApplicationAdapter {
 	
-	private boolean debugFlag = false;	// *****DEBUG*****
+	private boolean debugFlag = false;	// ****DEBUG****
 	
 	Camera camera;
 	private SpriteBatch batch;			// primary SpriteBatch for graphics
