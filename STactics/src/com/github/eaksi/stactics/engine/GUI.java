@@ -1,10 +1,13 @@
 package com.github.eaksi.stactics.engine;
 
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 
 public class GUI {		//FIXME: refactor!!!
-
+    
+	private GlyphLayout layout = new GlyphLayout();	// XXX: temp
+	
 	protected static void draw(SolGDX sol, SpriteBatch guiBatch) {
       
 		/*// XXX: quick hack for white text outline
@@ -24,8 +27,6 @@ public class GUI {		//FIXME: refactor!!!
     	sol.smallFont.setColor(0.6f, 0.6f, 0.6f, 1f);
     	sol.smallFont.draw(guiBatch, "framesLeft: "+ sol.entities.get(sol.nr).getFramesLeft(), 10, sol.screenHeight-30);
      	sol.smallFont.draw(guiBatch, "animation: "+ sol.entities.get(sol.nr).getAnimString(), 10, sol.screenHeight-45);
-     	
-
      	
      	// debug info
      	sol.smallFont.setColor(0f, 0f, 0f, 1f);

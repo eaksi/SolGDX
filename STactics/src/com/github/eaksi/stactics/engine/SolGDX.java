@@ -26,9 +26,9 @@ public class SolGDX extends ApplicationAdapter {
 	private SpriteBatch guiBatch;		// GUI SpriteBatch, does not move with camera
 	BitmapFont font;			// test font
 	BitmapFont smallFont;		// test font 2
-    private GlyphLayout layout = new GlyphLayout();	// XXX: temp GUI testing
 	
 	private Texture tempTile;			// test tile
+	private Texture tempTile0;			// test water tile
 	
 	private Texture spriteSheet;
 	private TextureRegion[][] splitSheet;		// sprite sheet divided into regions
@@ -78,6 +78,7 @@ public class SolGDX extends ApplicationAdapter {
 		}
 		
 		tempTile = new Texture("data/64px_tile_placeholder.png");
+		tempTile0 = new Texture("data/64px_tile_placeholder_water.png");
         
         entities.get(nr).isoX = getIsoX(entities.get(nr).tileY, entities.get(nr).tileX) + 16; 
         entities.get(nr).isoY = getIsoY(entities.get(nr).tileY, entities.get(nr).tileX) + 36; //XXX: sprite/tile sizes hack
@@ -227,8 +228,10 @@ public class SolGDX extends ApplicationAdapter {
 
     	for (int i = 0; i < battleMap.getWidth(); i++) {
         	for (int j = 0; j < battleMap.getHeight(); j++) {
-    			if (battleMap.getTile(i,j) != 0 ) {
-    				batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+16));	
+    			if (battleMap.getTile(i,j) == 0 ) {
+    				batch.draw(tempTile0, getIsoX(j,i), (getIsoY(j,i)+(battleMap.getTile(i,j)*16)));	
+    			} else {
+    				batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+(battleMap.getTile(i,j)*16)));
     			}
     		}
     	}
