@@ -176,19 +176,27 @@ public class SolGDX extends ApplicationAdapter {
 			switch (entities.get(nr).getHeading()) {
 			case NE:
 		    	entities.get(nr).isoX += 2;
+		    	camera.moveRight(2);
 		    	entities.get(nr).isoY += 1;
+		    	camera.moveUp(1);
 				break;
 			case SE:
 		    	entities.get(nr).isoX += 2;
+		    	camera.moveRight(2);
 		    	entities.get(nr).isoY -= 1;
+		    	camera.moveDown(1);
 				break;
 			case SW:
 		    	entities.get(nr).isoX -= 2;
+		    	camera.moveLeft(2);
 		    	entities.get(nr).isoY -= 1;
+		    	camera.moveDown(1);
 				break;
 			case NW:
 		    	entities.get(nr).isoX -= 2;
+		    	camera.moveLeft(2);
 		    	entities.get(nr).isoY += 1;
+		    	camera.moveUp(1);
 				break;
 			default:
 				break;
