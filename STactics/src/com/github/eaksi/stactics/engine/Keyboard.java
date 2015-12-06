@@ -23,6 +23,9 @@ public class Keyboard {
 				sol.camera.setZoom(false);
 		}
 		
+		// toggle debug mode
+		if (Gdx.input.isKeyJustPressed(Keys.NUM_0))	sol.debugFlag = !sol.debugFlag;
+		
         // Rotating the camera (disabled)    
         //if (Gdx.input.isKeyPressed(Keys.Q))			camera.rotate(-1f, 0, 0, 1);
         //if (Gdx.input.isKeyPressed(Keys.E))			camera.rotate(1f, 0, 0, 1);

@@ -31,6 +31,7 @@ public class Entity {
 	private int delay;
 	
 	public int tileX, tileY;	// used by AI, graphics engine
+	public int height;			// TODO: not used for anything yet
 	
 	
 	public Entity(Creature creat) {

@@ -7,10 +7,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Align;
 import com.github.eaksi.stactics.db.BattleMap;
 import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.engine.gfx.Entity;
@@ -19,7 +17,7 @@ import com.github.eaksi.stactics.engine.gfx.FontLoader;
 
 public class SolGDX extends ApplicationAdapter {
 	
-	private boolean debugFlag = false;	// ****DEBUG****
+	boolean debugFlag = false;	// ****DEBUG****
 	
 	Camera camera;
 	private SpriteBatch batch;			// primary SpriteBatch for graphics
@@ -109,8 +107,7 @@ public class SolGDX extends ApplicationAdapter {
 	    batch.end();  
 
 	    guiBatch.begin();
-	    GUI.draw(this, guiBatch);
-	    if (debugFlag) drawDebug();
+	    GUI.draw(this, guiBatch);		// draw GUI and possible debug data
 	    guiBatch.end();
     	
 	    // update FPS counter on window title
@@ -235,6 +232,15 @@ public class SolGDX extends ApplicationAdapter {
     			}
     		}
     	}
+    	
+    	if (debugFlag) {
+    		smallFont.setColor(0f, 0f, 0f, 1f);
+        	for (int i = 0; i < battleMap.getWidth(); i++) {
+            	for (int j = 0; j < battleMap.getHeight(); j++) {
+        				smallFont.draw(batch, i+","+j, getIsoX(j,i)+25, (getIsoY(j,i)+(battleMap.getTile(i,j)*16+36)));	
+           		}
+        	}
+    	}
     }
 	
 	
@@ -309,27 +315,6 @@ public class SolGDX extends ApplicationAdapter {
     	}
     	
     }
-    
-    
-	// Draw the needed stuff for debug (for quick testing)
-	private void drawDebug() {
-		
-		// draw the original sprite sheet by region
-		for (int i=0; i<2; i++) {
-			for (int j=0; j<7; j++) {
-				guiBatch.draw(splitSheet[i][j], 240+j*32 , 64-i*64);
-			}
-		}
-		
-		// draw the flipped sprite sheet by region
-	    for (int i=0; i<2; i++) {
-			for (int j=0; j<7; j++) {
-				guiBatch.draw(flippedSheet[i][j], j*32, 64-i*64);
-			}
-		}
-
-	}
-	
 	
 	@Override
 	public void dispose() {
