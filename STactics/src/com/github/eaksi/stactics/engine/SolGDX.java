@@ -234,9 +234,12 @@ public class SolGDX extends ApplicationAdapter {
     	for (int i = 0; i < battleMap.getWidth(); i++) {
         	for (int j = 0; j < battleMap.getHeight(); j++) {
     			if (battleMap.getTile(i,j) == 0 ) {
-    				batch.draw(tempTile0, getIsoX(j,i), (getIsoY(j,i)+(battleMap.getTile(i,j)*16)));	
+    				batch.draw(tempTile0, getIsoX(j,i), (getIsoY(j,i)));	
     			} else {
-    				batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+(battleMap.getTile(i,j)*16)));
+    				for (int k = 0; k < battleMap.getTile(i,j); k++) {	// TODO: temp, change to working wall graphics
+    					batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+k*16+16));
+    				}
+    				//batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+(battleMap.getTile(i,j)*16)));
     			}
     		}
     	}
