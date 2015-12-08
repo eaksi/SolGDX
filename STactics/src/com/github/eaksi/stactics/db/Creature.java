@@ -27,7 +27,7 @@ public class Creature {
 		name = World.getRandomFName();
 		suffixName = World.getRandomLName();
 	
-		baseHP = 10;
+		baseHP = 5;
 
 		baseDelay = 10;
 		

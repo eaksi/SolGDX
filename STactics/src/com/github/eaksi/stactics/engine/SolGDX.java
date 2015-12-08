@@ -102,7 +102,7 @@ public class SolGDX extends ApplicationAdapter {
 		// draw everything
 		batch.begin();
 	    drawTiles();
-	    drawCharacters();
+	    //drawCharacters();
 	    camera.updateZoom();	 //TODO: move
 	    batch.end();  
 
@@ -160,6 +160,7 @@ public class SolGDX extends ApplicationAdapter {
     		entities.get(nr).animFrame = 0;
     		entities.get(nr).setAnimation(Entity.Animation.WALK);
     		chAnimating = true;
+
 		}
 	}
 
@@ -209,6 +210,7 @@ public class SolGDX extends ApplicationAdapter {
 				chAnimating = false;
 				entities.get(nr).setAnimation(Entity.Animation.IDLE);
 			}
+			
 		}
 	}
 	
@@ -241,9 +243,19 @@ public class SolGDX extends ApplicationAdapter {
     				}
     				//batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+(battleMap.getTile(i,j)*16)));
     			}
+    	    	
+    			/*********** FIXME: TEMP simple painter's algorithm testing (wrong order) **************/
+    			if (entities.get(nr).tileX == j && entities.get(nr).tileX == i)
+    	    	{
+    	    			drawCharacters();
+    	    	}
+    			/*****************************************************/
+
     		}
     	}
     	
+    	
+    	// Draw BattleMap coordinates over tiles
     	if (debugFlag) {
     		smallFont.setColor(0f, 0f, 0f, 1f);
         	for (int i = 0; i < battleMap.getWidth(); i++) {
@@ -326,7 +338,8 @@ public class SolGDX extends ApplicationAdapter {
     	}
     	
     }
-	
+
+
 	@Override
 	public void dispose() {
 		batch.dispose();
