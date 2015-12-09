@@ -14,7 +14,7 @@ public class Creature {
 	private int baseHP, baseDelay;
 	
 	// x, y on battlemap
-	private int delay;
+	private int delay;		// XXX: move to Entity?
 	
 	private Vector<Integer> knownSpells;
 	public Hashtable<Integer, Integer> skills; // XXX: temp public
@@ -58,7 +58,16 @@ public class Creature {
 		delay--;
 		return false;
 	}
+
+	public int getId() {
+		return id;
+	}
 	
+	public String getName() {
+		return name;
+	}
+	
+
 	public String getFullName() {
 		String fullName = "";
 		if (prefixName.length() > 0) {
@@ -74,11 +83,6 @@ public class Creature {
 		return fullName;
 	}
 
-	public String getName() {
-		return name;
-	}
-	
-	
 	
 	//public int getJumpHeight() // TODO: needs creature cclass id reference
 	//public int getMove()       // TODO: needs creature cclass id reference

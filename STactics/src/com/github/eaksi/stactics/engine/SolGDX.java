@@ -31,8 +31,9 @@ public class SolGDX extends ApplicationAdapter {
 	private Texture spriteSheet;
 	private TextureRegion[][] splitSheet;		// sprite sheet divided into regions
 	private TextureRegion[][] flippedSheet;		// same as splitSheet, but regions individually flipped
-	final int screenWidth = 640;
-	final int screenHeight = 480;
+	
+	final int screenWidth = 800;				// screen resolution
+	final int screenHeight = 600;
 	
 	boolean chAnimating = false;				// temp: is the engine animating movement, move keys disabled  
 	

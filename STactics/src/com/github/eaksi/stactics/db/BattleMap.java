@@ -48,7 +48,7 @@ public class BattleMap {
 	}
 	
 	public int getHeight() {
-		return terrainMap[0].length;	// XXX: arrays always rectangular, checked elsewhere
+		return terrainMap[0].length;	// XXX: arrays should always be rectangular, test elsewhere
 	}
 	
 	public int getTile(int x, int y) {

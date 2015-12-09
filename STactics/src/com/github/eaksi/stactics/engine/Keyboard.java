@@ -10,20 +10,20 @@ public class Keyboard {
 		// Quit the application
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE))		Gdx.app.exit();
 
-        // Moving the view
+        // Move the camera view
 		if (Gdx.input.isKeyPressed(Keys.A))	sol.camera.moveLeft();
 		if (Gdx.input.isKeyPressed(Keys.D))	sol.camera.moveRight();
 		if (Gdx.input.isKeyPressed(Keys.S))	sol.camera.moveDown();
 		if (Gdx.input.isKeyPressed(Keys.W))	sol.camera.moveUp();
 		
-		// Zooming the view
+		// Zoom the view
 		if (Gdx.input.isKeyPressed(Keys.Z)) {
 				sol.camera.setZoom(true);
 		} else if (Gdx.input.isKeyPressed(Keys.X)) {
 				sol.camera.setZoom(false);
 		}
 		
-		// toggle debug mode
+		// Toggle debug mode
 		if (Gdx.input.isKeyJustPressed(Keys.NUM_0))	sol.debugFlag = !sol.debugFlag;
 		
         // Rotating the camera (disabled)    
@@ -34,6 +34,7 @@ public class Keyboard {
 		if (sol.chAnimating)	// if animation in progress, break 
 			return;
 		
+		// current character movement controls
 		if(Gdx.input.isKeyPressed(Keys.UP)) {
 			sol.setMoveDirection(Direction.NE);
 			return;

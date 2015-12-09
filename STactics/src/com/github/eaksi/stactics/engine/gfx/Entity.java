@@ -55,6 +55,10 @@ public class Entity {
 		this.currentAnimation = currentAnimation;
 	}
 
+	public int getId() {
+		return id;
+	}
+	
 	public Direction getHeading() {
 		return heading;
 	}
