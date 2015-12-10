@@ -17,7 +17,9 @@ import com.github.eaksi.stactics.engine.gfx.FontLoader;
 
 public class SolGDX extends ApplicationAdapter {
 	
-	boolean debugFlag = false;	// ****DEBUG****
+	boolean debugFlag = false;		// ****DEBUG****
+	boolean drawOrderFlag = false;	// draw order debug
+	private int drawOrder = 0;
 	
 	Camera camera;
 	private SpriteBatch batch;			// primary SpriteBatch for graphics
@@ -234,8 +236,11 @@ public class SolGDX extends ApplicationAdapter {
 	// Draw the tile map
 	private void drawTiles() {
 
+		drawOrder = 0;
+		smallFont.setColor(0f, 0f, 0f, 1f);
     	for (int i = 0; i < battleMap.getWidth(); i++) {
         	for (int j = 0; j < battleMap.getHeight(); j++) {
+        		drawOrder++;
     			if (battleMap.getTile(i,j) == 0 ) {
     				batch.draw(tempTile0, getIsoX(j,i), (getIsoY(j,i)));	
     			} else {
@@ -244,7 +249,9 @@ public class SolGDX extends ApplicationAdapter {
     				}
     				//batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+(battleMap.getTile(i,j)*16)));
     			}
-    	    	
+    			if (drawOrderFlag) {
+    				smallFont.draw(batch, ""+drawOrder, getIsoX(j,i)+25, (getIsoY(j,i)+(battleMap.getTile(i,j)*16+36)));
+    			}
     			/*********** FIXME: TEMP simple painter's algorithm testing (wrong order) **************/
     			if (entities.get(nr).tileX == j && entities.get(nr).tileX == i)
     	    	{
@@ -254,8 +261,7 @@ public class SolGDX extends ApplicationAdapter {
 
     		}
     	}
-    	
-    	
+    	    	
     	// Draw BattleMap coordinates over tiles
     	if (debugFlag) {
     		smallFont.setColor(0f, 0f, 0f, 1f);
@@ -265,6 +271,15 @@ public class SolGDX extends ApplicationAdapter {
            		}
         	}
     	}
+    	
+    	/*if (drawOrderFlag) {
+    		smallFont.setColor(0f, 0f, 0f, 1f);
+        	for (int i = 0; i < battleMap.getWidth(); i++) {
+            	for (int j = 0; j < battleMap.getHeight(); j++) {
+        				smallFont.draw(batch, ""+drawOrder, getIsoX(j,i)+25, (getIsoY(j,i)+(battleMap.getTile(i,j)*16+36)));	
+           		}
+        	}
+    	}*/
     }
 	
 	

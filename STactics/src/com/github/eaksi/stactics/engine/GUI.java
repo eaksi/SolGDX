@@ -41,7 +41,7 @@ public class GUI {		//FIXME: refactor!!!
 
     	} else {
     		sol.smallFont.setColor(0f, 0f, 0f, 1f);
-    		sol.smallFont.draw(guiBatch, "press '0' for debug mode", 10, sol.screenHeight-15, sol.screenWidth-20, Align.right, true);
+    		sol.smallFont.draw(guiBatch, "press '0' for debug mode, '9' for draw order", 10, sol.screenHeight-15, sol.screenWidth-20, Align.right, true);
     	}
 
     	//layout.setText(font, "layout test");
