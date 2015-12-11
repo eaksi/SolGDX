@@ -48,7 +48,7 @@ public class SolGDX extends ApplicationAdapter {
 	private Creature creature;
 	
 	Vector<Entity> entities;
-	int nr = 0;	// current entity Number
+	int nr = 0;		// current entity Number
 
 	@Override
 	public void create () {
@@ -238,29 +238,29 @@ public class SolGDX extends ApplicationAdapter {
 
 		drawOrder = 0;
 		smallFont.setColor(0f, 0f, 0f, 1f);
-    	for (int i = 0; i < battleMap.getWidth(); i++) {
-        	for (int j = 0; j < battleMap.getHeight(); j++) {
-        		drawOrder++;
-    			if (battleMap.getTile(i,j) == 0 ) {
-    				batch.draw(tempTile0, getIsoX(j,i), (getIsoY(j,i)));	
-    			} else {
-    				for (int k = 0; k < battleMap.getTile(i,j); k++) {	// TODO: temp, change to working wall graphics
-    					batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+k*16+16));
-    				}
-    				//batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+(battleMap.getTile(i,j)*16)));
-    			}
-    			if (drawOrderFlag) {
-    				smallFont.draw(batch, ""+drawOrder, getIsoX(j,i)+25, (getIsoY(j,i)+(battleMap.getTile(i,j)*16+36)));
-    			}
-    			/*********** FIXME: TEMP simple painter's algorithm testing (wrong order) **************/
-    			if (entities.get(nr).tileX == j && entities.get(nr).tileX == i)
-    	    	{
-    	    			drawCharacters();
-    	    	}
-    			/*****************************************************/
-
-    		}
-    	}
+		
+		for (int i = 0; i < battleMap.getWidth(); i++) {
+			for (int j = 0; j < battleMap.getHeight(); j++) {
+				drawOrder++;
+				if (battleMap.getTile(i,j) == 0 ) {
+					batch.draw(tempTile0, getIsoX(j,i), getIsoY(j,i));	
+				} else {
+					for (int k = 0; k < battleMap.getTile(i,j); k++) {	// TODO: temp, change to working wall graphics
+						batch.draw(tempTile, getIsoX(j,i), getIsoY(j,i)+k*16+16);
+					}
+					//batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+(battleMap.getTile(i,j)*16)));
+				}
+				if (drawOrderFlag) {
+					smallFont.draw(batch, ""+drawOrder, getIsoX(j,i)+25, (getIsoY(j,i)+(battleMap.getTile(i,j)*16+36)));
+				}
+				/*********** FIXME: TEMP simple painter's algorithm testing (wrong order) **************/
+				if (entities.get(nr).tileX == j && entities.get(nr).tileX == i)
+		    	{
+		    			drawCharacters();
+		    	}
+				/*****************************************************/
+			}
+		}
     	    	
     	// Draw BattleMap coordinates over tiles
     	if (debugFlag) {
