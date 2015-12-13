@@ -57,6 +57,11 @@ public class SolGDX extends ApplicationAdapter {
 		creature = new Creature();	// kind of a redundant line, but trying to prevent a future bug
 		entities = new Vector<Entity>();
 		entities.add(new Entity(creature));
+		entities.add(new Entity(creature));
+		entities.add(new Entity(creature));
+		System.out.println("Entity0 id: "+entities.get(0).getId());
+		System.out.println("Entity1 id: "+entities.get(1).getId());
+		System.out.println("Entity2 id: "+entities.get(2).getId());
 		
 		// setup camera
 		camera = new Camera(screenWidth, screenHeight);
@@ -104,7 +109,8 @@ public class SolGDX extends ApplicationAdapter {
 	    
 		// draw everything
 		batch.begin();
-	    drawTiles();
+		drawIsometric();
+		//drawTiles();
 	    //drawCharacters();
 	    camera.updateZoom();	 //TODO: move
 	    batch.end();  
@@ -232,9 +238,8 @@ public class SolGDX extends ApplicationAdapter {
     			
     }
 
-    
-	// Draw the tile map
-	private void drawTiles() {
+    // TODO: Draw everything
+    private void drawIsometric() {
 
 		drawOrder = 0;
 		smallFont.setColor(0f, 0f, 0f, 1f);
@@ -259,6 +264,51 @@ public class SolGDX extends ApplicationAdapter {
 		    			drawCharacters();
 		    	}
 				/*****************************************************/
+			}
+		}
+    	    	
+    	// Draw BattleMap coordinates over tiles
+    	if (debugFlag) {
+    		smallFont.setColor(0f, 0f, 0f, 1f);
+        	for (int i = 0; i < battleMap.getWidth(); i++) {
+            	for (int j = 0; j < battleMap.getHeight(); j++) {
+        				smallFont.draw(batch, i+","+j, getIsoX(j,i)+25, (getIsoY(j,i)+(battleMap.getTile(i,j)*16+36)));	
+           		}
+        	}
+    	}
+    	
+    	/*if (drawOrderFlag) {
+    		smallFont.setColor(0f, 0f, 0f, 1f);
+        	for (int i = 0; i < battleMap.getWidth(); i++) {
+            	for (int j = 0; j < battleMap.getHeight(); j++) {
+        				smallFont.draw(batch, ""+drawOrder, getIsoX(j,i)+25, (getIsoY(j,i)+(battleMap.getTile(i,j)*16+36)));	
+           		}
+        	}
+    	}*/
+    }
+    
+    
+    
+	// Draw the tile map
+	private void drawTiles() {
+
+		drawOrder = 0;
+		smallFont.setColor(0f, 0f, 0f, 1f);
+		
+		for (int i = 0; i < battleMap.getWidth(); i++) {
+			for (int j = 0; j < battleMap.getHeight(); j++) {
+				drawOrder++;
+				if (battleMap.getTile(i,j) == 0 ) {
+					batch.draw(tempTile0, getIsoX(j,i), getIsoY(j,i));	
+				} else {
+					for (int k = -1; k < battleMap.getTile(i,j); k++) {	// TODO: temp, change to working wall graphics
+						batch.draw(tempTile, getIsoX(j,i), getIsoY(j,i)+k*16+16);
+					}
+					//batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+(battleMap.getTile(i,j)*16)));
+				}
+				if (drawOrderFlag) {
+					smallFont.draw(batch, ""+drawOrder, getIsoX(j,i)+25, (getIsoY(j,i)+(battleMap.getTile(i,j)*16+36)));
+				}
 			}
 		}
     	    	
