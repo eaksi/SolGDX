@@ -2,6 +2,8 @@ package com.github.eaksi.stactics.engine;
 
 import java.util.Vector;
 
+import org.lwjgl.opengl.Drawable;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,6 +16,7 @@ import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.engine.gfx.Entity;
 import com.github.eaksi.stactics.engine.gfx.Entity.Direction;
 import com.github.eaksi.stactics.engine.gfx.FontLoader;
+import com.github.eaksi.stactics.engine.gfx.Tile;
 
 public class SolGDX extends ApplicationAdapter {
 	
@@ -49,7 +52,9 @@ public class SolGDX extends ApplicationAdapter {
 	
 	Vector<Entity> entities;
 	int nr = 0;		// current entity Number
-
+	
+	Vector<Drawable> painter;
+	
 	@Override
 	public void create () {
 
@@ -134,6 +139,24 @@ public class SolGDX extends ApplicationAdapter {
 		moveCreature(); 		// XXX: temp character turn-based keyboard movement
 	}
 
+	private void initializePainter() {
+		
+		painter = new Vector<Drawable>();
+		
+		for (int i = 0; i < battleMap.getWidth(); i++) {
+			for (int j = 0; j < battleMap.getHeight(); j++) {
+				if (battleMap.getTile(i,j) == 0 ) {
+					painter.add((Draw   able)new Tile(getIsoX(j,i), getIsoY(j,i), true));	
+				} else {
+					for (int k = -1; k < battleMap.getTile(i,j); k++) {	// TODO: temp, change to working wall graphics
+						batch.draw(tempTile, getIsoX(j,i), getIsoY(j,i)+k*16+16);
+					}
+					//batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+(battleMap.getTile(i,j)*16)));
+				}
+			}
+		}
+	}
+	
 	private void setEntityLocations()
 	{
 		// set starting locations of entities
