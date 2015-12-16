@@ -14,7 +14,7 @@ public class GUI {		//FIXME: refactor!!!
     	sol.font.draw(guiBatch, "name: "+ sol.entities.get(sol.nr).cr.getFullName(), 10, sol.screenHeight-10);
      	
      	// debug info
-    	if (sol.debugFlag) {
+    	if (sol.debug) {
     		sol.smallFont.setColor(0f, 0f, 0f, 1f);
     		
     		sol.smallFont.draw(guiBatch, "creature id: "+ sol.entities.get(sol.nr).cr.getId(), 10, sol.screenHeight-15, sol.screenWidth-150, Align.right, true);

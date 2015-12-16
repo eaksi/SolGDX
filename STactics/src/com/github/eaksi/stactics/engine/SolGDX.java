@@ -2,8 +2,6 @@ package com.github.eaksi.stactics.engine;
 
 import java.util.Vector;
 
-import org.lwjgl.opengl.Drawable;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.github.eaksi.stactics.db.BattleMap;
 import com.github.eaksi.stactics.db.Creature;
+import com.github.eaksi.stactics.engine.gfx.Drawable;
 import com.github.eaksi.stactics.engine.gfx.Entity;
 import com.github.eaksi.stactics.engine.gfx.Entity.Direction;
 import com.github.eaksi.stactics.engine.gfx.FontLoader;
@@ -20,7 +19,7 @@ import com.github.eaksi.stactics.engine.gfx.Tile;
 
 public class SolGDX extends ApplicationAdapter {
 	
-	boolean debugFlag = false;		// ****DEBUG****
+	boolean debug = true;		// ****DEBUG****
 	boolean drawOrderFlag = false;	// draw order debug
 	private int drawOrder = 0;
 	
@@ -100,11 +99,17 @@ public class SolGDX extends ApplicationAdapter {
         
 		// initial setup of entity locations, read tileX&Y, set isoX&Y
 		setEntityLocations();
+		
+		// initialize painter's algorithm (make Drawable objects, sort)
+		initializePainter();
         
-		// print the battlemap width and height and w/h difference (negative = more width than height) 
-        /*System.out.println("battleMap.getWidth() = " + battleMap.getWidth() + "  battleMap.getHeight() = " + battleMap.getHeight() + 
-        		"  difference = " + (battleMap.getWidth()-battleMap.getHeight()));
-        */
+		// print the BattleMap width and height and w/h difference (negative = more width than height) 
+        if (debug) {
+        	System.out.println("battleMap.getWidth() = " + battleMap.getWidth() + "  battleMap.getHeight() = " +
+        			battleMap.getHeight() + "  difference = " + (battleMap.getWidth()-battleMap.getHeight()));
+        }
+        	
+        
 	}
 
 	
@@ -139,23 +144,6 @@ public class SolGDX extends ApplicationAdapter {
 		moveCreature(); 		// XXX: temp character turn-based keyboard movement
 	}
 
-	private void initializePainter() {
-		
-		painter = new Vector<Drawable>();
-		
-		for (int i = 0; i < battleMap.getWidth(); i++) {
-			for (int j = 0; j < battleMap.getHeight(); j++) {
-				if (battleMap.getTile(i,j) == 0 ) {
-					painter.add((Draw   able)new Tile(getIsoX(j,i), getIsoY(j,i), true));	
-				} else {
-					for (int k = -1; k < battleMap.getTile(i,j); k++) {	// TODO: temp, change to working wall graphics
-						batch.draw(tempTile, getIsoX(j,i), getIsoY(j,i)+k*16+16);
-					}
-					//batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+(battleMap.getTile(i,j)*16)));
-				}
-			}
-		}
-	}
 	
 	private void setEntityLocations()
 	{
@@ -165,6 +153,32 @@ public class SolGDX extends ApplicationAdapter {
 	        e.isoY = getIsoY(e.tileY, e.tileX) + 36; //XXX: sprite/tile sizes hack
 		}
 	}
+	
+	private void initializePainter() {
+		
+		painter = new Vector<Drawable>();
+		Tile tile;
+		
+		for (int i = 0; i < battleMap.getWidth(); i++) {
+			for (int j = 0; j < battleMap.getHeight(); j++) {
+				if (battleMap.getTile(i,j) == 0 ) {
+					tile = new Tile(getIsoX(j,i), getIsoY(j,i), getIsoY(j,i), true);
+					painter.add((Drawable)tile);
+					if (debug) System.out.println("draw tile: (" + tile.isoX + "," + tile.isoY + ") z-depth: " + tile.getZ() +
+							" height: " + battleMap.getTile(i,j) + " water: "+tile.isWater());
+				} else {
+					for (int k = -1; k < battleMap.getTile(i,j); k++) {	// TODO: temp, change to working wall graphics
+						tile = new Tile(getIsoX(j,i), getIsoY(j,i)+k*16+16, getIsoY(j,i), false);
+						painter.add((Drawable)tile);
+						if (debug) System.out.println("draw tile: (" + tile.isoX + "," + tile.isoY + ") z-depth: " + tile.getZ() +
+								" height: " + k + " water: "+tile.isWater());
+					}
+					//batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+(battleMap.getTile(i,j)*16)));
+				}
+			}
+		}
+	}
+
 	// check if creature can move to a tile, this fires only once per move
 	void setMoveDirection(Direction d) {
 
@@ -305,7 +319,7 @@ public class SolGDX extends ApplicationAdapter {
 		drawCharacter(entities.get(2));
 	
     	// Draw BattleMap coordinates over tiles
-    	if (debugFlag) {
+    	if (debug) {
     		smallFont.setColor(0f, 0f, 0f, 1f);
         	for (int i = 0; i < battleMap.getWidth(); i++) {
             	for (int j = 0; j < battleMap.getHeight(); j++) {
@@ -350,7 +364,7 @@ public class SolGDX extends ApplicationAdapter {
 		}
     	    	
     	// Draw BattleMap coordinates over tiles
-    	if (debugFlag) {
+    	if (debug) {
     		smallFont.setColor(0f, 0f, 0f, 1f);
         	for (int i = 0; i < battleMap.getWidth(); i++) {
             	for (int j = 0; j < battleMap.getHeight(); j++) {

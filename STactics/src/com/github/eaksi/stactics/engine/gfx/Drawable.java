@@ -11,15 +11,18 @@ public class Drawable {
 
 	public int isoX, isoY;		// used by graphics engine
 	public int tileX, tileY;	// used by AI, graphics engine
-	public int height;			// TODO: not used for anything yet
-	
+	public int z;			// TODO: not used for anything yet
+
+
+
 	public Drawable() {
 		id = ++runningId;	// generates unique id
 		
 	}
 
 
-	public int getId() {
-		return id;
-	}
+	public int getId()		 { return id; }
+
+	public int getZ()		 { return z; }
+	public void setZ(int z)	 { this.z = z; }
 }

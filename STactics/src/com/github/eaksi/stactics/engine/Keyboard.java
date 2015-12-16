@@ -24,7 +24,7 @@ public class Keyboard {
 		}
 		
 		// Toggle debug mode
-		if (Gdx.input.isKeyJustPressed(Keys.NUM_0))	sol.debugFlag = !sol.debugFlag;
+		if (Gdx.input.isKeyJustPressed(Keys.NUM_0))	sol.debug = !sol.debug;
 		if (Gdx.input.isKeyJustPressed(Keys.NUM_9)) sol.drawOrderFlag = !sol.drawOrderFlag;
 		
         // Rotating the camera (disabled)    

@@ -4,10 +4,12 @@ public class Tile extends Drawable {
 	
 	private boolean water;
 	
-	public Tile(int x, int y, boolean w) {
+	public Tile(int x, int y, int depth, boolean w) {
 		this.isoX = x;
 		this.isoY = y;
+		this.z = depth;
 		this.water = w;
+		
 	}
 	
 	public boolean isWater() {
