@@ -159,6 +159,7 @@ public class SolGDX extends ApplicationAdapter {
 		painter = new Vector<Drawable>();
 		Tile tile;
 		
+		// add tiles
 		for (int i = 0; i < battleMap.getWidth(); i++) {
 			for (int j = 0; j < battleMap.getHeight(); j++) {
 				if (battleMap.getTile(i,j) == 0 ) {
@@ -177,6 +178,15 @@ public class SolGDX extends ApplicationAdapter {
 				}
 			}
 		}
+		
+		// add characters
+		for (Entity e: entities) {
+			e.setZ(e.isoY);
+			painter.add(e);
+		}
+		
+		//FIXME: sorting goes here!
+		
 	}
 
 	// check if creature can move to a tile, this fires only once per move
@@ -294,9 +304,31 @@ public class SolGDX extends ApplicationAdapter {
     // TODO: Draw everything
     private void drawIsometric() {
 
+    	//FIXME: sorting goes here!
+    	
 		drawOrder = 0;
 		smallFont.setColor(0f, 0f, 0f, 1f);
 		
+		for (Drawable d: painter) {
+			if (d instanceof Tile) {
+				if (((Tile)d).isWater()) {
+					batch.draw(tempTile0, d.isoX, d.isoY);
+				} else {
+					batch.draw(tempTile, d.isoX, d.isoY);
+				}
+
+				/*if (drawOrderFlag) {
+					smallFont.draw(batch, ""+drawOrder, d.isoX+25, d.isoY);
+				}*/
+				
+			} else if (d instanceof Entity) {
+				drawCharacter((Entity)d);
+			} else {
+				System.err.println("ERROR: unknown class in Vector<Drawable> painter");
+			}
+		}
+		
+		/*
 		for (int i = 0; i < battleMap.getWidth(); i++) {
 			for (int j = 0; j < battleMap.getHeight(); j++) {
 				drawOrder++;
@@ -317,7 +349,7 @@ public class SolGDX extends ApplicationAdapter {
 		drawCharacter(entities.get(0));
 		drawCharacter(entities.get(1));
 		drawCharacter(entities.get(2));
-	
+	*/
     	// Draw BattleMap coordinates over tiles
     	if (debug) {
     		smallFont.setColor(0f, 0f, 0f, 1f);
@@ -327,7 +359,14 @@ public class SolGDX extends ApplicationAdapter {
            		}
         	}
     	}
-    	
+    	if (drawOrderFlag) {
+			for (Drawable d: painter) {
+				drawOrder++;
+				if (d instanceof Tile) {
+					smallFont.draw(batch, ""+drawOrder, d.isoX+25, d.isoY+32);
+				}
+			}
+    	}
     	/*if (drawOrderFlag) {
     		smallFont.setColor(0f, 0f, 0f, 1f);
         	for (int i = 0; i < battleMap.getWidth(); i++) {
