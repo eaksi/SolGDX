@@ -168,13 +168,15 @@ public class SolGDX extends ApplicationAdapter {
 					if (debug) System.out.println("draw tile: (" + tile.isoX + "," + tile.isoY + ") z-depth: " + tile.getZ() +
 							" height: " + battleMap.getTile(i,j) + " water: "+tile.isWater());
 				} else {
-					for (int k = -1; k < battleMap.getTile(i,j); k++) {	// TODO: temp, change to working wall graphics
+					
+					tile = new Tile(getIsoX(j,i), getIsoY(j,i)+battleMap.getTile(i,j)*16, getIsoY(j,i), false);
+					painter.add((Drawable)tile);
+					/*for (int k = -1; k < battleMap.getTile(i,j); k++) {	// TODO: temp, change to working wall graphics
 						tile = new Tile(getIsoX(j,i), getIsoY(j,i)+k*16+16, getIsoY(j,i), false);
 						painter.add((Drawable)tile);
 						if (debug) System.out.println("draw tile: (" + tile.isoX + "," + tile.isoY + ") z-depth: " + tile.getZ() +
 								" height: " + k + " water: "+tile.isWater());
-					}
-					//batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+(battleMap.getTile(i,j)*16)));
+					}*/
 				}
 			}
 		}
