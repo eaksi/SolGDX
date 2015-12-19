@@ -1,5 +1,7 @@
 package com.github.eaksi.stactics.engine;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Vector;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -129,8 +131,6 @@ public class SolGDX extends ApplicationAdapter {
 		// draw everything
 		batch.begin();
 		drawIsometric();
-		//drawTiles();
-	    //drawCharacters();
 	    camera.updateZoom();	 //TODO: move
 	    batch.end();  
 
@@ -163,13 +163,12 @@ public class SolGDX extends ApplicationAdapter {
 		for (int i = 0; i < battleMap.getWidth(); i++) {
 			for (int j = 0; j < battleMap.getHeight(); j++) {
 				if (battleMap.getTile(i,j) == 0 ) {
-					tile = new Tile(getIsoX(j,i), getIsoY(j,i), getIsoY(j,i), true);
+					tile = new Tile(i, j, getIsoX(j,i), getIsoY(j,i), getIsoY(j,i), true);
 					painter.add((Drawable)tile);
-					if (debug) System.out.println("draw tile: (" + tile.isoX + "," + tile.isoY + ") z-depth: " + tile.getZ() +
-							" height: " + battleMap.getTile(i,j) + " water: "+tile.isWater());
+					
 				} else {
 					
-					tile = new Tile(getIsoX(j,i), getIsoY(j,i)+battleMap.getTile(i,j)*16, getIsoY(j,i), false);
+					tile = new Tile(i, j, getIsoX(j,i), getIsoY(j,i)+battleMap.getTile(i,j)*16, getIsoY(j,i), false);
 					painter.add((Drawable)tile);
 					/*for (int k = -1; k < battleMap.getTile(i,j); k++) {	// TODO: temp, change to working wall graphics
 						tile = new Tile(getIsoX(j,i), getIsoY(j,i)+k*16+16, getIsoY(j,i), false);
@@ -178,6 +177,9 @@ public class SolGDX extends ApplicationAdapter {
 								" height: " + k + " water: "+tile.isWater());
 					}*/
 				}
+				//debug
+				if (debug) System.out.println("draw tile: (" + tile.tileX + "," + tile.tileY + ") z-depth: " + tile.getZ() +
+						" height: " + battleMap.getTile(i,j) + " water: "+tile.isWater());
 			}
 		}
 		
@@ -188,6 +190,7 @@ public class SolGDX extends ApplicationAdapter {
 		}
 		
 		//FIXME: sorting goes here!
+		Collections.sort((List<Drawable>) painter, Collections.reverseOrder());
 		
 	}
 
@@ -379,53 +382,7 @@ public class SolGDX extends ApplicationAdapter {
     	}*/
     }
     
-    
-    
-	// Draw the tile map
-	private void drawTiles() {
-
-		drawOrder = 0;
-		smallFont.setColor(0f, 0f, 0f, 1f);
-		
-		for (int i = 0; i < battleMap.getWidth(); i++) {
-			for (int j = 0; j < battleMap.getHeight(); j++) {
-				drawOrder++;
-				if (battleMap.getTile(i,j) == 0 ) {
-					batch.draw(tempTile0, getIsoX(j,i), getIsoY(j,i));	
-				} else {
-					for (int k = -1; k < battleMap.getTile(i,j); k++) {	// TODO: temp, change to working wall graphics
-						batch.draw(tempTile, getIsoX(j,i), getIsoY(j,i)+k*16+16);
-					}
-					//batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+(battleMap.getTile(i,j)*16)));
-				}
-				if (drawOrderFlag) {
-					smallFont.draw(batch, ""+drawOrder, getIsoX(j,i)+25, (getIsoY(j,i)+(battleMap.getTile(i,j)*16+36)));
-				}
-			}
-		}
-    	    	
-    	// Draw BattleMap coordinates over tiles
-    	if (debug) {
-    		smallFont.setColor(0f, 0f, 0f, 1f);
-        	for (int i = 0; i < battleMap.getWidth(); i++) {
-            	for (int j = 0; j < battleMap.getHeight(); j++) {
-        				smallFont.draw(batch, i+","+j, getIsoX(j,i)+25, (getIsoY(j,i)+(battleMap.getTile(i,j)*16+36)));	
-           		}
-        	}
-    	}
-    	
-    	/*if (drawOrderFlag) {
-    		smallFont.setColor(0f, 0f, 0f, 1f);
-        	for (int i = 0; i < battleMap.getWidth(); i++) {
-            	for (int j = 0; j < battleMap.getHeight(); j++) {
-        				smallFont.draw(batch, ""+drawOrder, getIsoX(j,i)+25, (getIsoY(j,i)+(battleMap.getTile(i,j)*16+36)));	
-           		}
-        	}
-    	}*/
-    }
-	
-	
-    // FIXME: this whole method
+     // FIXME: this whole method
     private void drawCharacter(Entity e) {
 		    	
     	if (e.animFrame == 3 || e.animFrame == 11) { // XXX: temp simulate movement

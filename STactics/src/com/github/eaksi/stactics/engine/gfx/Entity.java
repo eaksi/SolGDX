@@ -40,7 +40,7 @@ public class Entity extends Drawable {
 		animFrame = -1;
 		heading = Direction.NE;
 		
-		tileX = 1;
+		tileX = 0;
 		tileY = 0;
 		
 	}

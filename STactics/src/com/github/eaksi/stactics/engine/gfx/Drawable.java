@@ -3,7 +3,7 @@ package com.github.eaksi.stactics.engine.gfx;
 /*
  * 	All drawables in isometric engine inherit this class
  */
-public class Drawable {
+public class Drawable implements Comparable<Drawable>{
 	
 	private static int runningId = 0;
 	
@@ -25,4 +25,10 @@ public class Drawable {
 
 	public int getZ()		 { return z; }
 	public void setZ(int z)	 { this.z = z; }
+
+
+	@Override
+	public int compareTo(Drawable d) {
+		return (Integer.valueOf(z)).compareTo(Integer.valueOf(d.getZ()));
+	}
 }
