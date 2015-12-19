@@ -185,7 +185,8 @@ public class SolGDX extends ApplicationAdapter {
 		
 		// add characters
 		for (Entity e: entities) {
-			e.setZ(e.isoY);
+			//FIXME: z position guessed (but tested, need frame by frame analysis, height changes testing and gfx)
+			e.setZ(e.isoY-42);
 			painter.add(e);
 		}
 		
@@ -256,24 +257,28 @@ public class SolGDX extends ApplicationAdapter {
 		    	entities.get(nr).isoX += 2;
 		    	camera.moveRight(2);
 		    	entities.get(nr).isoY += 1;
+		    	entities.get(nr).z += 1;
 		    	camera.moveUp(1);
 				break;
 			case SE:
 		    	entities.get(nr).isoX += 2;
 		    	camera.moveRight(2);
 		    	entities.get(nr).isoY -= 1;
+		    	entities.get(nr).z -= 1;
 		    	camera.moveDown(1);
 				break;
 			case SW:
 		    	entities.get(nr).isoX -= 2;
 		    	camera.moveLeft(2);
 		    	entities.get(nr).isoY -= 1;
+		    	entities.get(nr).z -= 1;
 		    	camera.moveDown(1);
 				break;
 			case NW:
 		    	entities.get(nr).isoX -= 2;
 		    	camera.moveLeft(2);
 		    	entities.get(nr).isoY += 1;
+		    	entities.get(nr).z += 1;
 		    	camera.moveUp(1);
 				break;
 			default:
@@ -309,7 +314,10 @@ public class SolGDX extends ApplicationAdapter {
     // TODO: Draw everything
     private void drawIsometric() {
 
-    	//FIXME: sorting goes here!
+    	// sort everything (again)
+    	// TODO: sorting optimization
+    	
+    	Collections.sort((List<Drawable>) painter, Collections.reverseOrder());
     	
 		drawOrder = 0;
 		smallFont.setColor(0f, 0f, 0f, 1f);
@@ -367,9 +375,9 @@ public class SolGDX extends ApplicationAdapter {
     	if (drawOrderFlag) {
 			for (Drawable d: painter) {
 				drawOrder++;
-				if (d instanceof Tile) {
-					smallFont.draw(batch, ""+drawOrder, d.isoX+25, d.isoY+32);
-				}
+				//if (d instanceof Tile) {
+					smallFont.draw(batch, ""+drawOrder, d.isoX+24, d.isoY+36);
+				//}
 			}
     	}
     	/*if (drawOrderFlag) {

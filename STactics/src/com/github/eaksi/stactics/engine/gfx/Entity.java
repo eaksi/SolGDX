@@ -68,7 +68,8 @@ public class Entity extends Drawable {
 	public String getAnimString() {
 		return currentAnimation.toString();
 	}
-		
+
+	
 	// getters and setters
 	/*public int getIsoX() {return isoX;}
 	public void setIsoX(int isoX) {this.isoX = isoX;}

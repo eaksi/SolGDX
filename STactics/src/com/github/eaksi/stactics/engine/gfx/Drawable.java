@@ -11,7 +11,7 @@ public class Drawable implements Comparable<Drawable>{
 
 	public int isoX, isoY;		// used by graphics engine
 	public int tileX, tileY;	// used by AI, graphics engine
-	public int z;			// TODO: not used for anything yet
+	public int z;				// for draw order
 
 
 
