@@ -7,6 +7,8 @@ import com.badlogic.gdx.utils.Align;
 public class GUI {		//FIXME: refactor!!!
     
 	private GlyphLayout layout = new GlyphLayout();	// XXX: temp
+	private static int leftDebugY = 0;
+	private static int rightDebugY = 0;
 	
 	protected static void draw(SolGDX sol, SpriteBatch guiBatch) {
       
@@ -15,18 +17,23 @@ public class GUI {		//FIXME: refactor!!!
      	
      	// debug info
     	if (sol.debug) {
+    		leftDebugY = 0;
+    		rightDebugY = 0;
+    		
     		sol.smallFont.setColor(0f, 0f, 0f, 1f);
     		
-    		sol.smallFont.draw(guiBatch, "creature id: "+ sol.entities.get(sol.nr).cr.getId(), 10, sol.screenHeight-15, sol.screenWidth-150, Align.right, true);
-    		sol.smallFont.draw(guiBatch, "entity id: "+ sol.entities.get(sol.nr).getId(), 10, sol.screenHeight-30, sol.screenWidth-150, Align.right, true);
+    		// left side of debug 
+    		debugDraw(sol, guiBatch, "creature id: "+ sol.entities.get(sol.nr).cr.getId(), true);
+    		debugDraw(sol, guiBatch, "entity id: "+ sol.entities.get(sol.nr).getId(), true);
     		
-    		sol.smallFont.draw(guiBatch, "framesLeft: "+ sol.entities.get(sol.nr).getFramesLeft(), 10, sol.screenHeight-15, sol.screenWidth-20, Align.right, true);
-    		sol.smallFont.draw(guiBatch, "animation: "+ sol.entities.get(sol.nr).getAnimString(), 10, sol.screenHeight-30, sol.screenWidth-20, Align.right, true);
-    		sol.smallFont.draw(guiBatch, "heading: "+ sol.entities.get(sol.nr).getHeading(), 10, sol.screenHeight-45, sol.screenWidth-20, Align.right, true);
-    		sol.smallFont.draw(guiBatch, "entity.isoX: "+sol.entities.get(sol.nr).isoX, 10, sol.screenHeight-60, sol.screenWidth-20, Align.right, true);
-    		sol.smallFont.draw(guiBatch, "entity.isoY: "+sol.entities.get(sol.nr).isoY, 10, sol.screenHeight-75, sol.screenWidth-20, Align.right, true);
-    		sol.smallFont.draw(guiBatch, "entity.tileX: "+sol.entities.get(sol.nr).tileX, 10, sol.screenHeight-90, sol.screenWidth-20, Align.right, true);
-    		sol.smallFont.draw(guiBatch, "entity.tileY: "+sol.entities.get(sol.nr).tileY, 10, sol.screenHeight-105, sol.screenWidth-20, Align.right, true);
+    		// right side of debug
+    		debugDraw(sol, guiBatch, "framesLeft: "+ sol.entities.get(sol.nr).getFramesLeft() , false);
+    		debugDraw(sol, guiBatch, "animation: "+ sol.entities.get(sol.nr).getAnimString() , false);
+    		debugDraw(sol, guiBatch, "heading: "+ sol.entities.get(sol.nr).getHeading() , false);
+    		debugDraw(sol, guiBatch, "entity.isoX: "+sol.entities.get(sol.nr).isoX , false);
+    		debugDraw(sol, guiBatch, "entity.isoY: "+sol.entities.get(sol.nr).isoY , false);
+    		debugDraw(sol, guiBatch, "entity.tileX: "+sol.entities.get(sol.nr).tileX , false);
+    		debugDraw(sol, guiBatch, "entity.tileY: "+sol.entities.get(sol.nr).tileY , false);
 
     	} else {
     		sol.smallFont.setColor(0f, 0f, 0f, 1f);
@@ -35,9 +42,18 @@ public class GUI {		//FIXME: refactor!!!
 
     	//layout.setText(font, "layout test");
     	//font.draw(guiBatch, layout, 200 + layout.width / 3, 200 + layout.height / 3);
-
-
     }
 
+	private static void debugDraw(SolGDX sol, SpriteBatch guiBatch, String text, boolean leftAlign) {
+		if (leftAlign) {
+			leftDebugY += 15;
+			sol.smallFont.draw(guiBatch, text, 10, sol.screenHeight-leftDebugY, sol.screenWidth-150, Align.right, true);
+		} else {
+			rightDebugY += 15;
+			sol.smallFont.draw(guiBatch, text, 10, sol.screenHeight-rightDebugY, sol.screenWidth-20, Align.right, true);
+		}
+		 
+	}
+	
 }
 

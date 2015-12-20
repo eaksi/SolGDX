@@ -110,7 +110,6 @@ public class SolGDX extends ApplicationAdapter {
         	System.out.println("battleMap.getWidth() = " + battleMap.getWidth() + "  battleMap.getHeight() = " +
         			battleMap.getHeight() + "  difference = " + (battleMap.getWidth()-battleMap.getHeight()));
         }
-        	
         
 	}
 
@@ -164,19 +163,12 @@ public class SolGDX extends ApplicationAdapter {
 			for (int j = 0; j < battleMap.getHeight(); j++) {
 				if (battleMap.getTile(i,j) == 0 ) {
 					tile = new Tile(i, j, getIsoX(j,i), getIsoY(j,i), getIsoY(j,i), true);
-					painter.add((Drawable)tile);
-					
 				} else {
-					
 					tile = new Tile(i, j, getIsoX(j,i), getIsoY(j,i)+battleMap.getTile(i,j)*16, getIsoY(j,i), false);
-					painter.add((Drawable)tile);
-					/*for (int k = -1; k < battleMap.getTile(i,j); k++) {	// TODO: temp, change to working wall graphics
-						tile = new Tile(getIsoX(j,i), getIsoY(j,i)+k*16+16, getIsoY(j,i), false);
-						painter.add((Drawable)tile);
-						if (debug) System.out.println("draw tile: (" + tile.isoX + "," + tile.isoY + ") z-depth: " + tile.getZ() +
-								" height: " + k + " water: "+tile.isWater());
-					}*/
 				}
+				
+				painter.add((Drawable)tile);
+				
 				//debug
 				if (debug) System.out.println("draw tile: (" + tile.tileX + "," + tile.tileY + ") z-depth: " + tile.getZ() +
 						" height: " + battleMap.getTile(i,j) + " water: "+tile.isWater());
@@ -190,7 +182,7 @@ public class SolGDX extends ApplicationAdapter {
 			painter.add(e);
 		}
 		
-		//FIXME: sorting goes here!
+		// initial sorting
 		Collections.sort((List<Drawable>) painter, Collections.reverseOrder());
 		
 	}
@@ -341,28 +333,6 @@ public class SolGDX extends ApplicationAdapter {
 			}
 		}
 		
-		/*
-		for (int i = 0; i < battleMap.getWidth(); i++) {
-			for (int j = 0; j < battleMap.getHeight(); j++) {
-				drawOrder++;
-				if (battleMap.getTile(i,j) == 0 ) {
-					batch.draw(tempTile0, getIsoX(j,i), getIsoY(j,i));	
-				} else {
-					for (int k = -1; k < battleMap.getTile(i,j); k++) {	// TODO: temp, change to working wall graphics
-						batch.draw(tempTile, getIsoX(j,i), getIsoY(j,i)+k*16+16);
-					}
-					//batch.draw(tempTile, getIsoX(j,i), (getIsoY(j,i)+(battleMap.getTile(i,j)*16)));
-				}
-				if (drawOrderFlag) {
-					smallFont.draw(batch, ""+drawOrder, getIsoX(j,i)+25, (getIsoY(j,i)+(battleMap.getTile(i,j)*16+36)));
-				}
-			}
-		}
-
-		drawCharacter(entities.get(0));
-		drawCharacter(entities.get(1));
-		drawCharacter(entities.get(2));
-	*/
     	// Draw BattleMap coordinates over tiles
     	if (debug) {
     		smallFont.setColor(0f, 0f, 0f, 1f);
@@ -372,22 +342,13 @@ public class SolGDX extends ApplicationAdapter {
            		}
         	}
     	}
+    	
     	if (drawOrderFlag) {
 			for (Drawable d: painter) {
 				drawOrder++;
-				//if (d instanceof Tile) {
 					smallFont.draw(batch, ""+drawOrder, d.isoX+24, d.isoY+36);
-				//}
 			}
     	}
-    	/*if (drawOrderFlag) {
-    		smallFont.setColor(0f, 0f, 0f, 1f);
-        	for (int i = 0; i < battleMap.getWidth(); i++) {
-            	for (int j = 0; j < battleMap.getHeight(); j++) {
-        				smallFont.draw(batch, ""+drawOrder, getIsoX(j,i)+25, (getIsoY(j,i)+(battleMap.getTile(i,j)*16+36)));	
-           		}
-        	}
-    	}*/
     }
     
      // FIXME: this whole method
