@@ -21,9 +21,9 @@ import com.github.eaksi.stactics.engine.gfx.Tile;
 
 public class SolGDX extends ApplicationAdapter {
 	
-	boolean debug = true;								// ****DEBUG****
+	boolean debug = false;								// ****DEBUG****
 	boolean drawOrderFlag = false;						// draw order debug
-	private boolean cameraFollowsCharacter = true;		// set camera to move with character
+	private boolean cameraFollowsCharacter = false;		// set camera to move with character
 	private int drawOrder = 0;
 	
 	Camera camera;
@@ -44,8 +44,6 @@ public class SolGDX extends ApplicationAdapter {
 	
 	boolean chAnimating = false;				// temp: is the engine animating movement, move keys disabled  
 
-	
-	
 	private int tileWidth = 64;
 	private int tileHeight = 32;
 	private int tileWidthHalf = tileWidth / 2; 		// slight optimization
@@ -232,7 +230,7 @@ public class SolGDX extends ApplicationAdapter {
 		for (Entity e: entities) {
 			if (entities.get(nr).tileX + tryX  == e.tileX  &&  entities.get(nr).tileY + tryY == e.tileY) {
 				canMove = false;
-				printMoveDebug("Can't move ("+ e.cr.getId() + ": " + e.cr.getName() + " is in the way: " +
+				printMoveDebug("Can't move, " + e.cr.getName() + " (id:"+ e.cr.getId() + ") is in the way: " +
 						entities.get(nr).getHeading(), tryX, tryY);
 				return; 	// NOTE!: "return;" here
 			}
@@ -294,8 +292,10 @@ public class SolGDX extends ApplicationAdapter {
 	    	entities.get(nr).isoY += modY;
 	    	entities.get(nr).z += modZ;
 	    	
-	    	camera.moveHorizontal(modX);
-	    	camera.moveVertical(modY);
+	    	if (cameraFollowsCharacter) {
+	    		camera.moveHorizontal(modX);
+	    		camera.moveVertical(modY);
+	    	}
 			
 			entities.get(nr).animFrame++;
 			
@@ -448,11 +448,11 @@ public class SolGDX extends ApplicationAdapter {
 		batch.dispose();
 		guiBatch.dispose();
 		tempTile.dispose();
+		tempTile0.dispose();
 		spriteSheet.dispose();
+		
 		font.dispose();
 		smallFont.dispose();
 	}
-
-
 	
-}
+} // end class SolGDX
