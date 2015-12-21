@@ -34,7 +34,7 @@ public class Entity extends Drawable {
 	public Entity(Creature creat) {
 		
 		super();
-		cr = creat;
+		this.cr = creat;
 		
 		currentAnimation = Animation.IDLE;
 		animFrame = -1;

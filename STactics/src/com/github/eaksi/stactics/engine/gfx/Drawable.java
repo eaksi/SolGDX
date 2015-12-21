@@ -17,7 +17,6 @@ public class Drawable implements Comparable<Drawable>{
 
 	public Drawable() {
 		id = ++runningId;	// generates unique id
-		
 	}
 
 

@@ -5,6 +5,8 @@ import java.util.Vector;
 
 public class Creature {
 	
+	private static int runningId = 0;
+	
 	private int id;
 	
 	private String name;
@@ -21,8 +23,8 @@ public class Creature {
 	
 	public Creature() {
 		
+		id = ++runningId;	// generates unique id
 		skills = new Hashtable<Integer,Integer>();
-		id = 1;
 		prefixName = "";
 		name = World.getRandomFName();
 		suffixName = World.getRandomLName();

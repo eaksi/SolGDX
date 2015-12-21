@@ -63,13 +63,12 @@ public class SolGDX extends ApplicationAdapter {
 	public void create () {
 
 		battleMap = new BattleMap();
-		creature = new Creature();	// kind of a redundant line, but trying to prevent a future bug
 		entities = new Vector<Entity>();
-		entities.add(new Entity(creature));
+		entities.add(new Entity(new Creature()));
 		
 		/*** XXX: TEMP ***/
-		entities.add(new Entity(creature));
-		entities.add(new Entity(creature));
+		entities.add(new Entity(new Creature()));
+		entities.add(new Entity(new Creature()));
 		System.out.println("Entity0 id: "+entities.get(0).getId());
 		System.out.println("Entity1 id: "+entities.get(1).getId());
 		System.out.println("Entity2 id: "+entities.get(2).getId());
@@ -77,7 +76,13 @@ public class SolGDX extends ApplicationAdapter {
 		entities.get(1).tileY = 5;
 		entities.get(2).tileX = 6;
 		entities.get(2).tileY = 4;
+		System.out.println("***ENTITIES***");
+		for (Entity e: entities) {
+			System.out.println(e.cr.getId() + ": " + e.cr.getFullName());
+		}
+		System.out.println("**************");
 		/*****************/
+		
 		
 		// setup camera
 		camera = new Camera(screenWidth, screenHeight);
@@ -200,7 +205,7 @@ public class SolGDX extends ApplicationAdapter {
 		entities.get(nr).setHeading(d);
 		
 		switch (entities.get(nr).getHeading()) {
-		case NE:
+		case NE: 
 			tryX = -1;
 			break;
 		case SE:
@@ -218,16 +223,28 @@ public class SolGDX extends ApplicationAdapter {
 		
 		if (battleMap.getTile((entities.get(nr).tileX + tryX), entities.get(nr).tileY + tryY) == 1) {
 			canMove = true;
-			printMoveDebug("" + entities.get(nr).getHeading(), tryX, tryY);
-			entities.get(nr).tileX += tryX;
-			entities.get(nr).tileY += tryY;
+		} else {
+			canMove = false;
+			printMoveDebug("Can't move (terrain): " + entities.get(nr).getHeading(), tryX, tryY);
+			return;		// NOTE!: "return;" here
+		}
+		
+		for (Entity e: entities) {
+			if (entities.get(nr).tileX + tryX  == e.tileX  &&  entities.get(nr).tileY + tryY == e.tileY) {
+				canMove = false;
+				printMoveDebug("Can't move ("+ e.cr.getId() + ": " + e.cr.getName() + " is in the way: " +
+						entities.get(nr).getHeading(), tryX, tryY);
+				return; 	// NOTE!: "return;" here
+			}
 		}
 		
 		
-		
-
-		// if everything okay, set movement in motion 
 		if (canMove) {
+			printMoveDebug("" + entities.get(nr).getHeading(), tryX, tryY);
+			entities.get(nr).tileX += tryX;
+			entities.get(nr).tileY += tryY;
+			
+			// if everything okay, set movement in motion 
     		entities.get(nr).animFrame = 0;
     		entities.get(nr).setAnimation(Entity.Animation.WALK);
     		chAnimating = true;
@@ -279,43 +296,6 @@ public class SolGDX extends ApplicationAdapter {
 	    	
 	    	camera.moveHorizontal(modX);
 	    	camera.moveVertical(modY);
-			
-			
-			
-		/*	
-		if (chAnimating) {
-			switch (entities.get(nr).getHeading()) {
-			case NE:
-		    	entities.get(nr).isoX += 2;
-		    	camera.moveRight(2);
-		    	entities.get(nr).isoY += 1;
-		    	entities.get(nr).z += 1;
-		    	camera.moveUp(1);
-				break;
-			case SE:
-		    	entities.get(nr).isoX += 2;
-		    	camera.moveRight(2);
-		    	entities.get(nr).isoY -= 1;
-		    	entities.get(nr).z -= 1;
-		    	camera.moveDown(1);
-				break;
-			case SW:
-		    	entities.get(nr).isoX -= 2;
-		    	camera.moveLeft(2);
-		    	entities.get(nr).isoY -= 1;
-		    	entities.get(nr).z -= 1;
-		    	camera.moveDown(1);
-				break;
-			case NW:
-		    	entities.get(nr).isoX -= 2;
-		    	camera.moveLeft(2);
-		    	entities.get(nr).isoY += 1;
-		    	entities.get(nr).z += 1;
-		    	camera.moveUp(1);
-				break;
-			default:
-				break;
-			} 	*/
 			
 			entities.get(nr).animFrame++;
 			
