@@ -21,8 +21,9 @@ import com.github.eaksi.stactics.engine.gfx.Tile;
 
 public class SolGDX extends ApplicationAdapter {
 	
-	boolean debug = true;		// ****DEBUG****
-	boolean drawOrderFlag = false;	// draw order debug
+	boolean debug = true;								// ****DEBUG****
+	boolean drawOrderFlag = false;						// draw order debug
+	private boolean cameraFollowsCharacter = true;		// set camera to move with character
 	private int drawOrder = 0;
 	
 	Camera camera;
@@ -42,6 +43,8 @@ public class SolGDX extends ApplicationAdapter {
 	final int screenHeight = 600;
 	
 	boolean chAnimating = false;				// temp: is the engine animating movement, move keys disabled  
+
+	
 	
 	private int tileWidth = 64;
 	private int tileHeight = 32;
@@ -191,46 +194,43 @@ public class SolGDX extends ApplicationAdapter {
 	void setMoveDirection(Direction d) {
 
 		boolean canMove = false;
+		int tryX = 0;
+		int tryY = 0;
+
 		entities.get(nr).setHeading(d);
 		
 		switch (entities.get(nr).getHeading()) {
 		case NE:
-			if (battleMap.getTile((entities.get(nr).tileX-1), entities.get(nr).tileY) == 1) {
-				canMove = true;
-				printMoveDebug("NE (-x)", -1, 0);
-				entities.get(nr).tileX--;
-			}
+			tryX = -1;
 			break;
 		case SE:
-			if (battleMap.getTile(entities.get(nr).tileX, (entities.get(nr).tileY+1)) == 1) {
-				canMove = true;
-				printMoveDebug("SE (+y)", 0, 1);
-				entities.get(nr).tileY++;
-			}
+			tryY = 1;
 			break;
 		case SW:
-			if (battleMap.getTile((entities.get(nr).tileX+1), entities.get(nr).tileY) == 1) {
-				canMove = true;
-				printMoveDebug("SW (+x)", 1, 0);
-				entities.get(nr).tileX++;
-			}
+			tryX = 1;
 			break;
 		case NW:
-			if (battleMap.getTile(entities.get(nr).tileX, (entities.get(nr).tileY-1)) == 1) {
-				canMove = true;
-				printMoveDebug("NW (-y)", 0, -1);
-				entities.get(nr).tileY--;
-			}
+			tryY = -1;
 			break;
 		default:
 			break;
 		}
 		
+		if (battleMap.getTile((entities.get(nr).tileX + tryX), entities.get(nr).tileY + tryY) == 1) {
+			canMove = true;
+			printMoveDebug("" + entities.get(nr).getHeading(), tryX, tryY);
+			entities.get(nr).tileX += tryX;
+			entities.get(nr).tileY += tryY;
+		}
+		
+		
+		
+
+		// if everything okay, set movement in motion 
 		if (canMove) {
     		entities.get(nr).animFrame = 0;
     		entities.get(nr).setAnimation(Entity.Animation.WALK);
     		chAnimating = true;
-
 		}
 	}
 
@@ -240,9 +240,49 @@ public class SolGDX extends ApplicationAdapter {
 				(entities.get(nr).tileX + x) + "," + (entities.get(nr).tileY + y) + ")");
 	}
 	
-	//move rectangle/sprite
+	// Moves the character sprite on screen
 	private void moveCreature() {
+
+		int modX = 0;
+		int modY = 0;
+		int modZ = 0;
 		
+		if (chAnimating) {
+			switch (entities.get(nr).getHeading()) {
+			case NE:
+				modX = 2;
+				modY = 1;
+				modZ = 1;
+				break;
+			case SE:
+				modX = 2;
+				modY = -1;
+				modZ = -1;
+				break;
+			case SW:
+				modX = -2;
+				modY = -1;
+				modZ = -1;
+				break;
+			case NW:
+				modX = -2;
+				modY = 1;
+				modZ = 1;
+				break;
+			default:
+				break;
+			}
+
+			entities.get(nr).isoX += modX;
+	    	entities.get(nr).isoY += modY;
+	    	entities.get(nr).z += modZ;
+	    	
+	    	camera.moveHorizontal(modX);
+	    	camera.moveVertical(modY);
+			
+			
+			
+		/*	
 		if (chAnimating) {
 			switch (entities.get(nr).getHeading()) {
 			case NE:
@@ -275,8 +315,8 @@ public class SolGDX extends ApplicationAdapter {
 				break;
 			default:
 				break;
-			}
-
+			} 	*/
+			
 			entities.get(nr).animFrame++;
 			
 			if (entities.get(nr).animFrame >= 16) {
