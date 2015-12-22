@@ -53,5 +53,21 @@ public class Keyboard {
 			return;
 		}
 	    
+		// Change controllable entity id
+		if (Gdx.input.isKeyJustPressed(Keys.PAGE_DOWN)) {
+			if (sol.entities.size() != (sol.nr+1)) {
+				sol.nr++;
+			} else {
+				sol.nr = 0;
+			}
+			return;
+		} else if (Gdx.input.isKeyJustPressed(Keys.PAGE_UP)) {
+			if (sol.nr <= 0) {
+				sol.nr = sol.entities.size()-1;
+			} else {
+				sol.nr--;
+			}
+			return;
+		}
 	}
 }

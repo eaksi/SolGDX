@@ -18,17 +18,14 @@ public class Entity extends Drawable {
 		NE_WALK1, SE_WALK1, SW_WALK1, NW_WALK1,
 		NE_WALK2, SE_WALK2, SW_WALK2, NW_WALK2
 	}
-	
 
 	public Creature cr;		// reference to creature
-	//private int spriteId;
 
 	private Animation currentAnimation;
 	public int animFrame;				// frames left in animation
 	private Direction heading;
 	
 	private int delay;
-	
 	
 	
 	public Entity(Creature creat) {

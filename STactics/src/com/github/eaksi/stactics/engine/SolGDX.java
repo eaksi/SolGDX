@@ -50,8 +50,7 @@ public class SolGDX extends ApplicationAdapter {
 	private int tileHeightHalf = tileHeight / 2; 	// slight optimization
 		
 	private BattleMap battleMap;
-	private Creature creature;
-	
+		
 	Vector<Entity> entities;
 	int nr = 0;		// current entity Number
 	
@@ -184,7 +183,7 @@ public class SolGDX extends ApplicationAdapter {
 		// add characters
 		for (Entity e: entities) {
 			//FIXME: z position guessed (but tested, need frame by frame analysis, height changes testing and gfx)
-			e.setZ(e.isoY-42);
+			e.setZ(e.isoY-43);
 			painter.add(e);
 		}
 		
