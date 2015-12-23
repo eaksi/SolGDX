@@ -25,9 +25,6 @@ public class Entity extends Drawable {
 	public int animFrame;				// frames left in animation
 	private Direction heading;
 	
-	private int delay;
-	
-	
 	public Entity(Creature creat) {
 		
 		super();

@@ -12,8 +12,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		
         config.title = "SolTactics";
-        config.width = 800;
-        config.height = 600;
+        config.width = 1024;
+        config.height = 800;
         
         new LwjglApplication(new SolGDX(), config);
 	}

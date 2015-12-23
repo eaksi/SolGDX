@@ -29,25 +29,23 @@ public class SolGDX extends ApplicationAdapter {
 	Camera camera;
 	private SpriteBatch batch;			// primary SpriteBatch for graphics
 	private SpriteBatch guiBatch;		// GUI SpriteBatch, does not move with camera
-	BitmapFont font;					// test font
-	BitmapFont smallFont;				// test font 2
+	BitmapFont font;					// temp test font
+	BitmapFont smallFont;				// temp test font 2
 	
-	private Texture tempTile;			// test tile
-	private Texture tempTile0;			// test water tile
+	private Texture tempTile;			// temp test tile
+	private Texture tempTile0;			// temp test water tile
 	
 	private Texture spriteSheet;
 	private TextureRegion[][] splitSheet;		// sprite sheet divided into regions
 	private TextureRegion[][] flippedSheet;		// same as splitSheet, but regions individually flipped
 	
-	final int screenWidth = 800;				// screen resolution
-	final int screenHeight = 600;
+	final int screenWidth = 1024;				// screen resolution
+	final int screenHeight = 800;
 	
 	boolean chAnimating = false;				// temp: is the engine animating movement, move keys disabled  
 
 	private int tileWidth = 64;
 	private int tileHeight = 32;
-	private int tileWidthHalf = tileWidth / 2; 		// slight optimization
-	private int tileHeightHalf = tileHeight / 2; 	// slight optimization
 		
 	private BattleMap battleMap;
 		
@@ -310,16 +308,13 @@ public class SolGDX extends ApplicationAdapter {
 	
 	// Get the isometric projection coordinate X, given tilemap X and Y as parameters.
     private int getIsoX(int mapx, int mapy) {
-    	return (screenWidth - ((battleMap.getWidth() * 32 - 32) + (mapy - mapx) * tileWidthHalf));
-    	//return (screenWidth - ((battleMap.getWidth() * 32 - 32) + (mapx - mapy) * tileWidthHalf));
-    			
+    	return (screenWidth - ((battleMap.getWidth() * 32 - 32) + (mapy - mapx) * (tileWidth / 2)));
     }
 
     
 	// Get the isometric projection coordinate Y, given tilemap X and Y as parameters.
     private int getIsoY(int mapx, int mapy) {
-    	return (screenHeight - ((battleMap.getHeight() * 16 - 32) + (mapy + mapx) * tileHeightHalf));
-    			
+    	return (screenHeight - ((battleMap.getHeight() * 16 - 32) + (mapy + mapx) * (tileHeight / 2)));
     }
 
     // TODO: Draw everything

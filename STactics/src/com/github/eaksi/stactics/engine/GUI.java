@@ -32,6 +32,7 @@ public class GUI {		//FIXME: refactor!!!
     		debugDraw(sol, guiBatch, "heading: "+ sol.entities.get(sol.nr).getHeading() , false);
     		debugDraw(sol, guiBatch, "entity.isoX: "+sol.entities.get(sol.nr).isoX , false);
     		debugDraw(sol, guiBatch, "entity.isoY: "+sol.entities.get(sol.nr).isoY , false);
+    		debugDraw(sol, guiBatch, "entity.z: "+sol.entities.get(sol.nr).z , false);
     		debugDraw(sol, guiBatch, "entity.tileX: "+sol.entities.get(sol.nr).tileX , false);
     		debugDraw(sol, guiBatch, "entity.tileY: "+sol.entities.get(sol.nr).tileY , false);
 
