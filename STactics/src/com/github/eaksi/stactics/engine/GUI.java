@@ -14,13 +14,15 @@ public class GUI {		//FIXME: refactor!!!
       
     	sol.font.setColor(0.6f, 0.6f, 0.6f, 1f);
     	sol.font.draw(guiBatch, "name: "+ sol.entities.get(sol.nr).cr.getFullName(), 10, sol.screenHeight-10);
-     	
-     	// debug info
-    	if (sol.debug) {
-    		leftDebugY = 0;
-    		rightDebugY = 0;
-    		
-    		sol.smallFont.setColor(0f, 0f, 0f, 1f);
+
+    	leftDebugY = 0;
+		rightDebugY = 0;
+		
+		sol.smallFont.setColor(0f, 0f, 0f, 1f);
+  
+		// debug info
+		if (sol.debug) {
+
     		
     		// left side of debug 
     		debugDraw(sol, guiBatch, "creature id: "+ sol.entities.get(sol.nr).cr.getId(), true);
@@ -37,8 +39,10 @@ public class GUI {		//FIXME: refactor!!!
     		debugDraw(sol, guiBatch, "entity.tileY: "+sol.entities.get(sol.nr).tileY , false);
 
     	} else {
-    		sol.smallFont.setColor(0f, 0f, 0f, 1f);
-    		sol.smallFont.draw(guiBatch, "press '0' for debug mode, '9' for draw order", 10, sol.screenHeight-15, sol.screenWidth-20, Align.right, true);
+    		debugDraw(sol, guiBatch, "Help:", false);
+    		debugDraw(sol, guiBatch, "PGUP & PGDOWN = change entity", false);
+    		debugDraw(sol, guiBatch, "9 = show z draw order", false);
+    		debugDraw(sol, guiBatch, "0 = show debug info", false);
     	}
 
     	//layout.setText(font, "layout test");
