@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -19,7 +20,7 @@ import com.github.eaksi.stactics.engine.gfx.Entity.Direction;
 import com.github.eaksi.stactics.engine.gfx.FontLoader;
 import com.github.eaksi.stactics.engine.gfx.Tile;
 
-public class SolGDX extends ApplicationAdapter {
+public class SolGDX extends ApplicationAdapter implements InputProcessor {
 	
 	boolean debug = false;								// ****DEBUG****
 	boolean drawOrderFlag = false;						// draw order debug
@@ -56,7 +57,7 @@ public class SolGDX extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
-
+		
 		battleMap = new BattleMap();
 		entities = new Vector<Entity>();
 		entities.add(new Entity(new Creature()));
@@ -126,7 +127,7 @@ public class SolGDX extends ApplicationAdapter {
 		
  		camera.update();
 
- 		Keyboard.getInput(this);		// keyboard controls handled at this point
+ 		Controls.getInput(this);		// keyboard controls handled at this point
  		
 		batch.setProjectionMatrix(camera.combined);
 	    
@@ -322,7 +323,6 @@ public class SolGDX extends ApplicationAdapter {
 
     	// sort everything (again)
     	// TODO: sorting optimization
-    	
     	Collections.sort((List<Drawable>) painter, Collections.reverseOrder());
     	
 		drawOrder = 0;
@@ -335,11 +335,6 @@ public class SolGDX extends ApplicationAdapter {
 				} else {
 					batch.draw(tempTile, d.isoX, d.isoY);
 				}
-
-				/*if (drawOrderFlag) {
-					smallFont.draw(batch, ""+drawOrder, d.isoX+25, d.isoY);
-				}*/
-				
 			} else if (d instanceof Entity) {
 				drawCharacter((Entity)d);
 			} else {
@@ -447,6 +442,63 @@ public class SolGDX extends ApplicationAdapter {
 		
 		font.dispose();
 		smallFont.dispose();
+	}
+
+
+	@Override
+	public boolean keyDown(int arg0) { return false; }
+
+	@Override
+	public boolean keyTyped(char arg0) { return false; }
+
+
+	@Override
+	public boolean keyUp(int arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean mouseMoved(int arg0, int arg1) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	
+	// FIXME: set input controller
+	broken on purpose - continue coding here
+	@Override
+	public boolean scrolled(int scroll) {
+		System.out.println("aaa");
+		if (scroll == 1) {
+			camera.setZoom(true);
+		} else if (scroll == -1) {
+			camera.setZoom(false);
+		}
+		return false;
+	}
+
+
+	@Override
+	public boolean touchDown(int arg0, int arg1, int arg2, int arg3) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean touchDragged(int arg0, int arg1, int arg2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean touchUp(int arg0, int arg1, int arg2, int arg3) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 } // end class SolGDX

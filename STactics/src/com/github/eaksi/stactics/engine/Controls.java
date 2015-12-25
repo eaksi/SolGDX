@@ -4,7 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.github.eaksi.stactics.engine.gfx.Entity.Direction;
 
-public class Keyboard {
+public class Controls {
+	
 	protected static void getInput(SolGDX sol) {
 
 		// Quit the application
@@ -17,9 +18,9 @@ public class Keyboard {
 		if (Gdx.input.isKeyPressed(Keys.W))	sol.camera.moveUp();
 		
 		// Zoom the view
-		if (Gdx.input.isKeyPressed(Keys.Z)) {
+		if (Gdx.input.isKeyJustPressed(Keys.Z)) {
 				sol.camera.setZoom(true);
-		} else if (Gdx.input.isKeyPressed(Keys.X)) {
+		} else if (Gdx.input.isKeyJustPressed(Keys.X)) {
 				sol.camera.setZoom(false);
 		}
 		
@@ -70,4 +71,5 @@ public class Keyboard {
 			return;
 		}
 	}
+
 }
