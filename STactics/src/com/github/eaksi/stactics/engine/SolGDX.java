@@ -6,7 +6,6 @@ import java.util.Vector;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -20,7 +19,7 @@ import com.github.eaksi.stactics.engine.gfx.Entity.Direction;
 import com.github.eaksi.stactics.engine.gfx.FontLoader;
 import com.github.eaksi.stactics.engine.gfx.Tile;
 
-public class SolGDX extends ApplicationAdapter implements InputProcessor {
+public class SolGDX extends ApplicationAdapter {
 	
 	boolean debug = false;								// ****DEBUG****
 	boolean drawOrderFlag = false;						// draw order debug
@@ -444,61 +443,5 @@ public class SolGDX extends ApplicationAdapter implements InputProcessor {
 		smallFont.dispose();
 	}
 
-
-	@Override
-	public boolean keyDown(int arg0) { return false; }
-
-	@Override
-	public boolean keyTyped(char arg0) { return false; }
-
-
-	@Override
-	public boolean keyUp(int arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public boolean mouseMoved(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	
-	// FIXME: set input controller
-	broken on purpose - continue coding here
-	@Override
-	public boolean scrolled(int scroll) {
-		System.out.println("aaa");
-		if (scroll == 1) {
-			camera.setZoom(true);
-		} else if (scroll == -1) {
-			camera.setZoom(false);
-		}
-		return false;
-	}
-
-
-	@Override
-	public boolean touchDown(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public boolean touchDragged(int arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public boolean touchUp(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 } // end class SolGDX

@@ -1,6 +1,7 @@
 package com.github.eaksi.stactics.engine;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.github.eaksi.stactics.engine.gfx.Entity.Direction;
 
@@ -18,9 +19,9 @@ public class Controls {
 		if (Gdx.input.isKeyPressed(Keys.W))	sol.camera.moveUp();
 		
 		// Zoom the view
-		if (Gdx.input.isKeyJustPressed(Keys.Z)) {
+		if (Gdx.input.isKeyJustPressed(Keys.Z) ||  Gdx.input.isButtonPressed(Buttons.LEFT)) {
 				sol.camera.setZoom(true);
-		} else if (Gdx.input.isKeyJustPressed(Keys.X)) {
+		} else if (Gdx.input.isKeyJustPressed(Keys.X) ||  Gdx.input.isButtonPressed(Buttons.RIGHT)) {
 				sol.camera.setZoom(false);
 		}
 		
