@@ -53,7 +53,15 @@ public class SolGDX extends ApplicationAdapter {
 	int nr = 0;		// current entity Number
 	
 	Vector<Drawable> painter;
-	
+
+	// debug
+	public int mouseScreenX = -999;
+	public int mouseScreenY = -999;
+	public int mouseIsoX = -999;
+	public int mouseIsoY = -999;
+	public int mouseDragX = -999;
+	public int mouseDragY = -999;
+
 	@Override
 	public void create () {
 		

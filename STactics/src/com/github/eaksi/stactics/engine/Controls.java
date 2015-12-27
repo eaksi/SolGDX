@@ -19,10 +19,19 @@ public class Controls {
 		if (Gdx.input.isKeyPressed(Keys.W))	sol.camera.moveUp();
 		
 		// Zoom the view
-		if (Gdx.input.isKeyJustPressed(Keys.Z) ||  Gdx.input.isButtonPressed(Buttons.LEFT)) {
+		if (Gdx.input.isKeyJustPressed(Keys.Z)) {
 				sol.camera.setZoom(true);
-		} else if (Gdx.input.isKeyJustPressed(Keys.X) ||  Gdx.input.isButtonPressed(Buttons.RIGHT)) {
+		} else if (Gdx.input.isKeyJustPressed(Keys.X)) {
 				sol.camera.setZoom(false);
+		}
+		
+		if (Gdx.input.isButtonPressed(Buttons.LEFT) && Gdx.input.justTouched()) {
+			sol.mouseScreenX = Gdx.input.getX();
+			sol.mouseScreenY = Gdx.input.getY();
+		} else if (Gdx.input.isTouched()) {
+			sol.mouseDragX = Gdx.input.getX();
+			sol.mouseDragY = Gdx.input.getY();
+
 		}
 		
 		// Toggle debug mode
