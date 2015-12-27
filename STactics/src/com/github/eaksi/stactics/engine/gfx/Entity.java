@@ -22,7 +22,7 @@ public class Entity extends Drawable {
 	public Creature cr;		// reference to creature
 
 	private Animation currentAnimation;
-	public int animFrame;				// frames left in animation
+	public int animFrame;				// current animation frame
 	private Direction heading;
 	
 	public Entity(Creature creat) {
@@ -55,7 +55,7 @@ public class Entity extends Drawable {
 		this.heading = dir;
 	}
 	
-	public int getFramesLeft() {
+	public int getCurrentFrame() {
 		return animFrame;
 	}
 
