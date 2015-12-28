@@ -2,21 +2,10 @@ package com.github.eaksi.stactics.db;
 
 public class BattleMap {
 
-	public int[][] terrainMap;		// make 3d eventually for terrain effects and good borders
+	private int[][] terrainMap;		// make 3d eventually for terrain effects and good borders
 	//public int[][] heightMap;
 	
 	public BattleMap() {
-		/*terrainMap = new int[][]   {{1,1,1,1,1,1,1,1},
-									{1,0,0,0,1,1,1,1},
-									{1,0,0,1,1,1,1,1},
-									{1,1,1,1,1,1,0,1},
-									{1,0,0,1,1,1,0,1},
-									{1,0,0,1,1,1,0,1},
-									{1,0,0,1,1,1,0,1},
-									{1,0,0,0,1,1,1,1},
-									{1,0,0,0,1,1,0,1},
-									{1,0,0,0,1,1,0,1},
-									{1,1,1,1,1,1,0,1} };*/
 		
 		// Huge map testing
 		terrainMap = new int[][]

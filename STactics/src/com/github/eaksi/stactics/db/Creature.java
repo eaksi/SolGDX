@@ -2,10 +2,11 @@ package com.github.eaksi.stactics.db;
 
 import java.util.Hashtable;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Creature {
 	
-	private static int runningId = 0;
+	private static AtomicInteger runningId = new AtomicInteger();
 	
 	private int id;
 	
@@ -23,7 +24,7 @@ public class Creature {
 	
 	public Creature() {
 		
-		id = ++runningId;	// generates unique id
+		id = runningId.incrementAndGet();	// generates unique id
 		skills = new Hashtable<Integer,Integer>();
 		prefixName = "";
 		name = World.getRandomFName();

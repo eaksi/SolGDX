@@ -35,17 +35,14 @@ public class World {
 	private static Vector<String> loadNameFile(String fileName) {
 		Vector<String> names = new Vector<String>();
 
-		BufferedReader filein;
+		
 		String line = null;
-		try {
-			filein = new BufferedReader(new FileReader(fileName));
+		try (BufferedReader filein = new BufferedReader(new FileReader(fileName))) {
 			line = filein.readLine();
 			while (line!=null) {
 				if (!line.equals("")) names.addElement(line);
 				line = filein.readLine();
 			}
-		
-			filein.close();
 		} catch (FileNotFoundException fnf) {
 			System.err.println("ERROR: FileNotFoundException in NameGen!");
 		} catch (IOException ioe) {

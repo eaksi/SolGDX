@@ -138,11 +138,12 @@ public class SolGDX extends ApplicationAdapter {
  		
 		batch.setProjectionMatrix(camera.combined);
 	    
+	    camera.updateZoom();
+		
 		// draw everything
 		batch.begin();
 		drawIsometric();
-	    camera.updateZoom();	 //TODO: move
-	    batch.end();  
+		batch.end();  
 
 	    guiBatch.begin();
 	    GUI.draw(this, guiBatch);		// draw GUI and possible debug data
@@ -201,7 +202,6 @@ public class SolGDX extends ApplicationAdapter {
 	// check if creature can move to a tile, this fires only once per move
 	void setMoveDirection(Direction d) {
 
-		boolean canMove = false;
 		int tryX = 0;
 		int tryY = 0;
 
@@ -224,34 +224,28 @@ public class SolGDX extends ApplicationAdapter {
 			break;
 		}
 		
-		if (battleMap.getTile((entities.get(nr).tileX + tryX), entities.get(nr).tileY + tryY) == 1) {
-			canMove = true;
-		} else {
-			canMove = false;
+		if(battleMap.getTile((entities.get(nr).tileX + tryX), entities.get(nr).tileY + tryY) != 1) {
 			printMoveDebug("Can't move (terrain): " + entities.get(nr).getHeading(), tryX, tryY);
-			return;		// NOTE!: "return;" here
+			return;
 		}
+
 		
 		for (Entity e: entities) {
 			if (entities.get(nr).tileX + tryX  == e.tileX  &&  entities.get(nr).tileY + tryY == e.tileY) {
-				canMove = false;
 				printMoveDebug("Can't move, " + e.cr.getName() + " (id:"+ e.cr.getId() + ") is in the way: " +
 						entities.get(nr).getHeading(), tryX, tryY);
 				return; 	// NOTE!: "return;" here
 			}
 		}
 		
+		printMoveDebug("" + entities.get(nr).getHeading(), tryX, tryY);
+		entities.get(nr).tileX += tryX;
+		entities.get(nr).tileY += tryY;
 		
-		if (canMove) {
-			printMoveDebug("" + entities.get(nr).getHeading(), tryX, tryY);
-			entities.get(nr).tileX += tryX;
-			entities.get(nr).tileY += tryY;
-			
-			// if everything okay, set movement in motion 
-    		entities.get(nr).animFrame = 0;
-    		entities.get(nr).setAnimation(Entity.Animation.WALK);
-    		chAnimating = true;
-		}
+		// if everything okay, set movement in motion 
+		entities.get(nr).animFrame = 0;
+		entities.get(nr).setAnimation(Entity.Animation.WALK);
+		chAnimating = true;
 	}
 
 	

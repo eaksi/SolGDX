@@ -1,11 +1,13 @@
 package com.github.eaksi.stactics.engine.gfx;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /*
  * 	All drawables in isometric engine inherit this class
  */
 public class Drawable implements Comparable<Drawable>{
 	
-	private static int runningId = 0;
+	private static AtomicInteger runningId = new AtomicInteger();
 	
 	protected int id;			// id inside animation framework
 
@@ -16,7 +18,7 @@ public class Drawable implements Comparable<Drawable>{
 
 
 	public Drawable() {
-		id = ++runningId;	// generates unique id
+		id = runningId.incrementAndGet();	// generates unique id
 	}
 
 
@@ -25,6 +27,7 @@ public class Drawable implements Comparable<Drawable>{
 	public int getZ()		 { return z; }
 	public void setZ(int z)	 { this.z = z; }
 
+//	public void draw(int isox, int isoy);
 
 	@Override
 	public int compareTo(Drawable d) {
