@@ -23,7 +23,6 @@ public class FontLoader {
 		switch (type) {
 		case MAIN:
 			fontPath = "data/Klill-Light.ttf";
-			
 			size = 20;
 			break;
 		case SMALL:

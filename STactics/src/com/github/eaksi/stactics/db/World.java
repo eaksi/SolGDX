@@ -14,7 +14,7 @@ public class World {
 	private static boolean skillTableInitialized = false;
 	private static Vector<String> fNameList;
 	private static Vector<String> lNameList;
-	private static Random rng;	//Random Number Generator
+	protected static Random rng;	//Random Number Generator
 	
 	// Initialize everything
 	public static void initialize() {

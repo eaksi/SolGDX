@@ -13,12 +13,10 @@ public class STactics {
 		World.initialize();
 		
 		Vector<Creature> npcs = new Vector<Creature>();
-		npcs.add(new Creature());
-		npcs.add(new Creature());
-		npcs.add(new Creature());
-		npcs.add(new Creature());
-		npcs.add(new Creature());
-		npcs.add(new Creature());
+		for (int i=0; i<4; i++) {
+			npcs.add(new Creature());
+		}
+
 
 		// test delay system
 		for (int i = 0; i < 50; i++) {

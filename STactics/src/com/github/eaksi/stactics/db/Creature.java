@@ -32,12 +32,12 @@ public class Creature {
 	
 		baseHP = 5;
 
-		baseDelay = 10;
+		baseDelay = 10 + World.rng.nextInt(4);
 		
 		skills.put(1,2);
 		
 		// starting current stats
-		delay = 10;
+		delay = baseDelay + World.rng.nextInt(5);
 		
 	}
 	
@@ -54,10 +54,10 @@ public class Creature {
 		
 		if (delay <= 0) {
 			delay += baseDelay;
-			System.out.println(this.getFullName() + ": action");
+			System.out.println(this.getFullName() + ": ACTION");
 			return true;
 		}
-		System.out.println(this.getFullName() + ": delay: " + delay);
+		System.out.println(this.getFullName() + " (base:" + baseDelay + ") delay: " + delay);
 		delay--;
 		return false;
 	}
