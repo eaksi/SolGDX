@@ -117,10 +117,10 @@ public class SolGDX extends ApplicationAdapter {
 		initializePainter();
         
 		// print the BattleMap width and height and w/h difference (negative = more width than height) 
-        if (debug) {
+		if (debug) {
         	System.out.println("battleMap.getWidth() = " + battleMap.getWidth() + "  battleMap.getHeight() = " +
         			battleMap.getHeight() + "  difference = " + (battleMap.getWidth()-battleMap.getHeight()));
-        }
+		}
         
 	}
 
