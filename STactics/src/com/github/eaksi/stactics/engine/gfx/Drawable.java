@@ -15,12 +15,9 @@ public class Drawable implements Comparable<Drawable>{
 	public int tileX, tileY;	// used by AI, graphics engine
 	public int z;				// for draw order
 
-
-
 	public Drawable() {
 		id = runningId.incrementAndGet();	// generates unique id
 	}
-
 
 	public int getId()		 { return id; }
 

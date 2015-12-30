@@ -22,12 +22,16 @@ public class Entity extends Drawable {
 	private Animation currentAnimation;
 	public int animFrame; // current animation frame
 	private Direction heading;
+	
+	private int baseDelay, delay;
 
 	public Entity(Creature creat) {
 
 		super();
 		this.cr = creat;
 
+		this.baseDelay = cr.getBaseDelay();
+		
 		currentAnimation = Animation.IDLE;
 		animFrame = -1;
 		heading = Direction.NE;
@@ -60,7 +64,18 @@ public class Entity extends Drawable {
 	public String getAnimString() {
 		return currentAnimation.toString();
 	}
+	
+	public boolean isReady() {
 
+		if (delay <= 0) {
+			delay += baseDelay;
+			System.out.println(cr.getFullName() + ": ACTION");
+			return true;
+		}
+		System.out.println(cr.getFullName() + " (base:" + baseDelay + ") delay: " + delay);
+		delay--;
+		return false;
+	}
 	// getters and setters
 	/*
 	 * public int getIsoX() {return isoX;} public void setIsoX(int isoX)

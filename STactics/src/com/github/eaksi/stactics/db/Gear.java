@@ -1,7 +1,7 @@
 package com.github.eaksi.stactics.db;
 
 // Class for items and equipment
-public class Eq {
+public class Gear {
 
 	public enum Type {		// TODO: make more item types after the framework works
 		SWORD,		// melee weapon

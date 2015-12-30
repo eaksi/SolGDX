@@ -12,17 +12,17 @@ public class STactics {
 
 		World.initialize();
 		
-		Vector<Creature> npcs = new Vector<Creature>();
+		Vector<Entity> battlers = new Vector<Entity>();
 		for (int i=0; i<4; i++) {
-			npcs.add(new Creature());
+			battlers.add(new Entity(new Creature()));
 		}
 
 
 		// test delay system
 		for (int i = 0; i < 50; i++) {
 			System.out.println("*** TURN "+ (i+1) +" ***");
-			for (Creature npc: npcs) {
-				npc.isReady();
+			for (Entity battler: battlers) {
+				battler.isReady();
 			}
 		}
 		

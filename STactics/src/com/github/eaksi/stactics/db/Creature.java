@@ -50,18 +50,6 @@ public class Creature {
 
 	}
 
-	public boolean isReady() {
-
-		if (delay <= 0) {
-			delay += baseDelay;
-			System.out.println(this.getFullName() + ": ACTION");
-			return true;
-		}
-		System.out.println(this.getFullName() + " (base:" + baseDelay + ") delay: " + delay);
-		delay--;
-		return false;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -70,6 +58,10 @@ public class Creature {
 		return name;
 	}
 
+	public int getBaseDelay() {
+		return baseDelay;
+	}
+	
 	public String getFullName() {
 		String fullName = "";
 		if (prefixName.length() > 0) {
