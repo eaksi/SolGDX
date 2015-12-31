@@ -361,7 +361,10 @@ public class SolGDX extends ApplicationAdapter {
     	}
     }
     
-     // FIXME: this whole method
+	// FIXME: this whole method
+	// animationframes -> Entity
+    // link to graphics -> Entity
+    // graphics from GraphicsLibrary (or similar name)
     private void drawCharacter(Entity e) {
 		    	
     	if (e.animFrame == 3 || e.animFrame == 11) { // XXX: temp simulate movement
