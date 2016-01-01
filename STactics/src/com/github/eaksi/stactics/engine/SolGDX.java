@@ -96,19 +96,7 @@ public class SolGDX extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		guiBatch = new SpriteBatch();
 		
-		spriteSheet = new Texture("data/farcher_placeholder.png");
-		splitSheet = TextureRegion.split(spriteSheet, 32, 64);
-		flippedSheet = TextureRegion.split(spriteSheet, 32, 64);
-
-		// flip all sprites within sheet 
-		for (int i=0; i<2; i++) {
-			for (int j=0; j<7; j++) {
-				flippedSheet[i][j].flip(true, false);
-			}
-		}
-		
-		tempTile = new Texture("data/64px_tile_placeholder.png");
-		tempTile0 = new Texture("data/64px_tile_placeholder_water.png");
+		Gfx.initialize();
         
 		// initial setup of entity locations, read tileX&Y, set isoX&Y
 		setEntityLocations();
@@ -160,8 +148,8 @@ public class SolGDX extends ApplicationAdapter {
 	{
 		// set starting locations of entities
 		for (Entity e: entities) {
-			e.isoX = getIsoX(e.tileY, e.tileX) + 16; 
-	        e.isoY = getIsoY(e.tileY, e.tileX) + 36; //XXX: sprite/tile sizes hack
+			e.isoX = toIsoX(e.tileY, e.tileX) + 16; 
+	        e.isoY = toIsoY(e.tileY, e.tileX) + 36; //XXX: sprite/tile sizes hack
 		}
 	}
 	
@@ -174,9 +162,9 @@ public class SolGDX extends ApplicationAdapter {
 		for (int i = 0; i < battleMap.getWidth(); i++) {
 			for (int j = 0; j < battleMap.getHeight(); j++) {
 				if (battleMap.getTile(i,j) == 0 ) {
-					tile = new Tile(i, j, getIsoX(j,i), getIsoY(j,i), getIsoY(j,i), true);
+					tile = new Tile(i, j, toIsoX(j,i), toIsoY(j,i), toIsoY(j,i), true);
 				} else {
-					tile = new Tile(i, j, getIsoX(j,i), getIsoY(j,i)+battleMap.getTile(i,j)*16, getIsoY(j,i), false);
+					tile = new Tile(i, j, toIsoX(j,i), toIsoY(j,i)+battleMap.getTile(i,j)*16, toIsoY(j,i), false);
 				}
 				
 				painter.add((Drawable)tile);
@@ -243,7 +231,7 @@ public class SolGDX extends ApplicationAdapter {
 		entities.get(nr).tileY += tryY;
 		
 		// if everything okay, set movement in motion 
-		entities.get(nr).animFrame = 0;
+		entities.get(nr).animFrameNr = 0;
 		entities.get(nr).setAnimation(Entity.Animation.WALK);
 		chAnimating = true;
 	}
@@ -296,26 +284,27 @@ public class SolGDX extends ApplicationAdapter {
 	    		camera.moveVertical(modY);
 	    	}
 			
-			entities.get(nr).animFrame++;
+			entities.get(nr).updateAnimFrame();
 			
-			if (entities.get(nr).animFrame >= 16) {
-				entities.get(nr).animFrame = -1;
+			if (entities.get(nr).animFrameNr >= 16) {
+				entities.get(nr).animFrameNr = -1;
 				chAnimating = false;
-				entities.get(nr).setAnimation(Entity.Animation.IDLE);
 			}
+			
+ftrhdxrth
 			
 		}
 	}
 	
 	
 	// Get the isometric projection coordinate X, given tilemap X and Y as parameters.
-    private int getIsoX(int mapx, int mapy) {
+    private int toIsoX(int mapx, int mapy) {
     	return (screenWidth - ((battleMap.getWidth() * 32 - 32) + (mapy - mapx) * (tileWidth / 2)));
     }
 
     
 	// Get the isometric projection coordinate Y, given tilemap X and Y as parameters.
-    private int getIsoY(int mapx, int mapy) {
+    private int toIsoY(int mapx, int mapy) {
     	return (screenHeight - ((battleMap.getHeight() * 16 - 32) + (mapy + mapx) * (tileHeight / 2)));
     }
 
@@ -332,9 +321,9 @@ public class SolGDX extends ApplicationAdapter {
 		for (Drawable d: painter) {
 			if (d instanceof Tile) {
 				if (((Tile)d).isWater()) {
-					batch.draw(tempTile0, d.isoX, d.isoY);
+					batch.draw(Gfx.tempTile0, d.isoX, d.isoY);
 				} else {
-					batch.draw(tempTile, d.isoX, d.isoY);
+					batch.draw(Gfx.tempTile, d.isoX, d.isoY);
 				}
 			} else if (d instanceof Entity) {
 				drawCharacter((Entity)d);
@@ -348,7 +337,7 @@ public class SolGDX extends ApplicationAdapter {
     		smallFont.setColor(0f, 0f, 0f, 1f);
         	for (int i = 0; i < battleMap.getWidth(); i++) {
             	for (int j = 0; j < battleMap.getHeight(); j++) {
-        				smallFont.draw(batch, i+","+j, getIsoX(j,i)+25, (getIsoY(j,i)+(battleMap.getTile(i,j)*16+36)));	
+        				smallFont.draw(batch, i+","+j, toIsoX(j,i)+25, (toIsoY(j,i)+(battleMap.getTile(i,j)*16+36)));	
            		}
         	}
     	}
@@ -367,11 +356,16 @@ public class SolGDX extends ApplicationAdapter {
     // graphics from GraphicsLibrary (or similar name)
     private void drawCharacter(Entity e) {
 		    	
-    	if (e.animFrame == 3 || e.animFrame == 11) { // XXX: temp simulate movement
+    	batch.draw(e.getSprite(), e.isoX, e.isoY);
+    	
+    	
+    	if (e.animFrameNr == 3 || e.animFrameNr == 11) { // XXX: temp simulate movement
 			e.isoY += 1;
-		} else if (e.animFrame == 5 || e.animFrame == 14) {
+		} else if (e.animFrameNr == 5 || e.animFrameNr == 14) {
 			e.isoY -= 1;
 		}
+    	
+    	/*
     	
     	switch(e.animFrame) {
     	case -1: case 0: case 1: case 7: case 8: case 9: case 15:
@@ -432,7 +426,7 @@ public class SolGDX extends ApplicationAdapter {
     		System.err.println("Warning: invalid animation frame!"); //XXX: written 60 times per second
     			
     	}
-    	
+    	*/
     }
 
 
