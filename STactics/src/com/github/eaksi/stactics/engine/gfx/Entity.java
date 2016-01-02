@@ -103,26 +103,25 @@ public class Entity extends Drawable {
 				animFrameNr = -1;	// TODO: more elegant solution
 				animFrame = AnimFrame.STAND;
 				currentAnimation = Animation.IDLE;
-				break;	// XXX: hmm
 			} else {
 				switch(animFrameNr) {
 					case 0: case 1: case 7: case 8: case 9: case 15:
 						animFrame = AnimFrame.STAND;
+						moveCreatureOneFrame();
 						break;
 					case 2: case 3: case 4: case 5: case 6:
 						animFrame = AnimFrame.WALK1;
+						moveCreatureOneFrame();
 						break;
 			    	case 10: case 11: case 12: case 13: case 14:
 			    		animFrame = AnimFrame.WALK2;
+			    		moveCreatureOneFrame();
 			    		break;
 			    	default:
 			    		System.err.println("Error: Wrong values in updateAnimFrame! (refactored wrong way?)");
 						animFrameNr = -1;  // prevent animation loops
 						animFrame = AnimFrame.STAND;  // prevent animation loops
 				}
-				
-				animFrameNr++;
-			
 			}
 			break;
 			
@@ -131,14 +130,50 @@ public class Entity extends Drawable {
 			animFrameNr = -1;  // prevent animation loops
 			animFrame = AnimFrame.STAND;  // prevent animation loops
 			break;
-			
 		}
 		
 		if (animFrameNr == -1) {
 			return false;
 		} else {
+			animFrameNr++;
 			return true;
 		}
+	}
+	
+	private void moveCreatureOneFrame() {
+		int modX = 0;
+		int modY = 0;
+		int modZ = 0;
+		
+
+		switch (heading) {
+		case NE:
+			modX = 2;
+			modY = 1;
+			modZ = 1;
+			break;
+		case SE:
+			modX = 2;
+			modY = -1;
+			modZ = -1;
+			break;
+		case SW:
+			modX = -2;
+			modY = -1;
+			modZ = -1;
+			break;
+		case NW:
+			modX = -2;
+			modY = 1;
+			modZ = 1;
+			break;
+		default:
+			break;
+		}
+
+		isoX += modX;
+    	isoY += modY;
+    	z += modZ;
 	}
 		
 } // end class

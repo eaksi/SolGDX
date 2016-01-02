@@ -116,7 +116,8 @@ public class SolGDX extends ApplicationAdapter {
  		camera.update();
 
  		Controls.getInput(this);		// keyboard controls handled at this point
- 		
+ 		chAnimating = entities.get(nr).updateAnimFrame(); // XXX: temp character turn-based keyboard movement
+		
 		batch.setProjectionMatrix(camera.combined);
 	    
 	    camera.updateZoom();
@@ -133,7 +134,7 @@ public class SolGDX extends ApplicationAdapter {
 	    // update FPS counter on window title
 	    Gdx.graphics.setTitle("SolGDX     FPS: " + Gdx.graphics.getFramesPerSecond() + " Zoom: " + camera.getZoomLevel());
 		
-		moveCreature(); 		// XXX: temp character turn-based keyboard movement
+
 	}
 
 	
@@ -236,52 +237,15 @@ public class SolGDX extends ApplicationAdapter {
 				(entities.get(nr).tileX + x) + "," + (entities.get(nr).tileY + y) + ")");
 	}
 	
+	// TODO: remove as redundant after camera character follow is redone
 	// Moves the character sprite on screen
 	private void moveCreature() {
 
-		int modX = 0;
-		int modY = 0;
-		int modZ = 0;
-		
-		if (chAnimating) {
-			switch (entities.get(nr).getHeading()) {
-			case NE:
-				modX = 2;
-				modY = 1;
-				modZ = 1;
-				break;
-			case SE:
-				modX = 2;
-				modY = -1;
-				modZ = -1;
-				break;
-			case SW:
-				modX = -2;
-				modY = -1;
-				modZ = -1;
-				break;
-			case NW:
-				modX = -2;
-				modY = 1;
-				modZ = 1;
-				break;
-			default:
-				break;
-			}
-
-			entities.get(nr).isoX += modX;
-	    	entities.get(nr).isoY += modY;
-	    	entities.get(nr).z += modZ;
-	    	
-	    	if (cameraFollowsCharacter) {
-	    		camera.moveHorizontal(modX);
-	    		camera.moveVertical(modY);
-	    	}
-	    	
-	    	chAnimating = entities.get(nr).updateAnimFrame();
-
-
-		}
+    	/*
+    	if (cameraFollowsCharacter) {
+    		camera.moveHorizontal(modX);
+    		camera.moveVertical(modY);
+    	}*/
 	}
 	
 	
