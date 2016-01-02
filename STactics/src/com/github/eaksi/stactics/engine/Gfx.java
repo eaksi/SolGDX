@@ -31,10 +31,66 @@ public class Gfx {
 	}
 	
 	public static TextureRegion drawEntitySprite(Entity.Direction dir, Entity.AnimFrame anim) {
-		return new TextureRegion();
+		switch (dir) {
+		
+
+		default:
+			System.err.println("Error: drawEntitySprite direction wrong");
+			// fallthrough
+		case NE:
+			switch(anim) {
+			case STAND:
+				return flippedSheet[0][3];
+			case WALK1:
+				return flippedSheet[0][4];
+			case WALK2:
+				return flippedSheet[0][5];
+			default:
+				System.err.println("Error: drawEntitySprite unknown animation frame!");
+				return new TextureRegion();
+			}
+		case SE:
+			switch(anim) {
+			case STAND:
+				return splitSheet[0][0];
+			case WALK1:
+				return splitSheet[0][1];
+			case WALK2:
+				return splitSheet[0][2];
+			default:
+				System.err.println("Error: drawEntitySprite unknown animation frame!");
+				return new TextureRegion();
+			}
+		case SW:
+			switch(anim) {
+			case STAND:
+				return flippedSheet[0][0];
+			case WALK1:
+				return flippedSheet[0][1];
+			case WALK2:
+				return flippedSheet[0][2];
+			default:
+				System.err.println("Error: drawEntitySprite unknown animation frame!");
+				return new TextureRegion();
+			}
+		case NW:
+			switch(anim) {
+			case STAND:
+				return splitSheet[0][3];
+			case WALK1:
+				return splitSheet[0][4];
+			case WALK2:
+				return splitSheet[0][5];
+			default:
+				System.err.println("Error: drawEntitySprite unknown animation frame!");
+				return new TextureRegion();
+			} // end anim switch-case
+		} // end dir switch-case
+	} // method drawEntitySprite
+	
+	public static void dispose() {
+		tempTile.dispose();
+		tempTile0.dispose();
+		spriteSheet.dispose();
 	}
-	
-	
-	
-	
-}
+} // end class

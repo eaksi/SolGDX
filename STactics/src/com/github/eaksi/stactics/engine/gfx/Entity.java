@@ -12,7 +12,7 @@ public class Entity extends Drawable {
 	}
 
 	public enum Animation {
-		IDLE, STAND, WALK, KO, ATTACK, HIT
+		IDLE, WALK, KO, ATTACK, HIT
 	}
 
 	public enum AnimFrame {
@@ -85,7 +85,7 @@ public class Entity extends Drawable {
 		return false;
 	}
 
-	public void updateAnimFrame() {
+	public boolean updateAnimFrame() {
 		/* if (animFrameNr == -1) {
 			currentAnimation = Animation.IDLE;
 		}
@@ -95,36 +95,50 @@ public class Entity extends Drawable {
 		
 		case IDLE:
 			animFrameNr = -1;
+			animFrame = AnimFrame.STAND;
 			break;
-		case STAND:
-			if (animFrameNr >= 16) {
-dr5thdfrtht
+		
+		case WALK:
+			if (animFrameNr == -1 || animFrameNr >= 16) {
+				animFrameNr = -1;	// TODO: more elegant solution
+				animFrame = AnimFrame.STAND;
+				currentAnimation = Animation.IDLE;
+				break;	// XXX: hmm
+			} else {
+				switch(animFrameNr) {
+					case 0: case 1: case 7: case 8: case 9: case 15:
+						animFrame = AnimFrame.STAND;
+						break;
+					case 2: case 3: case 4: case 5: case 6:
+						animFrame = AnimFrame.WALK1;
+						break;
+			    	case 10: case 11: case 12: case 13: case 14:
+			    		animFrame = AnimFrame.WALK2;
+			    		break;
+			    	default:
+			    		System.err.println("Error: Wrong values in updateAnimFrame! (refactored wrong way?)");
+						animFrameNr = -1;  // prevent animation loops
+						animFrame = AnimFrame.STAND;  // prevent animation loops
+				}
 				
-			break;
-		default:
-			System.err.println("Error: Invalid Animation on " + cr.getId() + ":" + cr.getName());
+				animFrameNr++;
+			
+			}
 			break;
 			
-				
-			switch(animFrameNr) {
-			case -1:
-				animFrame = Animation.IDLE;
-			}
+		default:
+			System.err.println("Error: Invalid Animation on " + cr.getId() + ":" + cr.getName());
+			animFrameNr = -1;  // prevent animation loops
+			animFrame = AnimFrame.STAND;  // prevent animation loops
+			break;
+			
+		}
+		
+		if (animFrameNr == -1) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 		
-		
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
-	
-	
-	// getters and setters
-	/*
-	 * public int getIsoX() {return isoX;} public void setIsoX(int isoX)
-	 * {this.isoX = isoX;} public int getIsoY() {return isoY;} public void
-	 * setIsoY(int isoY) {this.isoY = isoY;}
-	 */
-}
+} // end class

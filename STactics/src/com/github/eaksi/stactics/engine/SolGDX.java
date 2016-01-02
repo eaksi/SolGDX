@@ -31,14 +31,7 @@ public class SolGDX extends ApplicationAdapter {
 	private SpriteBatch guiBatch;		// GUI SpriteBatch, does not move with camera
 	BitmapFont font;					// temp test font
 	BitmapFont smallFont;				// temp test font 2
-	
-	private Texture tempTile;			// temp test tile
-	private Texture tempTile0;			// temp test water tile
-	
-	private Texture spriteSheet;
-	private TextureRegion[][] splitSheet;		// sprite sheet divided into regions
-	private TextureRegion[][] flippedSheet;		// same as splitSheet, but regions individually flipped
-	
+
 	final int screenWidth = 1024;				// screen resolution
 	final int screenHeight = 800;
 	
@@ -212,12 +205,13 @@ public class SolGDX extends ApplicationAdapter {
 			break;
 		}
 		
+		// test if able to move in terrain
 		if(battleMap.getTile((entities.get(nr).tileX + tryX), entities.get(nr).tileY + tryY) != 1) {
 			printMoveDebug("Can't move (terrain): " + entities.get(nr).getHeading(), tryX, tryY);
 			return;
 		}
 
-		
+		// test if able to move because of other entities 
 		for (Entity e: entities) {
 			if (entities.get(nr).tileX + tryX  == e.tileX  &&  entities.get(nr).tileY + tryY == e.tileY) {
 				printMoveDebug("Can't move, " + e.cr.getName() + " (id:"+ e.cr.getId() + ") is in the way: " +
@@ -283,16 +277,10 @@ public class SolGDX extends ApplicationAdapter {
 	    		camera.moveHorizontal(modX);
 	    		camera.moveVertical(modY);
 	    	}
-			
-			entities.get(nr).updateAnimFrame();
-			
-			if (entities.get(nr).animFrameNr >= 16) {
-				entities.get(nr).animFrameNr = -1;
-				chAnimating = false;
-			}
-			
-ftrhdxrth
-			
+	    	
+	    	chAnimating = entities.get(nr).updateAnimFrame();
+
+
 		}
 	}
 	
@@ -358,75 +346,15 @@ ftrhdxrth
 		    	
     	batch.draw(e.getSprite(), e.isoX, e.isoY);
     	
-    	
+/*    	
+    	// TODO: replace this with a bounce() method in Entity so there's less risk of isoY getting "out of sync"
     	if (e.animFrameNr == 3 || e.animFrameNr == 11) { // XXX: temp simulate movement
 			e.isoY += 1;
 		} else if (e.animFrameNr == 5 || e.animFrameNr == 14) {
 			e.isoY -= 1;
 		}
+*/
     	
-    	/*
-    	
-    	switch(e.animFrame) {
-    	case -1: case 0: case 1: case 7: case 8: case 9: case 15:
-    	    switch(e.getHeading()) {
-	    	case NE:
-	    		batch.draw(flippedSheet[0][3], e.isoX, e.isoY);
-	    		break;
-	    	case SE:
-	    		batch.draw(splitSheet[0][0], e.isoX, e.isoY);
-	    		break;
-	    	case SW:
-	    		batch.draw(flippedSheet[0][0], e.isoX, e.isoY);
-	    		break;
-	    	case NW:
-	    		batch.draw(splitSheet[0][3], e.isoX, e.isoY);
-	    		break;
-	    	default:
-	    		System.err.println("Warning: invalid direction of character!"); //XXX: written 60 times per second
-	    	}
-    	    break;
-    	case 2: case 3: case 4: case 5: case 6:	//walk 1
-        	switch(e.getHeading()) {
-        	case NE:
-        		batch.draw(flippedSheet[0][4], e.isoX, e.isoY);
-        		break;
-        	case SE:
-        		batch.draw(splitSheet[0][1], e.isoX, e.isoY);
-        		break;
-        	case SW:
-        		batch.draw(flippedSheet[0][1], e.isoX, e.isoY);
-        		break;
-        	case NW:
-        		batch.draw(splitSheet[0][4], e.isoX, e.isoY);
-        		break;
-        	default:
-        		System.err.println("Warning: invalid direction of character!"); //XXX: written 60 times per second
-        	}
-    		break;
-    	case 10: case 11: case 12: case 13: case 14: // walk 2
-        	switch(e.getHeading()) {
-        	case NE:
-        		batch.draw(flippedSheet[0][5], e.isoX, e.isoY);
-        		break;
-        	case SE:
-        		batch.draw(splitSheet[0][2], e.isoX, e.isoY);
-        		break;
-        	case SW:
-        		batch.draw(flippedSheet[0][2], e.isoX, e.isoY);
-        		break;
-        	case NW:
-        		batch.draw(splitSheet[0][5], e.isoX, e.isoY);
-        		break;
-        	default:
-        		System.err.println("Warning: invalid direction of character!"); //XXX: written 60 times per second
-        	}
-    		break;
-    	default:
-    		System.err.println("Warning: invalid animation frame!"); //XXX: written 60 times per second
-    			
-    	}
-    	*/
     }
 
 
@@ -434,12 +362,13 @@ ftrhdxrth
 	public void dispose() {
 		batch.dispose();
 		guiBatch.dispose();
-		tempTile.dispose();
-		tempTile0.dispose();
-		spriteSheet.dispose();
-		
+
+		Gfx.dispose(); // Gfx class dispose
+
 		font.dispose();
 		smallFont.dispose();
+
+		
 	}
 
 	
