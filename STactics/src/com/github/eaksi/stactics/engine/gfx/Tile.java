@@ -1,5 +1,8 @@
 package com.github.eaksi.stactics.engine.gfx;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.github.eaksi.stactics.engine.Gfx;
+
 public class Tile extends Drawable {
 	
 	private boolean water;
@@ -20,6 +23,11 @@ public class Tile extends Drawable {
 	
 	public boolean isWater() {
 		return this.water;
+	}
+
+	@Override
+	public TextureRegion getSprite() {
+		return Gfx.drawTileSprite(water);
 	}
 	
 }

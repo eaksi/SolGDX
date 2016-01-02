@@ -2,10 +2,12 @@ package com.github.eaksi.stactics.engine.gfx;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 /*
  * 	All drawables in isometric engine inherit this class
  */
-public class Drawable implements Comparable<Drawable>{
+public abstract class Drawable implements Comparable<Drawable>{
 	
 	private static AtomicInteger runningId = new AtomicInteger();
 	
@@ -26,6 +28,8 @@ public class Drawable implements Comparable<Drawable>{
 
 //	public void draw(int isox, int isoy);
 
+	public abstract TextureRegion getSprite();
+	
 	@Override
 	public int compareTo(Drawable d) {
 		return (Integer.valueOf(z)).compareTo(Integer.valueOf(d.getZ()));

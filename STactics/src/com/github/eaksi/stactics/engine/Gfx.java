@@ -6,17 +6,23 @@ import com.github.eaksi.stactics.engine.gfx.Entity;
 
 public class Gfx {
 
-	protected static Texture tempTile;			// temp test tile
-	static Texture tempTile0;			// temp test water tile
-	
+	private static Texture tempTile;			// temp test tile
+	private static Texture tempTile0;			// temp test water tile
 	private static Texture spriteSheet;
+
 	private static TextureRegion[][] splitSheet;		// sprite sheet divided into regions
 	private static TextureRegion[][] flippedSheet;		// same as splitSheet, but regions individually flipped
+	private static TextureRegion landTile;
+	private static TextureRegion waterTile;
 
 	public static void initialize() {
 		
 		spriteSheet = new Texture("data/farcher_placeholder.png");
-		splitSheet = TextureRegion.split(spriteSheet, 32, 64);
+		tempTile = new Texture("data/64px_tile_placeholder.png");
+		tempTile0 = new Texture("data/64px_tile_placeholder_water.png");
+
+		splitSheet = TextureRegion.split(spriteSheet, 32, 64);		
+
 		flippedSheet = TextureRegion.split(spriteSheet, 32, 64);
 
 		// flip all sprites within sheet 
@@ -25,9 +31,18 @@ public class Gfx {
 				flippedSheet[i][j].flip(true, false);
 			}
 		}
+
+		landTile = new TextureRegion(tempTile);
+		waterTile = new TextureRegion(tempTile0);
 		
-		tempTile = new Texture("data/64px_tile_placeholder.png");
-		tempTile0 = new Texture("data/64px_tile_placeholder_water.png");
+	}
+	
+	public static TextureRegion drawTileSprite(boolean water) {
+		if (water) {
+			return waterTile;
+		} else {
+			return landTile;
+		}
 	}
 	
 	public static TextureRegion drawEntitySprite(Entity.Direction dir, Entity.AnimFrame anim) {

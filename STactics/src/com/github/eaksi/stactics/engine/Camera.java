@@ -11,8 +11,12 @@ public class Camera extends OrthographicCamera{
 	private final int maxZoom = 10;			// how close you can zoom in
 	private final int minZoom = -20;		// how far can you zoom out		// TODO: fix tearing when below 0 coordinates
 	private final int moveIncrement = 10;	// how many units the camera moves at once
+	
 	// TODO: vertical and horizontal moveIncrement differs? test
+	
 	// TODO: mouse movement testing, smoothing
+
+	// TODO: reimplement camera following character movement 
 	
 	public Camera(int width, int height) {
 		super();

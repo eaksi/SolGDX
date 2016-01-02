@@ -69,6 +69,7 @@ public class Entity extends Drawable {
 		return currentAnimation.toString();
 	}
 	
+	@Override
 	public TextureRegion getSprite() {
 		return Gfx.drawEntitySprite(heading, animFrame);
 	}
@@ -98,6 +99,7 @@ public class Entity extends Drawable {
 			animFrame = AnimFrame.STAND;
 			break;
 		
+		// TODO: add character "bounce" to animation (change isoY couple of pixels, more with flying entities) 
 		case WALK:
 			if (animFrameNr == -1 || animFrameNr >= 16) {
 				animFrameNr = -1;	// TODO: more elegant solution
@@ -119,16 +121,16 @@ public class Entity extends Drawable {
 			    		break;
 			    	default:
 			    		System.err.println("Error: Wrong values in updateAnimFrame! (refactored wrong way?)");
-						animFrameNr = -1;  // prevent animation loops
-						animFrame = AnimFrame.STAND;  // prevent animation loops
+						animFrameNr = -1;  // prevent animation infinite loops
+						animFrame = AnimFrame.STAND;  // prevent animation infinite loops
 				}
 			}
 			break;
 			
 		default:
 			System.err.println("Error: Invalid Animation on " + cr.getId() + ":" + cr.getName());
-			animFrameNr = -1;  // prevent animation loops
-			animFrame = AnimFrame.STAND;  // prevent animation loops
+			animFrameNr = -1;  // prevent animation infinite loops
+			animFrame = AnimFrame.STAND;  // prevent animation infinite loops
 			break;
 		}
 		

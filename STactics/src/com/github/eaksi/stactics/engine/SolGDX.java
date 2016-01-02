@@ -237,18 +237,6 @@ public class SolGDX extends ApplicationAdapter {
 				(entities.get(nr).tileX + x) + "," + (entities.get(nr).tileY + y) + ")");
 	}
 	
-	// TODO: remove as redundant after camera character follow is redone
-	// Moves the character sprite on screen
-	private void moveCreature() {
-
-    	/*
-    	if (cameraFollowsCharacter) {
-    		camera.moveHorizontal(modX);
-    		camera.moveVertical(modY);
-    	}*/
-	}
-	
-	
 	// Get the isometric projection coordinate X, given tilemap X and Y as parameters.
     private int toIsoX(int mapx, int mapy) {
     	return (screenWidth - ((battleMap.getWidth() * 32 - 32) + (mapy - mapx) * (tileWidth / 2)));
@@ -260,7 +248,8 @@ public class SolGDX extends ApplicationAdapter {
     	return (screenHeight - ((battleMap.getHeight() * 16 - 32) + (mapy + mapx) * (tileHeight / 2)));
     }
 
-    // TODO: Draw everything
+    
+    // primary draw method
     private void drawIsometric() {
 
     	// sort everything (again)
@@ -271,17 +260,7 @@ public class SolGDX extends ApplicationAdapter {
 		smallFont.setColor(0f, 0f, 0f, 1f);
 		
 		for (Drawable d: painter) {
-			if (d instanceof Tile) {
-				if (((Tile)d).isWater()) {
-					batch.draw(Gfx.tempTile0, d.isoX, d.isoY);
-				} else {
-					batch.draw(Gfx.tempTile, d.isoX, d.isoY);
-				}
-			} else if (d instanceof Entity) {
-				drawCharacter((Entity)d);
-			} else {
-				System.err.println("ERROR: unknown class in Vector<Drawable> painter");
-			}
+	    	batch.draw(d.getSprite(), d.isoX, d.isoY);
 		}
 		
     	// Draw BattleMap coordinates over tiles
@@ -301,26 +280,6 @@ public class SolGDX extends ApplicationAdapter {
 			}
     	}
     }
-    
-	// FIXME: this whole method
-	// animationframes -> Entity
-    // link to graphics -> Entity
-    // graphics from GraphicsLibrary (or similar name)
-    private void drawCharacter(Entity e) {
-		    	
-    	batch.draw(e.getSprite(), e.isoX, e.isoY);
-    	
-/*    	
-    	// TODO: replace this with a bounce() method in Entity so there's less risk of isoY getting "out of sync"
-    	if (e.animFrameNr == 3 || e.animFrameNr == 11) { // XXX: temp simulate movement
-			e.isoY += 1;
-		} else if (e.animFrameNr == 5 || e.animFrameNr == 14) {
-			e.isoY -= 1;
-		}
-*/
-    	
-    }
-
 
 	@Override
 	public void dispose() {
