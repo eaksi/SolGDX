@@ -43,7 +43,7 @@ public class Controls {
 		if (Gdx.input.isKeyJustPressed(Keys.NUM_0))
 			sol.debug = !sol.debug;
 		if (Gdx.input.isKeyJustPressed(Keys.NUM_9))
-			sol.drawOrderFlag = !sol.drawOrderFlag;
+			sol.drawOrderDebug = !sol.drawOrderDebug;
 
 		// Rotating the camera (disabled)
 		// if (Gdx.input.isKeyPressed(Keys.Q)) camera.rotate(-1f, 0, 0, 1);

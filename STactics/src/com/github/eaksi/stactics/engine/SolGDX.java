@@ -21,9 +21,8 @@ import com.github.eaksi.stactics.engine.gfx.Tile;
 
 public class SolGDX extends ApplicationAdapter {
 	
-	boolean debug = false;								// ****DEBUG****
-	boolean drawOrderFlag = false;						// draw order debug
-	private boolean cameraFollowsCharacter = false;		// set camera to move with character
+	boolean debug = false;
+	boolean drawOrderDebug = false;
 	private int drawOrder = 0;
 	
 	Camera camera;
@@ -273,7 +272,7 @@ public class SolGDX extends ApplicationAdapter {
         	}
     	}
     	
-    	if (drawOrderFlag) {
+    	if (drawOrderDebug) {
 			for (Drawable d: painter) {
 				drawOrder++;
 					smallFont.draw(batch, ""+drawOrder, d.isoX+24, d.isoY+36);
