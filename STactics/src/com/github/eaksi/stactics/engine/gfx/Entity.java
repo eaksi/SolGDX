@@ -90,7 +90,7 @@ public class Entity extends Drawable {
 		/* if (animFrameNr == -1) {
 			currentAnimation = Animation.IDLE;
 		}
-		*/		
+		*/
 		
 		switch(currentAnimation) {
 		

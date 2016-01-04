@@ -4,7 +4,11 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 
-public class GUI { // FIXME: refactor!!!
+/**
+ * This class draws everything on the guiPatch (SpriteBatch).
+ * The contents do not move with the camera, unlike the contents of the other batch.
+ */
+public class GUI {
 
 	private GlyphLayout layout = new GlyphLayout(); // XXX: temp
 	private static int leftDebugY = 0;

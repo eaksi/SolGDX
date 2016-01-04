@@ -5,6 +5,9 @@ import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.github.eaksi.stactics.engine.gfx.Entity.Direction;
 
+/**
+ *	This class handles the keyboard and mouse controls. Called from render/update loop in SolGDX. 
+ */
 public class Controls {
 
 	protected static void getInput(SolGDX sol) {

@@ -4,6 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.github.eaksi.stactics.engine.gfx.Entity;
 
+/**
+ * This class serves as a storage and contains help methods for drawing different graphics.
+ *
+ */
 public class Gfx {
 
 	private static Texture tempTile;			// temp test tile
