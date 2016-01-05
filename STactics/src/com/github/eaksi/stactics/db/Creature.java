@@ -15,6 +15,8 @@ public class Creature {
 
 	// base stats
 	private int baseHP, baseDelay;
+	
+	private int hp;
 
 	// x, y on battlemap
 	private int delay; // XXX: move to Entity?
@@ -31,6 +33,7 @@ public class Creature {
 		suffixName = World.getRandomLName();
 
 		baseHP = 5;
+		hp = baseHP;
 
 		baseDelay = 10 + World.rng.nextInt(4);
 
@@ -60,6 +63,19 @@ public class Creature {
 
 	public int getBaseDelay() {
 		return baseDelay;
+	}
+	
+	public int getHP() {
+		return hp;
+	}
+	
+	// temp: quick and dirty method for displaying hp in symbols
+	public String getStringHP() {
+		String h = "";
+		for (int i = 0; i < hp; i++) {
+			h = h.concat("*");
+		}
+		return h;
 	}
 	
 	public String getFullName() {

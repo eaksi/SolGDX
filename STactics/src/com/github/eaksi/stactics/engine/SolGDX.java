@@ -24,6 +24,8 @@ public class SolGDX extends ApplicationAdapter {
 	boolean debug = false;
 	boolean drawOrderDebug = false;
 	private int drawOrder = 0;
+	
+	boolean showEntityInfo = false;
 
 	Camera camera;
 	private SpriteBatch batch; // primary SpriteBatch for graphics
@@ -283,6 +285,14 @@ public class SolGDX extends ApplicationAdapter {
 				smallFont.draw(batch, "" + drawOrder, d.isoX + 24, d.isoY + 36);
 			}
 		}
+		
+		if (showEntityInfo) {
+			font.setColor(1f, 0f, 0f, 1f);
+			for (Entity e : entities) {
+				font.draw(batch, e.cr.getStringHP(), e.isoX-4, e.isoY+72);
+			}
+		}
+		
 	}
 
 	@Override

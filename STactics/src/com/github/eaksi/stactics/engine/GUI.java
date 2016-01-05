@@ -51,8 +51,9 @@ public class GUI {
 		} else {
 			debugDraw(sol, guiBatch, "Help:", false);
 			debugDraw(sol, guiBatch, "PGUP & PGDOWN = change entity", false);
-			debugDraw(sol, guiBatch, "9 = show z draw order", false);
-			debugDraw(sol, guiBatch, "0 = show debug info", false);
+			debugDraw(sol, guiBatch, "HOME = display battler info", false);
+			debugDraw(sol, guiBatch, "9 = toggle z draw order", false);
+			debugDraw(sol, guiBatch, "0 = toggle debug info", false);
 		}
 
 		// layout.setText(font, "layout test");

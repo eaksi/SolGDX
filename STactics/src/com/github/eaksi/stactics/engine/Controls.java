@@ -39,9 +39,12 @@ public class Controls {
 		} else if (Gdx.input.isTouched()) {
 			sol.mouseDragX = Gdx.input.getX();
 			sol.mouseDragY = Gdx.input.getY();
-
 		}
 
+		if (Gdx.input.isKeyJustPressed(Keys.HOME))
+			sol.showEntityInfo = !sol.showEntityInfo;
+
+		
 		// Toggle debug mode
 		if (Gdx.input.isKeyJustPressed(Keys.NUM_0))
 			sol.debug = !sol.debug;
