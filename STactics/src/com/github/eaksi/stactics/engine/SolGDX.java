@@ -32,6 +32,7 @@ public class SolGDX extends ApplicationAdapter {
 	private SpriteBatch guiBatch; // GUI SpriteBatch, does not move with camera
 	BitmapFont font; // temp test font
 	BitmapFont smallFont; // temp test font 2
+	BitmapFont systemFont;
 
 	final int screenWidth = 1024; // screen resolution
 	final int screenHeight = 800;
@@ -86,6 +87,7 @@ public class SolGDX extends ApplicationAdapter {
 
 		font = FontLoader.getFont(FontLoader.Type.MAIN);
 		smallFont = FontLoader.getFont(FontLoader.Type.SMALL);
+		systemFont = FontLoader.getSystemFont();
 
 		batch = new SpriteBatch();
 		guiBatch = new SpriteBatch();
@@ -287,9 +289,11 @@ public class SolGDX extends ApplicationAdapter {
 		}
 		
 		if (showEntityInfo) {
-			font.setColor(1f, 0f, 0f, 1f);
 			for (Entity e : entities) {
-				font.draw(batch, e.cr.getStringHP(), e.isoX-4, e.isoY+72);
+				smallFont.setColor(0f, 0f, 0f, 1f);
+				smallFont.draw(batch, e.cr.getName(), e.isoX-4, e.isoY+87);
+				systemFont.setColor(1f, 0f, 0f, 1f);
+				systemFont.draw(batch, e.cr.getStringHP(), e.isoX-4, e.isoY+72);
 			}
 		}
 		

@@ -48,5 +48,9 @@ public class FontLoader {
 
 		return font;
 	}
-
+	
+	public static BitmapFont getSystemFont() {
+		return new BitmapFont();
+	}
+	
 }
