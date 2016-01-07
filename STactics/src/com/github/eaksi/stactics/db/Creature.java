@@ -16,12 +16,8 @@ public class Creature {
 	// base stats
 	private int baseHP, baseDelay;
 	
-	private int hp;
+	private int hp, delay;
 
-	// x, y on battlemap
-	private int delay; // XXX: move to Entity?
-
-	private Vector<Integer> knownSpells;
 	public Hashtable<Integer, Integer> skills; // XXX: temp public
 
 	public Creature() {
@@ -32,8 +28,8 @@ public class Creature {
 		name = World.getRandomFName();
 		suffixName = World.getRandomLName();
 
-		baseHP = 5;
-		hp = baseHP;
+		baseHP = 4 + World.rng.nextInt(2);
+		hp = baseHP - 2; //World.rng.nextInt(2);
 
 		baseDelay = 10 + World.rng.nextInt(4);
 
@@ -72,8 +68,12 @@ public class Creature {
 	// temp: quick and dirty method for displaying hp in symbols
 	public String getStringHP() {
 		String h = "";
-		for (int i = 0; i < hp; i++) {
-			h = h.concat("*");
+		for (int i = 0; i < baseHP; i++) {
+			if (i >= hp ) {
+				h = h.concat("-");
+			} else {
+				h = h.concat("o");
+			}
 		}
 		return h;
 	}
@@ -93,8 +93,5 @@ public class Creature {
 		return fullName;
 	}
 
-	// public int getJumpHeight() // TODO: needs creature cclass id reference
-	// public int getMove() // TODO: needs creature cclass id reference
-	// public int getSwim() // TODO: needs creature cclass/skill id reference
 
 }

@@ -94,14 +94,12 @@ public class SolGDX extends ApplicationAdapter {
 
 		Gfx.initialize();
 
-		// initial setup of entity locations, read tileX&Y, set isoX&Y
-		setEntityLocations();
+		setEntityLocations(); // initial setup of entity locations
 
-		// initialize painter's algorithm (make Drawable objects, sort)
-		initializePainter();
+		initializePainter(); // initialize painter's algorithm (make & sort Drawables)
 
-		// print the BattleMap width and height and w/h difference (negative =
-		// more width than height)
+		/* print the BattleMap width and height and w/h difference
+		 *  (negative = more width than height)	 */
 		if (debug) {
 			System.out.println("battleMap.getWidth() = " + battleMap.getWidth() + "  battleMap.getHeight() = "
 					+ battleMap.getHeight() + "  difference = " + (battleMap.getWidth() - battleMap.getHeight()));

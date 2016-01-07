@@ -98,7 +98,6 @@ public class Entity extends Drawable {
 			animFrameNr = -1;
 			animFrame = AnimFrame.STAND;
 			break;
-		
 		// TODO: add character "bounce" to animation (change isoY couple of pixels, more with flying entities) 
 		case WALK:
 			if (animFrameNr == -1 || animFrameNr >= 16) {
@@ -126,7 +125,6 @@ public class Entity extends Drawable {
 				}
 			}
 			break;
-			
 		default:
 			System.err.println("Error: Invalid Animation on " + cr.getId() + ":" + cr.getName());
 			animFrameNr = -1;  // prevent animation infinite loops

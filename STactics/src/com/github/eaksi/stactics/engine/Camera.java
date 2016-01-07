@@ -69,8 +69,7 @@ public class Camera extends OrthographicCamera{
 	// TODO: refactor
 	public void moveHorizontal(int amount)	{ translate(amount, 0, 0);  }
 	public void moveVertical(int amount)	{ translate(0, amount, 0);  }
-	
-	
+		
 	// keyboard-controlled camera movement
 	public void moveLeft()	{ translate(-moveIncrement, 0, 0); }
 	public void moveRight() { translate(moveIncrement, 0, 0);  }

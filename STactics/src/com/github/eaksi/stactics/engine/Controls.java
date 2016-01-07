@@ -55,6 +55,7 @@ public class Controls {
 		// if (Gdx.input.isKeyPressed(Keys.Q)) camera.rotate(-1f, 0, 0, 1);
 		// if (Gdx.input.isKeyPressed(Keys.E)) camera.rotate(1f, 0, 0, 1);
 
+		
 		if (sol.chAnimating) // if animation in progress, break
 			return;
 
