@@ -29,7 +29,7 @@ public class Creature {
 		suffixName = World.getRandomLName();
 
 		baseHP = 4 + World.rng.nextInt(2);
-		hp = baseHP - 2; //World.rng.nextInt(2);
+		hp = baseHP - World.rng.nextInt(2);
 
 		baseDelay = 10 + World.rng.nextInt(4);
 
@@ -66,16 +66,20 @@ public class Creature {
 	}
 	
 	// temp: quick and dirty method for displaying hp in symbols
-	public String getStringHP() {
-		String h = "";
-		for (int i = 0; i < baseHP; i++) {
-			if (i >= hp ) {
-				h = h.concat("-");
-			} else {
-				h = h.concat("o");
+	public String getStringHP(boolean dots) {
+		if (dots) {
+			String h = "";
+			for (int i = 0; i < baseHP; i++) {
+				if (i >= hp ) {
+					h = h.concat("-");
+				} else {
+					h = h.concat("o");
+				}
 			}
+			return h;
+		} else {
+			return hp + "/" + baseHP;
 		}
-		return h;
 	}
 	
 	public String getFullName() {

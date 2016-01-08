@@ -291,7 +291,7 @@ public class SolGDX extends ApplicationAdapter {
 				smallFont.setColor(0f, 0f, 0f, 1f);
 				smallFont.draw(batch, e.cr.getName(), e.isoX-4, e.isoY+87);
 				systemFont.setColor(1f, 0f, 0f, 1f);
-				systemFont.draw(batch, e.cr.getStringHP(), e.isoX-4, e.isoY+72);
+				systemFont.draw(batch, e.cr.getStringHP(true), e.isoX + 4 - 2*(e.cr.getHP()), e.isoY+72);
 			}
 		}
 		
