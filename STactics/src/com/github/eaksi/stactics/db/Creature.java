@@ -65,6 +65,11 @@ public class Creature {
 		return hp;
 	}
 	
+	public void applyDamage(int damage) {
+		hp -= damage;
+		if (hp < 0) hp = 0;
+	}
+	
 	// temp: quick and dirty method for displaying hp in symbols
 	public String getStringHP(boolean dots) {
 		if (dots) {

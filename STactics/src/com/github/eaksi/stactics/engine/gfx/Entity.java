@@ -125,6 +125,15 @@ public class Entity extends Drawable {
 				}
 			}
 			break;
+		case ATTACK:  // XXX: TEMP
+			if (animFrameNr == -1 || animFrameNr >= 16) {
+				animFrameNr = -1;	// TODO: more elegant solution
+				animFrame = AnimFrame.STAND;
+				currentAnimation = Animation.IDLE;
+			} else {
+				animFrame = AnimFrame.WALK1;
+			}
+			break;
 		default:
 			System.err.println("Error: Invalid Animation on " + cr.getId() + ":" + cr.getName());
 			animFrameNr = -1;  // prevent animation infinite loops

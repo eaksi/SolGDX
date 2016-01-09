@@ -26,6 +26,8 @@ public class SolGDX extends ApplicationAdapter {
 	private int drawOrder = 0;
 	
 	boolean showEntityInfo = false;
+	
+	boolean hitBattlersDebug = true;
 
 	Camera camera;
 	private SpriteBatch batch; // primary SpriteBatch for graphics
@@ -221,8 +223,15 @@ public class SolGDX extends ApplicationAdapter {
 		// test if able to move because of other entities
 		for (Entity e : entities) {
 			if (entities.get(nr).tileX + tryX == e.tileX && entities.get(nr).tileY + tryY == e.tileY) {
-				printMoveDebug("Can't move, " + e.cr.getName() + " (id:" + e.cr.getId() + ") is in the way: "
-						+ entities.get(nr).getHeading(), tryX, tryY);
+				if (!hitBattlersDebug) {
+					printMoveDebug("Can't move, " + e.cr.getName() + " (id:" + e.cr.getId() + ") is in the way: "
+							+ entities.get(nr).getHeading(), tryX, tryY);
+				} else { // XXX: TEMP attack code
+					entities.get(nr).animFrameNr = 0;
+					entities.get(nr).setAnimation(Entity.Animation.ATTACK);
+					chAnimating = true;
+					e.cr.applyDamage(1);
+				}
 				return; // NOTE!: "return;" here
 			}
 		}
