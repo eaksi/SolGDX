@@ -16,7 +16,7 @@ public class Entity extends Drawable {
 	}
 
 	public enum AnimFrame {
-		STAND, WALK1, WALK2
+		STAND, WALK1, WALK2, ATTACKING, DAMAGED
 	}
 
 	public Creature cr; // reference to creature
@@ -131,8 +131,47 @@ public class Entity extends Drawable {
 				animFrame = AnimFrame.STAND;
 				currentAnimation = Animation.IDLE;
 			} else {
-				animFrame = AnimFrame.WALK1;
+				switch(animFrameNr) {
+				case 0: case 1: case 2: case 3:
+					animFrame = AnimFrame.WALK2;
+					break;
+				case 4: case 5: case 6: case 7: case 8: case 9:
+					animFrame = AnimFrame.ATTACKING;
+		    		break;
+				case 10: case 11: case 12: case 13: case 14: case 15:
+					animFrame = AnimFrame.STAND;
+		    		break;
+		    	default:
+		    		System.err.println("Error: Wrong values in updateAnimFrame! (refactored wrong way?)");
+					animFrameNr = -1;  // prevent animation infinite loops
+					animFrame = AnimFrame.STAND;  // prevent animation infinite loops
+				}
 			}
+			break;
+		case HIT:  // XXX: TEMP
+			if (animFrameNr == -1 || animFrameNr >= 16) {
+				animFrameNr = -1;	// TODO: more elegant solution
+				animFrame = AnimFrame.STAND;
+				currentAnimation = Animation.IDLE;
+			} else {
+				animFrame = AnimFrame.DAMAGED;
+				
+				switch(animFrameNr) {
+				case 0: case 1: case 2: case 3:
+					isoX += 1;
+				case 4: case 5: case 6: case 7:
+					isoX -= 2;
+				case 8: case 9:	case 10: case 11:
+					isoX += 2;
+				case 12: case 13: case 14: case 15:
+					isoX -= 1;
+				
+		    	default:
+		    		System.err.println("Error: Wrong values in updateAnimFrame! (refactored wrong way?)");
+					animFrameNr = -1;  // prevent animation infinite loops
+					animFrame = AnimFrame.STAND;  // prevent animation infinite loops
+			}
+		}
 			break;
 		default:
 			System.err.println("Error: Invalid Animation on " + cr.getId() + ":" + cr.getName());

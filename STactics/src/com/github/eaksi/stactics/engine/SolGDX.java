@@ -230,7 +230,11 @@ public class SolGDX extends ApplicationAdapter {
 					entities.get(nr).animFrameNr = 0;
 					entities.get(nr).setAnimation(Entity.Animation.ATTACK);
 					chAnimating = true;
+					
+					// animate victim
 					e.cr.applyDamage(1);
+					e.animFrameNr = 0;
+					e.setAnimation(Entity.Animation.HIT);
 				}
 				return; // NOTE!: "return;" here
 			}

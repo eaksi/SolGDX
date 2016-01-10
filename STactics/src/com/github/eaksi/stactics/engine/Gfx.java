@@ -64,6 +64,10 @@ public class Gfx {
 				return flippedSheet[0][4];
 			case WALK2:
 				return flippedSheet[0][5];
+			case ATTACKING:
+				return flippedSheet[1][6];
+			case DAMAGED:
+				return flippedSheet[1][5];
 			default:
 				System.err.println("Error: drawEntitySprite unknown animation frame!");
 				return new TextureRegion();
@@ -76,6 +80,10 @@ public class Gfx {
 				return splitSheet[0][1];
 			case WALK2:
 				return splitSheet[0][2];
+			case ATTACKING:
+				return splitSheet[0][6];
+			case DAMAGED:
+				return splitSheet[1][4];
 			default:
 				System.err.println("Error: drawEntitySprite unknown animation frame!");
 				return new TextureRegion();
@@ -88,6 +96,10 @@ public class Gfx {
 				return flippedSheet[0][1];
 			case WALK2:
 				return flippedSheet[0][2];
+			case ATTACKING:
+				return flippedSheet[0][6];
+			case DAMAGED:
+				return flippedSheet[1][4];
 			default:
 				System.err.println("Error: drawEntitySprite unknown animation frame!");
 				return new TextureRegion();
@@ -100,6 +112,10 @@ public class Gfx {
 				return splitSheet[0][4];
 			case WALK2:
 				return splitSheet[0][5];
+			case ATTACKING:
+				return splitSheet[1][6];
+			case DAMAGED:	
+				return splitSheet[1][5];
 			default:
 				System.err.println("Error: drawEntitySprite unknown animation frame!");
 				return new TextureRegion();
