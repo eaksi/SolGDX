@@ -120,14 +120,19 @@ public class SolGDX extends ApplicationAdapter {
 		camera.update();
 
 		Controls.getInput(this); // keyboard controls handled at this point
-		chAnimating = entities.get(nr).updateAnimFrame(); // XXX: temp character
-															// turn-based
-															// keyboard movement
-
+		// update animation frames for entities
+		for (Entity e : entities) {
+			e.updateAnimFrame();
+		}
+		
+		chAnimating = (entities.get(nr).getAnimation() != Entity.Animation.IDLE); // if no animation, can move
+		
 		batch.setProjectionMatrix(camera.combined);
 
 		camera.updateZoom();
+		
 
+		
 		// draw everything
 		batch.begin();
 		drawIsometric();
@@ -136,6 +141,8 @@ public class SolGDX extends ApplicationAdapter {
 		guiBatch.begin();
 		GUI.draw(this, guiBatch); // draw GUI and possible debug data
 		guiBatch.end();
+		
+
 
 		// update FPS counter on window title
 		Gdx.graphics
@@ -147,8 +154,8 @@ public class SolGDX extends ApplicationAdapter {
 		// set starting locations of entities
 		for (Entity e : entities) {
 			e.isoX = toIsoX(e.tileY, e.tileX) + 16;
-			e.isoY = toIsoY(e.tileY, e.tileX) + 36; // XXX: sprite/tile sizes
-													// hack
+			e.isoY = toIsoY(e.tileY, e.tileX) + 36; // XXX: sprite/tile sizes hack
+			
 		}
 	}
 

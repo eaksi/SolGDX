@@ -154,18 +154,22 @@ public class Entity extends Drawable {
 				animFrame = AnimFrame.STAND;
 				currentAnimation = Animation.IDLE;
 			} else {
-				animFrame = AnimFrame.DAMAGED;
-				
+				animFrame = AnimFrame.DAMAGED;	// only one frame of animation
+
+				// sprite moves from side to side when entity hit
 				switch(animFrameNr) {
 				case 0: case 1: case 2: case 3:
 					isoX += 1;
+					break;
 				case 4: case 5: case 6: case 7:
 					isoX -= 2;
+					break;
 				case 8: case 9:	case 10: case 11:
 					isoX += 2;
+					break;
 				case 12: case 13: case 14: case 15:
 					isoX -= 1;
-				
+					break;
 		    	default:
 		    		System.err.println("Error: Wrong values in updateAnimFrame! (refactored wrong way?)");
 					animFrameNr = -1;  // prevent animation infinite loops
