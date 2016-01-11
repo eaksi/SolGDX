@@ -14,7 +14,7 @@ public class STactics {
 		
 		Vector<Entity> battlers = new Vector<Entity>();
 		for (int i=0; i<4; i++) {
-			battlers.add(new Entity(new Creature()));
+			battlers.add(new Entity(new Creature(),0,0));
 		}
 
 

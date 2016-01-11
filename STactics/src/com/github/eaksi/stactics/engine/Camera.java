@@ -18,6 +18,8 @@ public class Camera extends OrthographicCamera{
 
 	// TODO: reimplement camera following character movement 
 	
+	// FIXME: if window size is changed during the game, the screen ratio goes awry
+	
 	public Camera(int width, int height) {
 		super();
 		this.setToOrtho(false, width, height);

@@ -9,6 +9,7 @@ public class Tile extends Drawable {
 	
 	public Tile(int tX, int tY, int iX, int iY, int depth, boolean w) {
 		
+		super();
 		this.tileX = tX;
 		this.tileY = tY;
 		

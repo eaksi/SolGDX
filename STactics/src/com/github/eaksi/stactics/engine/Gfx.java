@@ -121,7 +121,7 @@ public class Gfx {
 				return new TextureRegion();
 			} // end anim switch-case
 		} // end dir switch-case
-	} // method drawEntitySprite
+	} // end method drawEntitySprite
 	
 	public static void dispose() {
 		tempTile.dispose();

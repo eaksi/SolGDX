@@ -36,14 +36,10 @@ public class FontLoader {
 		generator = new FreeTypeFontGenerator(Gdx.files.internal(fontPath));
 		parameter = new FreeTypeFontParameter();
 		parameter.size = size;
-		// parameter.borderWidth = 2;
-		// parameter.borderColor = Color.BLUE; // doesn't work for some reason
-		// parameter.borderStraight = true;
-		// parameter.color = Color.BLACK;
+
 		BitmapFont font = generator.generateFont(parameter);
 		generator.dispose(); // generator no longer needed
 
-		// font = new BitmapFont();
 		font.setColor(Color.BLACK); // set default color
 
 		return font;

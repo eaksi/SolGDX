@@ -12,7 +12,7 @@ public class Entity extends Drawable {
 	}
 
 	public enum Animation {
-		IDLE, WALK, KO, ATTACK, HIT
+		IDLE, WALK, KO, ATTACK, HURT
 	}
 
 	public enum AnimFrame {
@@ -28,20 +28,20 @@ public class Entity extends Drawable {
 	
 	private int baseDelay, delay;
 
-	public Entity(Creature creat) {
+	public Entity(Creature creat, int x, int y) {
 
 		super();
-		this.cr = creat;
+		cr = creat;
 
-		this.baseDelay = cr.getBaseDelay();
+		baseDelay = cr.getBaseDelay();
 		
 		currentAnimation = Animation.IDLE;
 		animFrameNr = -1;
 		heading = Direction.NE;
 		animFrame = AnimFrame.STAND;
 
-		tileX = 0;
-		tileY = 0;
+		tileX = x;
+		tileY = y;
 
 	}
 
@@ -87,11 +87,7 @@ public class Entity extends Drawable {
 	}
 
 	public boolean updateAnimFrame() {
-		/* if (animFrameNr == -1) {
-			currentAnimation = Animation.IDLE;
-		}
-		*/
-		
+	
 		switch(currentAnimation) {
 		
 		case IDLE:
@@ -148,7 +144,7 @@ public class Entity extends Drawable {
 				}
 			}
 			break;
-		case HIT:  // XXX: TEMP
+		case HURT:  // XXX: TEMP
 			if (animFrameNr == -1 || animFrameNr >= 16) {
 				animFrameNr = -1;	// TODO: more elegant solution
 				animFrame = AnimFrame.STAND;

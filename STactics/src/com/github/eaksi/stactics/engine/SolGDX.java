@@ -7,10 +7,8 @@ import java.util.Vector;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.github.eaksi.stactics.db.BattleMap;
 import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.engine.gfx.Drawable;
@@ -39,7 +37,7 @@ public class SolGDX extends ApplicationAdapter {
 	final int screenWidth = 1024; // screen resolution
 	final int screenHeight = 800;
 
-	// (temp) if the engine is animating movement -> move keys disabled
+	// XXX: TEMP if the engine is animating movement -> move keys disabled
 	boolean chAnimating = false; 
 
 	private int tileWidth = 64;
@@ -65,24 +63,16 @@ public class SolGDX extends ApplicationAdapter {
 
 		battleMap = new BattleMap();
 		entities = new Vector<Entity>();
-		entities.add(new Entity(new Creature()));
+		entities.add(new Entity(new Creature(), 2, 1));
+		entities.add(new Entity(new Creature(), 4, 5));
+		entities.add(new Entity(new Creature(), 6, 4));
 
-		/*** XXX: TEMP ***/
-		entities.add(new Entity(new Creature()));
-		entities.add(new Entity(new Creature()));
-		System.out.println("Entity0 id: " + entities.get(0).getId());
-		System.out.println("Entity1 id: " + entities.get(1).getId());
-		System.out.println("Entity2 id: " + entities.get(2).getId());
-		entities.get(1).tileX = 4;
-		entities.get(1).tileY = 5;
-		entities.get(2).tileX = 6;
-		entities.get(2).tileY = 4;
 		System.out.println("***ENTITIES***");
 		for (Entity e : entities) {
 			System.out.println(e.cr.getId() + ": " + e.cr.getFullName());
 		}
 		System.out.println("**************");
-		/*****************/
+
 
 		// setup camera
 		camera = new Camera(screenWidth, screenHeight);
@@ -241,7 +231,7 @@ public class SolGDX extends ApplicationAdapter {
 					// animate victim
 					e.cr.applyDamage(1);
 					e.animFrameNr = 0;
-					e.setAnimation(Entity.Animation.HIT);
+					e.setAnimation(Entity.Animation.HURT);
 				}
 				return; // NOTE!: "return;" here
 			}
