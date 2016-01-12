@@ -6,7 +6,6 @@ import com.github.eaksi.stactics.engine.gfx.Entity;
 
 /**
  * This class serves as a storage and contains help methods for drawing different graphics.
- *
  */
 public class Gfx {
 

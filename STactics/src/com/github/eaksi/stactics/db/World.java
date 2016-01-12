@@ -14,11 +14,10 @@ public class World {
 	private static boolean skillTableInitialized = false;
 	private static Vector<String> fNameList;
 	private static Vector<String> lNameList;
-	protected static Random rng; // Random Number Generator
 
 	// Initialize everything
 	public static void initialize() {
-		rng = new Random(); // Initialize RNG
+		RNG.initialize();
 		initializeNameGenerator();
 		initializeSkills();
 		// initializeItems();
@@ -53,12 +52,12 @@ public class World {
 	}
 
 	public static String getRandomFName() {
-		int nr = rng.nextInt(fNameList.size());
+		int nr = RNG.nextInt(fNameList.size());
 		return fNameList.get(nr);
 	}
 
 	public static String getRandomLName() {
-		int nr = rng.nextInt(lNameList.size());
+		int nr = RNG.nextInt(lNameList.size());
 		return lNameList.get(nr);
 	}
 

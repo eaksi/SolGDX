@@ -1,7 +1,6 @@
 package com.github.eaksi.stactics.db;
 
 import java.util.Hashtable;
-import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Creature {
@@ -16,7 +15,7 @@ public class Creature {
 	// base stats
 	private int baseHP, baseDelay;
 	
-	private int hp, delay;
+	private int hp;
 
 	public Hashtable<Integer, Integer> skills; // XXX: temp public
 
@@ -28,15 +27,12 @@ public class Creature {
 		name = World.getRandomFName();
 		suffixName = World.getRandomLName();
 
-		baseHP = 4 + World.rng.nextInt(2);
-		hp = baseHP - World.rng.nextInt(2);
+		baseHP = 4 + RNG.nextInt(2);
+		hp = baseHP;
 
-		baseDelay = 10 + World.rng.nextInt(4);
+		baseDelay = 10 + RNG.nextInt(4);
 
 		skills.put(1, 2);
-
-		// starting current stats
-		delay = baseDelay + World.rng.nextInt(5);
 
 	}
 

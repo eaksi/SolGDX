@@ -15,9 +15,9 @@ public class Gear {
 		RECIPE		// a recipe book for (possible) crafting	//XXX: own class for recipes and quest items?
 	}
 	
-	private boolean customized = false;		// true if the item has changed permanently, cannot set back to false (sorting etc.)
-	private boolean tempChanged = false;	// true if item has changed temporarily,  can be set back to false
-	private boolean unique = false;			// true if only one can exist within the game (mainly for artifacts and quest items)
+	//private boolean customized = false;		// true if the item has changed permanently, cannot set back to false (sorting etc.)
+	//private boolean tempChanged = false;	// true if item has changed temporarily,  can be set back to false
+	//private boolean unique = false;			// true if only one can exist within the game (mainly for artifacts and quest items)
 	
 	
 }

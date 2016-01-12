@@ -1,6 +1,5 @@
 package com.github.eaksi.stactics.engine;
 
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 
@@ -10,13 +9,17 @@ import com.badlogic.gdx.utils.Align;
  */
 public class GUI {
 
-	private GlyphLayout layout = new GlyphLayout(); // XXX: temp
 	private static int leftDebugY = 0;
 	private static int rightDebugY = 0;
 
+	/**
+	 *  Called from SolGDX on every render() cycle after everything else has been rendered.
+	 */
 	protected static void draw(SolGDX sol, SpriteBatch guiBatch) {
 
 		sol.font.setColor(0.6f, 0.6f, 0.6f, 1f);
+		
+		// display current character info
 		sol.font.draw(guiBatch, "name: " + sol.entities.get(sol.nr).cr.getFullName(), 10, sol.screenHeight - 10);
 
 		leftDebugY = 0;
@@ -56,11 +59,11 @@ public class GUI {
 			debugDraw(sol, guiBatch, "0 = toggle debug info", false);
 		}
 
-		// layout.setText(font, "layout test");
-		// font.draw(guiBatch, layout, 200 + layout.width / 3, 200 +
-		// layout.height / 3);
 	}
 
+	/**
+	 *	Helper method for draw(...), makes for cleaner code 
+	 */
 	private static void debugDraw(SolGDX sol, SpriteBatch guiBatch, String text, boolean leftAlign) {
 		if (leftAlign) {
 			leftDebugY += 15;

@@ -1,10 +1,13 @@
 package com.github.eaksi.stactics.db;
 
+/**
+ *	Contains info on the battle map, height differences etc. 
+ */
 public class BattleMap {
 
 	private int[][] terrainMap;		// make 3d eventually for terrain effects and good borders
 	//public int[][] heightMap;
-	
+
 	public BattleMap() {
 		
 		// Huge map testing
