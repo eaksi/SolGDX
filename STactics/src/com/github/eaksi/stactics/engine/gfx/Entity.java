@@ -27,6 +27,8 @@ public class Entity extends Drawable {
 	private AnimFrame animFrame;
 	
 	private int baseDelay, delay;
+	private int moves, movesMax;
+	private int actions, actionsMax;
 
 	public Entity(Creature creat, int x, int y) {
 
@@ -40,6 +42,12 @@ public class Entity extends Drawable {
 		heading = Direction.NE;
 		animFrame = AnimFrame.STAND;
 
+		movesMax = cr.getBaseMove();
+		moves = movesMax;
+		
+		actionsMax = 1;
+		actions = actionsMax;
+		
 		tileX = x;
 		tileY = y;
 
@@ -67,6 +75,26 @@ public class Entity extends Drawable {
 
 	public String getAnimString() {
 		return currentAnimation.toString();
+	}
+	
+	public int getMoves() {
+		return moves;
+	}
+
+	public int getActions() {
+		return actions;
+	}
+	
+	public String getMAString() {
+			return "(A" + actions + " M" + moves + ")";
+	}
+	
+	public void spendAction() {
+		actions--;
+	}
+	
+	public void spendMove() {
+		moves--;
 	}
 	
 	@Override

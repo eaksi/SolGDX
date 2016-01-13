@@ -187,6 +187,7 @@ public class SolGDX extends ApplicationAdapter {
 	}
 
 	// check if creature can move to a tile, this fires only once per move
+	// XXX: refactor whole method
 	void setMoveDirection(Direction d) {
 
 		int tryX = 0;
@@ -223,28 +224,41 @@ public class SolGDX extends ApplicationAdapter {
 				if (!hitBattlersDebug) {
 					printMoveDebug("Can't move, " + e.cr.getName() + " (id:" + e.cr.getId() + ") is in the way: "
 							+ entities.get(nr).getHeading(), tryX, tryY);
-				} else { // XXX: TEMP attack code
+				} else if (entities.get(nr).getActions() > 0) { // XXX: TEMP attack code
 					entities.get(nr).animFrameNr = 0;
 					entities.get(nr).setAnimation(Entity.Animation.ATTACK);
 					chAnimating = true;
+					
+					entities.get(nr).spendAction();
 					
 					// animate victim
 					e.cr.applyDamage(1);
 					e.animFrameNr = 0;
 					e.setAnimation(Entity.Animation.HURT);
+				} else {
+					System.out.println(entities.get(nr).cr.getName() + " ran out of actions!");
 				}
 				return; // NOTE!: "return;" here
 			}
 		}
 
-		printMoveDebug("" + entities.get(nr).getHeading(), tryX, tryY);
-		entities.get(nr).tileX += tryX;
-		entities.get(nr).tileY += tryY;
-
-		// if everything okay, set movement in motion
-		entities.get(nr).animFrameNr = 0;
-		entities.get(nr).setAnimation(Entity.Animation.WALK);
-		chAnimating = true;
+		// check if entity has moves left
+		// TODO: moves where more than 1 point of move needed
+		if (entities.get(nr).getMoves() > 0) {
+			
+			printMoveDebug("" + entities.get(nr).getHeading(), tryX, tryY);
+			entities.get(nr).tileX += tryX;
+			entities.get(nr).tileY += tryY;
+	
+			// if everything okay, set movement in motion
+			entities.get(nr).animFrameNr = 0;
+			entities.get(nr).setAnimation(Entity.Animation.WALK);
+			chAnimating = true;
+			
+			entities.get(nr).spendMove();
+		} else {
+			System.out.println(entities.get(nr).cr.getName() + " ran out of moves!");
+		}
 	}
 
 	private void printMoveDebug(String dir, int x, int y) {
@@ -299,9 +313,10 @@ public class SolGDX extends ApplicationAdapter {
 		if (showEntityInfo) {
 			for (Entity e : entities) {
 				smallFont.setColor(0f, 0f, 0f, 1f);
-				smallFont.draw(batch, e.cr.getName(), e.isoX-4, e.isoY+87);
+				smallFont.draw(batch, e.cr.getName() + " " + e.getMAString(), e.isoX-4, e.isoY+87);
 				systemFont.setColor(1f, 0f, 0f, 1f);
 				systemFont.draw(batch, e.cr.getStringHP(true), e.isoX + 4 - 2*(e.cr.getHP()), e.isoY+72);
+								
 			}
 		}
 		

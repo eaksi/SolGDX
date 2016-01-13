@@ -13,7 +13,7 @@ public class Creature {
 	private String prefixName, suffixName; // titles and descriptors
 
 	// base stats
-	private int baseHP, baseDelay;
+	private int baseHP, baseDelay, baseMove;
 	
 	private int hp;
 
@@ -29,6 +29,8 @@ public class Creature {
 
 		baseHP = 4 + RNG.nextInt(2);
 		hp = baseHP;
+		
+		baseMove = 4;
 
 		baseDelay = 10 + RNG.nextInt(4);
 
@@ -57,6 +59,9 @@ public class Creature {
 		return baseDelay;
 	}
 	
+	public int getBaseMove() {
+		return baseMove;
+	}
 	public int getHP() {
 		return hp;
 	}
