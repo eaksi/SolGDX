@@ -55,6 +55,7 @@ public class GUI {
 			debugDraw(sol, guiBatch, "Help:", false);
 			debugDraw(sol, guiBatch, "PGUP & PGDOWN = change entity", false);
 			debugDraw(sol, guiBatch, "HOME = display battler info", false);
+			debugDraw(sol, guiBatch, "END = do \"new turn\" things with battler", false);
 			debugDraw(sol, guiBatch, "9 = toggle z draw order", false);
 			debugDraw(sol, guiBatch, "0 = toggle debug info", false);
 		}

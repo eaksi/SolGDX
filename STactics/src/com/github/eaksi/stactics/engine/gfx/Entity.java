@@ -97,6 +97,11 @@ public class Entity extends Drawable {
 		moves--;
 	}
 	
+	public void startNewTurn() {
+		actions = actionsMax;
+		moves = movesMax;
+	}
+	
 	@Override
 	public TextureRegion getSprite() {
 		return Gfx.drawEntitySprite(heading, animFrame);
