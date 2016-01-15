@@ -120,9 +120,7 @@ public class SolGDX extends ApplicationAdapter {
 		batch.setProjectionMatrix(camera.combined);
 
 		camera.updateZoom();
-		
 
-		
 		// draw everything
 		batch.begin();
 		drawIsometric();
@@ -131,8 +129,6 @@ public class SolGDX extends ApplicationAdapter {
 		guiBatch.begin();
 		GUI.draw(this, guiBatch); // draw GUI and possible debug data
 		guiBatch.end();
-		
-
 
 		// update FPS counter on window title
 		Gdx.graphics
@@ -144,7 +140,7 @@ public class SolGDX extends ApplicationAdapter {
 		// set starting locations of entities
 		for (Entity e : entities) {
 			e.isoX = toIsoX(e.tileY, e.tileX) + 16;
-			e.isoY = toIsoY(e.tileY, e.tileX) + 36; // XXX: sprite/tile sizes hack
+			e.isoY = toIsoY(e.tileY, e.tileX) + 22; // XXX: sprite/tile sizes hack
 			
 		}
 	}
@@ -269,13 +265,13 @@ public class SolGDX extends ApplicationAdapter {
 	// Get the isometric projection coordinate X, given tilemap X and Y as
 	// parameters.
 	private int toIsoX(int mapx, int mapy) {
-		return (screenWidth - ((battleMap.getWidth() * 32 - 32) + (mapy - mapx) * (tileWidth / 2)));
+		return (screenWidth - ((battleMap.getWidth() * 32) + (mapy - mapx) * (tileWidth / 2)));
 	}
 
 	// Get the isometric projection coordinate Y, given tilemap X and Y as
 	// parameters.
 	private int toIsoY(int mapx, int mapy) {
-		return (screenHeight - ((battleMap.getHeight() * 16 - 32) + (mapy + mapx) * (tileHeight / 2)));
+		return (screenHeight - ((battleMap.getHeight() * 16) + (mapy + mapx) * (tileHeight / 2)));
 	}
 
 	// primary draw method

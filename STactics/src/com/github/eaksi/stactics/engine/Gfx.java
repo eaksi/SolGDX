@@ -21,8 +21,8 @@ public class Gfx {
 	public static void initialize() {
 		
 		spriteSheet = new Texture("data/farcher_placeholder.png");
-		tempTile = new Texture("data/64px_tile_placeholder.png");
-		tempTile0 = new Texture("data/64px_tile_placeholder_water.png");
+		tempTile = new Texture("data/tile_placeholder.png");
+		tempTile0 = new Texture("data/tile_placeholder_water.png");
 
 		splitSheet = TextureRegion.split(spriteSheet, 32, 64);		
 
