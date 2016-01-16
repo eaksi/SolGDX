@@ -22,6 +22,7 @@ public class SolGDX extends ApplicationAdapter {
 	boolean debug = false;
 	boolean drawOrderDebug = false;
 	private int drawOrder = 0;
+	boolean autoRefreshMovesDebug = true;
 	
 	boolean showEntityInfo = false;
 	
@@ -224,8 +225,8 @@ public class SolGDX extends ApplicationAdapter {
 					entities.get(nr).animFrameNr = 0;
 					entities.get(nr).setAnimation(Entity.Animation.ATTACK);
 					chAnimating = true;
-					
-					entities.get(nr).spendAction();
+
+					entities.get(nr).spendAction();	
 					
 					// animate victim
 					e.cr.applyDamage(1);
@@ -238,6 +239,10 @@ public class SolGDX extends ApplicationAdapter {
 			}
 		}
 
+		// refresh moves automatically if debug flag for that is on
+		if (entities.get(nr).getMoves() <= 0 && autoRefreshMovesDebug) entities.get(nr).startNewTurn(); 
+		
+		
 		// check if entity has moves left
 		// TODO: moves where more than 1 point of move needed
 		if (entities.get(nr).getMoves() > 0) {
@@ -252,6 +257,8 @@ public class SolGDX extends ApplicationAdapter {
 			chAnimating = true;
 			
 			entities.get(nr).spendMove();
+			
+
 		} else {
 			System.out.println(entities.get(nr).cr.getName() + " ran out of moves!");
 		}
