@@ -45,7 +45,7 @@ public class Controls {
 			sol.showEntityInfo = !sol.showEntityInfo;
 
 		if (Gdx.input.isKeyJustPressed(Keys.END))
-			sol.entities.get(sol.nr).startNewTurn();
+			sol.entities.get(sol.nr).cr.startNewTurn();
 
 		
 		// Toggle debug mode

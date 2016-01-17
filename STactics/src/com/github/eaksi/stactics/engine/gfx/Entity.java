@@ -25,29 +25,17 @@ public class Entity extends Drawable {
 	public int animFrameNr; // current animation frame
 	private Direction heading;
 	private AnimFrame animFrame;
-	
-	private int baseDelay, delay;
-	private int moves, movesMax;
-	private int actions, actionsMax;
 
 	public Entity(Creature creat, int x, int y) {
 
 		super();
 		cr = creat;
-
-		baseDelay = cr.getBaseDelay();
 		
 		currentAnimation = Animation.IDLE;
 		animFrameNr = -1;
 		heading = Direction.NE;
 		animFrame = AnimFrame.STAND;
 
-		movesMax = cr.getBaseMove();
-		moves = movesMax;
-		
-		actionsMax = 1;
-		actions = actionsMax;
-		
 		tileX = x;
 		tileY = y;
 
@@ -76,48 +64,13 @@ public class Entity extends Drawable {
 	public String getAnimString() {
 		return currentAnimation.toString();
 	}
-	
-	public int getMoves() {
-		return moves;
-	}
 
-	public int getActions() {
-		return actions;
-	}
-	
-	public String getMAString() {
-			return "(A" + actions + " M" + moves + ")";
-	}
-	
-	public void spendAction() {
-		actions--;
-	}
-	
-	public void spendMove() {
-		moves--;
-	}
-	
-	public void startNewTurn() {
-		actions = actionsMax;
-		moves = movesMax;
-	}
 	
 	@Override
 	public TextureRegion getSprite() {
 		return Gfx.drawEntitySprite(heading, animFrame);
 	}
-	
-	public boolean isReady() {
 
-		if (delay <= 0) {
-			delay += baseDelay;
-			System.out.println(cr.getFullName() + ": ACTION");
-			return true;
-		}
-		System.out.println(cr.getFullName() + " (base:" + baseDelay + ") delay: " + delay);
-		delay--;
-		return false;
-	}
 
 	public boolean updateAnimFrame() {
 	

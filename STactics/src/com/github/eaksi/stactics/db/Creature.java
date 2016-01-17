@@ -13,10 +13,15 @@ public class Creature {
 	private String prefixName, suffixName; // titles and descriptors
 
 	// base stats
-	private int baseHP, baseDelay, baseMove;
+	private int naturalHP, naturalDelay;
 	
-	private int hp;
-
+	private int baseMovement;
+	
+	private int hp, moves, actions;
+	private int hpMax, movesMax, actionsMax;
+	
+	private int baseDelay, delay;
+	
 	public Hashtable<Integer, Integer> skills; // XXX: temp public
 
 	public Creature() {
@@ -27,13 +32,21 @@ public class Creature {
 		name = World.getRandomFName();
 		suffixName = World.getRandomLName();
 
-		baseHP = 4 + RNG.nextInt(2);
-		hp = baseHP;
+		naturalHP = 4 + RNG.nextInt(2);
+		hpMax = naturalHP;
+		hp = naturalHP;
 		
-		baseMove = 4;
-
-		baseDelay = 10 + RNG.nextInt(4);
-
+		baseMovement = 4;
+		movesMax = baseMovement;
+		moves = baseMovement;
+		
+		naturalDelay = 10 + RNG.nextInt(4);
+		baseDelay = naturalDelay;
+		delay = naturalDelay;
+		
+		actionsMax = 1;
+		actions = actionsMax;
+		
 		skills.put(1, 2);
 
 	}
@@ -58,10 +71,7 @@ public class Creature {
 	public int getBaseDelay() {
 		return baseDelay;
 	}
-	
-	public int getBaseMove() {
-		return baseMove;
-	}
+
 	public int getHP() {
 		return hp;
 	}
@@ -71,11 +81,37 @@ public class Creature {
 		if (hp < 0) hp = 0;
 	}
 	
+	
+	public int getMoves() {
+		return moves;
+	}
+
+	public int getActions() {
+		return actions;
+	}
+	
+	public String getMAString() {
+			return "(A" + actions + " M" + moves + ")";
+	}
+	
+	public void spendAction() {
+		actions--;
+	}
+	
+	public void spendMove() {
+		moves--;
+	}
+	
+	public void startNewTurn() {
+		actions = actionsMax;
+		moves = movesMax;
+	}
+	
 	// temp: quick and dirty method for displaying hp in symbols
 	public String getStringHP(boolean dots) {
 		if (dots) {
 			String h = "";
-			for (int i = 0; i < baseHP; i++) {
+			for (int i = 0; i < hpMax; i++) {
 				if (i >= hp ) {
 					h = h.concat("-");
 				} else {
@@ -84,7 +120,7 @@ public class Creature {
 			}
 			return h;
 		} else {
-			return hp + "/" + baseHP;
+			return hp + "/" + hpMax;
 		}
 	}
 	
@@ -103,5 +139,16 @@ public class Creature {
 		return fullName;
 	}
 
+	public boolean isReady() {
+
+		if (delay <= 0) {
+			delay += baseDelay;
+			System.out.println(getFullName() + ": ACTION");
+			return true;
+		}
+		System.out.println(getFullName() + " (base:" + baseDelay + ") delay: " + delay);
+		delay--;
+		return false;
+	}
 
 }

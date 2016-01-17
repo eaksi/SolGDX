@@ -22,7 +22,7 @@ public class STactics {
 		for (int i = 0; i < 50; i++) {
 			System.out.println("*** TURN "+ (i+1) +" ***");
 			for (Entity battler: battlers) {
-				battler.isReady();
+				battler.cr.isReady();
 			}
 		}
 		

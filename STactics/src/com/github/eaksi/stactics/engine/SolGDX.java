@@ -221,12 +221,12 @@ public class SolGDX extends ApplicationAdapter {
 				if (!hitBattlersDebug) {
 					printMoveDebug("Can't move, " + e.cr.getName() + " (id:" + e.cr.getId() + ") is in the way: "
 							+ entities.get(nr).getHeading(), tryX, tryY);
-				} else if (entities.get(nr).getActions() > 0) { // XXX: TEMP attack code
+				} else if (entities.get(nr).cr.getActions() > 0) { // XXX: TEMP attack code
 					entities.get(nr).animFrameNr = 0;
 					entities.get(nr).setAnimation(Entity.Animation.ATTACK);
 					chAnimating = true;
 
-					entities.get(nr).spendAction();	
+					entities.get(nr).cr.spendAction();	
 					
 					// animate victim
 					e.cr.applyDamage(1);
@@ -240,12 +240,12 @@ public class SolGDX extends ApplicationAdapter {
 		}
 
 		// refresh moves automatically if debug flag for that is on
-		if (entities.get(nr).getMoves() <= 0 && autoRefreshMovesDebug) entities.get(nr).startNewTurn(); 
+		if (entities.get(nr).cr.getMoves() <= 0 && autoRefreshMovesDebug) entities.get(nr).cr.startNewTurn(); 
 		
 		
 		// check if entity has moves left
 		// TODO: moves where more than 1 point of move needed
-		if (entities.get(nr).getMoves() > 0) {
+		if (entities.get(nr).cr.getMoves() > 0) {
 			
 			printMoveDebug("" + entities.get(nr).getHeading(), tryX, tryY);
 			entities.get(nr).tileX += tryX;
@@ -256,7 +256,7 @@ public class SolGDX extends ApplicationAdapter {
 			entities.get(nr).setAnimation(Entity.Animation.WALK);
 			chAnimating = true;
 			
-			entities.get(nr).spendMove();
+			entities.get(nr).cr.spendMove();
 			
 
 		} else {
@@ -316,7 +316,7 @@ public class SolGDX extends ApplicationAdapter {
 		if (showEntityInfo) {
 			for (Entity e : entities) {
 				smallFont.setColor(0f, 0f, 0f, 1f);
-				smallFont.draw(batch, e.cr.getName() + " " + e.getMAString(), e.isoX-4, e.isoY+87);
+				smallFont.draw(batch, e.cr.getName() + " " + e.cr.getMAString(), e.isoX-4, e.isoY+87);
 				systemFont.setColor(1f, 0f, 0f, 1f);
 				systemFont.draw(batch, e.cr.getStringHP(true), e.isoX + 4 - 2*(e.cr.getHP()), e.isoY+72);
 								
