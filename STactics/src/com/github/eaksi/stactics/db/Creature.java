@@ -12,13 +12,14 @@ public class Creature {
 	private String name;
 	private String prefixName, suffixName; // titles and descriptors
 
-	// base stats
+	// "natural", mostly unchanging stats
 	private int naturalHP, naturalDelay;
 	
 	private int baseMovement;
 	
-	private int hp, moves, actions;
-	private int hpMax, movesMax, actionsMax;
+	private int hp, hpMax;
+	private int moves, movesMax;
+	private int actions, actionsMax;
 	
 	private int baseDelay, delay;
 	

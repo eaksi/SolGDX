@@ -2,7 +2,7 @@ package com.github.eaksi.stactics.engine;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
-public class Camera extends OrthographicCamera{
+public class Camera extends OrthographicCamera {
 	
 	private boolean zoomingIn = false;	 
 	private boolean zoomingOut = false;

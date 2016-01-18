@@ -1,8 +1,9 @@
-package com.github.eaksi.stactics.engine;
+package com.github.eaksi.stactics.main;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.github.eaksi.stactics.db.World;
+import com.github.eaksi.stactics.engine.SolGDX;
 
 public class DesktopLauncher {
 	

@@ -2,6 +2,10 @@ package com.github.eaksi.stactics.db;
 
 import java.util.Random;
 
+/**
+ * A very basic Random Number Generator class. Will be expanded later. 
+ *
+ */
 public class RNG {
 
 	private static Random rng;

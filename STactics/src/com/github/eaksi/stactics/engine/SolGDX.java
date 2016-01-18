@@ -306,6 +306,7 @@ public class SolGDX extends ApplicationAdapter {
 			}
 		}
 
+		//FIXME: placed incorrectly
 		if (drawOrderDebug) {
 			for (Drawable d : painter) {
 				drawOrder++;
@@ -313,6 +314,7 @@ public class SolGDX extends ApplicationAdapter {
 			}
 		}
 		
+		//FIXME: placed incorrectly
 		if (showEntityInfo) {
 			for (Entity e : entities) {
 				smallFont.setColor(0f, 0f, 0f, 1f);
