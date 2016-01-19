@@ -37,19 +37,21 @@ public class Creature {
 		hpMax = naturalHP;
 		hp = naturalHP;
 		
-		baseMovement = 4;
-		movesMax = baseMovement;
-		moves = baseMovement;
-		
 		naturalDelay = 10 + RNG.nextInt(4);
-		baseDelay = naturalDelay;
-		delay = naturalDelay;
+		
+		baseMovement = 4;
 		
 		actionsMax = 1;
-		actions = actionsMax;
 		
 		skills.put(1, 2);
 
+		baseDelay = naturalDelay;
+		delay = naturalDelay;
+		movesMax = baseMovement;
+		moves = baseMovement;
+		actions = actionsMax;
+
+		
 	}
 
 	public Creature(String pre, String nam, String suf) {

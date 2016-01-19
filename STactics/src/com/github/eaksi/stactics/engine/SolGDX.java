@@ -172,9 +172,9 @@ public class SolGDX extends ApplicationAdapter {
 
 		// add characters
 		for (Entity e : entities) {
-			// FIXME: z position guessed (but tested, need frame by frame
+			// XXX: z position guessed (but tested, need frame by frame
 			// analysis, height changes testing and gfx)
-			e.setZ(e.isoY - 43);
+			e.setZ(e.isoY - 27);
 			painter.add(e);
 		}
 
@@ -269,19 +269,23 @@ public class SolGDX extends ApplicationAdapter {
 				+ (entities.get(nr).tileX + x) + "," + (entities.get(nr).tileY + y) + ")");
 	}
 
-	// Get the isometric projection coordinate X, given tilemap X and Y as
-	// parameters.
+	/**
+	 *  Get the isometric projection coordinate X, given tilemap X and Y as parameters
+	 */
 	private int toIsoX(int mapx, int mapy) {
 		return (screenWidth - ((battleMap.getWidth() * 32) + (mapy - mapx) * (tileWidth / 2)));
 	}
 
-	// Get the isometric projection coordinate Y, given tilemap X and Y as
-	// parameters.
+	/**
+	 *  Get the isometric projection coordinate Y, given tilemap X and Y as parameters
+	 */
 	private int toIsoY(int mapx, int mapy) {
 		return (screenHeight - ((battleMap.getHeight() * 16) + (mapy + mapx) * (tileHeight / 2)));
 	}
 
-	// primary draw method
+	/**
+	 *  The primary draw method.
+	 */
 	private void drawIsometric() {
 
 		// sort everything (again)
@@ -300,8 +304,8 @@ public class SolGDX extends ApplicationAdapter {
 			smallFont.setColor(0f, 0f, 0f, 1f);
 			for (int i = 0; i < battleMap.getWidth(); i++) {
 				for (int j = 0; j < battleMap.getHeight(); j++) {
-					smallFont.draw(batch, i + "," + j, toIsoX(j, i) + 25,
-							(toIsoY(j, i) + (battleMap.getTile(i, j) * 16 + 36)));
+					smallFont.draw(batch, i + "," + j, toIsoX(j, i) + 20,
+							(toIsoY(j, i) + (battleMap.getTile(i, j) * 16 + 20)));
 				}
 			}
 		}
@@ -310,11 +314,10 @@ public class SolGDX extends ApplicationAdapter {
 		if (drawOrderDebug) {
 			for (Drawable d : painter) {
 				drawOrder++;
-				smallFont.draw(batch, "" + drawOrder, d.isoX + 24, d.isoY + 36);
+				smallFont.draw(batch, "" + drawOrder, d.isoX + 24, d.isoY + 20);
 			}
 		}
 		
-		//FIXME: placed incorrectly
 		if (showEntityInfo) {
 			for (Entity e : entities) {
 				smallFont.setColor(0f, 0f, 0f, 1f);
