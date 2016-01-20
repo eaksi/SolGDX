@@ -14,26 +14,22 @@ import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.engine.gfx.Drawable;
 import com.github.eaksi.stactics.engine.gfx.Entity;
 import com.github.eaksi.stactics.engine.gfx.Entity.Direction;
-import com.github.eaksi.stactics.engine.gfx.FontLoader;
 import com.github.eaksi.stactics.engine.gfx.Tile;
 
 public class SolGDX extends ApplicationAdapter {
 
+	// debug flags and related things
 	boolean debug = false;
 	boolean drawOrderDebug = false;
 	private int drawOrder = 0;
 	boolean autoRefreshMovesDebug = true;
+	boolean hitBattlersDebug = true;
 	
 	boolean showEntityInfo = false;
 	
-	boolean hitBattlersDebug = true;
-
 	Camera camera;
 	private SpriteBatch batch; // primary SpriteBatch for graphics
 	private SpriteBatch guiBatch; // GUI SpriteBatch, does not move with camera
-	BitmapFont font; // temp test font
-	BitmapFont smallFont; // temp test font 2
-	BitmapFont systemFont;
 
 	final int screenWidth = 1024; // screen resolution
 	final int screenHeight = 800;
@@ -77,10 +73,6 @@ public class SolGDX extends ApplicationAdapter {
 
 		// setup camera
 		camera = new Camera(screenWidth, screenHeight);
-
-		font = FontLoader.getFont(FontLoader.Type.MAIN);
-		smallFont = FontLoader.getFont(FontLoader.Type.SMALL);
-		systemFont = FontLoader.getSystemFont();
 
 		batch = new SpriteBatch();
 		guiBatch = new SpriteBatch();
@@ -293,7 +285,7 @@ public class SolGDX extends ApplicationAdapter {
 		Collections.sort((List<Drawable>) painter, Collections.reverseOrder());
 
 		drawOrder = 0;
-		smallFont.setColor(0f, 0f, 0f, 1f);
+		Gfx.getSmallFont().setColor(0f, 0f, 0f, 1f);
 
 		for (Drawable d : painter) {
 			batch.draw(d.getSprite(), d.isoX, d.isoY);
@@ -301,10 +293,10 @@ public class SolGDX extends ApplicationAdapter {
 
 		// Draw BattleMap coordinates over tiles
 		if (debug) {
-			smallFont.setColor(0f, 0f, 0f, 1f);
+			Gfx.getSmallFont().setColor(0f, 0f, 0f, 1f);
 			for (int i = 0; i < battleMap.getWidth(); i++) {
 				for (int j = 0; j < battleMap.getHeight(); j++) {
-					smallFont.draw(batch, i + "," + j, toIsoX(j, i) + 20,
+					Gfx.getSmallFont().draw(batch, i + "," + j, toIsoX(j, i) + 20,
 							(toIsoY(j, i) + (battleMap.getTile(i, j) * 16 + 20)));
 				}
 			}
@@ -314,16 +306,16 @@ public class SolGDX extends ApplicationAdapter {
 		if (drawOrderDebug) {
 			for (Drawable d : painter) {
 				drawOrder++;
-				smallFont.draw(batch, "" + drawOrder, d.isoX + 24, d.isoY + 20);
+				Gfx.getSmallFont().draw(batch, "" + drawOrder, d.isoX + 24, d.isoY + 20);
 			}
 		}
 		
 		if (showEntityInfo) {
 			for (Entity e : entities) {
-				smallFont.setColor(0f, 0f, 0f, 1f);
-				smallFont.draw(batch, e.cr.getName() + " " + e.cr.getMAString(), e.isoX-4, e.isoY+87);
-				systemFont.setColor(1f, 0f, 0f, 1f);
-				systemFont.draw(batch, e.cr.getStringHP(true), e.isoX + 4 - 2*(e.cr.getHP()), e.isoY+72);
+				Gfx.getSmallFont().setColor(0f, 0f, 0f, 1f);
+				Gfx.getSmallFont().draw(batch, e.cr.getName() + " " + e.cr.getMAString(), e.isoX-4, e.isoY+87);
+				Gfx.getSystemFont().setColor(1f, 0f, 0f, 1f);
+				Gfx.getSystemFont().draw(batch, e.cr.getStringHP(true), e.isoX + 4 - 2*(e.cr.getHP()), e.isoY+72);
 								
 			}
 		}
@@ -336,10 +328,6 @@ public class SolGDX extends ApplicationAdapter {
 		guiBatch.dispose();
 
 		Gfx.dispose();
-
-		font.dispose();
-		smallFont.dispose();
-
 	}
 
 } // end class SolGDX

@@ -17,15 +17,15 @@ public class GUI {
 	 */
 	protected static void draw(SolGDX sol, SpriteBatch guiBatch) {
 
-		sol.font.setColor(0.6f, 0.6f, 0.6f, 1f);
+		Gfx.getFont().setColor(0.6f, 0.6f, 0.6f, 1f);
 		
 		// display current character info
-		sol.font.draw(guiBatch, "name: " + sol.entities.get(sol.nr).cr.getFullName(), 10, sol.screenHeight - 10);
+		Gfx.getFont().draw(guiBatch, "name: " + sol.entities.get(sol.nr).cr.getFullName(), 10, sol.screenHeight - 10);
 
 		leftDebugY = 0;
 		rightDebugY = 0;
 
-		sol.smallFont.setColor(0f, 0f, 0f, 1f);
+		Gfx.getSmallFont().setColor(0f, 0f, 0f, 1f);
 
 		// debug info
 		if (sol.debug) {
@@ -68,11 +68,11 @@ public class GUI {
 	private static void debugDraw(SolGDX sol, SpriteBatch guiBatch, String text, boolean leftAlign) {
 		if (leftAlign) {
 			leftDebugY += 15;
-			sol.smallFont.draw(guiBatch, text, 10, sol.screenHeight - leftDebugY, sol.screenWidth - 150, Align.right,
+			Gfx.getSmallFont().draw(guiBatch, text, 10, sol.screenHeight - leftDebugY, sol.screenWidth - 150, Align.right,
 					true);
 		} else {
 			rightDebugY += 15;
-			sol.smallFont.draw(guiBatch, text, 10, sol.screenHeight - rightDebugY, sol.screenWidth - 20, Align.right,
+			Gfx.getSmallFont().draw(guiBatch, text, 10, sol.screenHeight - rightDebugY, sol.screenWidth - 20, Align.right,
 					true);
 		}
 

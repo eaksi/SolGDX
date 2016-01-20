@@ -1,6 +1,7 @@
 package com.github.eaksi.stactics.engine;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.github.eaksi.stactics.engine.gfx.Entity;
 
@@ -17,9 +18,14 @@ public class Gfx {
 	private static TextureRegion[][] flippedSheet;		// same as splitSheet, but regions individually flipped
 	private static TextureRegion landTile;
 	private static TextureRegion waterTile;
+	
+	private static BitmapFont font; // temp test font
+	private static BitmapFont smallFont; // temp test font 2
+	private static BitmapFont systemFont;
 
 	public static void initialize() {
 		
+		// load sprite sheets
 		spriteSheet = new Texture("data/farcher_placeholder.png");
 		tempTile = new Texture("data/tile_placeholder.png");
 		tempTile0 = new Texture("data/tile_placeholder_water.png");
@@ -35,8 +41,14 @@ public class Gfx {
 			}
 		}
 
+		// load tile graphics
 		landTile = new TextureRegion(tempTile);
 		waterTile = new TextureRegion(tempTile0);
+		
+		// load fonts
+		font = FontLoader.getFont(FontLoader.Type.MAIN);
+		smallFont = FontLoader.getFont(FontLoader.Type.SMALL);
+		systemFont = FontLoader.getSystemFont();
 		
 	}
 	
@@ -47,6 +59,7 @@ public class Gfx {
 			return landTile;
 		}
 	}
+	
 	
 	public static TextureRegion drawEntitySprite(Entity.Direction dir, Entity.AnimFrame anim) {
 		switch (dir) {
@@ -126,5 +139,21 @@ public class Gfx {
 		tempTile.dispose();
 		tempTile0.dispose();
 		spriteSheet.dispose();
+		
+		font.dispose();
+		smallFont.dispose();
+		systemFont.dispose();
+	}
+
+	public static BitmapFont getFont() {
+		return font;
+	}
+
+	public static BitmapFont getSmallFont() {
+		return smallFont;
+	}
+
+	public static BitmapFont getSystemFont() {
+		return systemFont;
 	}
 } // end class

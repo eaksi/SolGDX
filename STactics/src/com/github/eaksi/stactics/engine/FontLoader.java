@@ -1,4 +1,4 @@
-package com.github.eaksi.stactics.engine.gfx;
+package com.github.eaksi.stactics.engine;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
