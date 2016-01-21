@@ -18,9 +18,14 @@ public class GUI {
 	protected static void draw(SolGDX sol, SpriteBatch guiBatch) {
 
 		Gfx.getFont().setColor(0.6f, 0.6f, 0.6f, 1f);
+		Gfx.getSmallFont().setColor(0.6f, 0.6f, 0.6f, 1f);
 		
 		// display current character info
 		Gfx.getFont().draw(guiBatch, "name: " + sol.entities.get(sol.nr).cr.getFullName(), 10, sol.screenHeight - 10);
+		Gfx.getSmallFont().draw(guiBatch, "id: " + sol.entities.get(sol.nr).cr.getId(), 10, sol.screenHeight - 30);
+		Gfx.getSmallFont().draw(guiBatch, "hp: " + sol.entities.get(sol.nr).cr.getHP() + "/" + 
+				sol.entities.get(sol.nr).cr.getHPMax() , 10, sol.screenHeight - 45);
+		Gfx.getSmallFont().draw(guiBatch, sol.entities.get(sol.nr).cr.getMAString(), 10, sol.screenHeight - 60);
 
 		leftDebugY = 0;
 		rightDebugY = 0;
@@ -48,8 +53,8 @@ public class GUI {
 			debugDraw(sol, guiBatch, "mouseScreenY: " + sol.mouseScreenY, false);
 			debugDraw(sol, guiBatch, "Dragged X: " + (sol.mouseDragX - sol.mouseScreenX), false);
 			debugDraw(sol, guiBatch, "Dragged Y: " + (sol.mouseDragY - sol.mouseScreenY), false);
-			debugDraw(sol, guiBatch, "mouseIsoX: " + sol.mouseIsoX, false);
-			debugDraw(sol, guiBatch, "mouseIsoY: " + sol.mouseIsoY, false);
+			//debugDraw(sol, guiBatch, "mouseIsoX: " + sol.mouseIsoX, false);
+			//debugDraw(sol, guiBatch, "mouseIsoY: " + sol.mouseIsoY, false);
 
 		} else {
 			debugDraw(sol, guiBatch, "Help:", false);

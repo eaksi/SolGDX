@@ -79,6 +79,10 @@ public class Creature {
 		return hp;
 	}
 	
+	public int getHPMax() {
+		return hpMax;
+	}
+	
 	public void applyDamage(int damage) {
 		hp -= damage;
 		if (hp < 0) hp = 0;

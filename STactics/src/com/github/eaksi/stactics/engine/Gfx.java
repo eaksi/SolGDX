@@ -19,9 +19,9 @@ public class Gfx {
 	private static TextureRegion landTile;
 	private static TextureRegion waterTile;
 	
-	private static BitmapFont font; // temp test font
-	private static BitmapFont smallFont; // temp test font 2
-	private static BitmapFont systemFont;
+	private static BitmapFont font;			// main text font
+	private static BitmapFont smallFont;	// secondary text font
+	private static BitmapFont systemFont;	// system font
 
 	public static void initialize() {
 		
