@@ -96,8 +96,9 @@ public class SolGDX extends ApplicationAdapter {
 	public void render() {
 
 
-		Gdx.gl.glClearColor(1, 1, 1, 1); 		// white screen
-		// Gdx.gl.glClearColor(0, 0, 0, 1); 		// black screen
+		Gdx.gl.glClearColor(1, 1, 1, 1); 					// white screen
+		//Gdx.gl.glClearColor(0.95f, 0.95f, 0.95f, 1); 		// light grey screen
+		//Gdx.gl.glClearColor(0, 0, 0, 1);			 		// black screen
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		camera.update();
@@ -108,7 +109,7 @@ public class SolGDX extends ApplicationAdapter {
 			e.updateAnimFrame();
 		}
 		
-		chAnimating = (entities.get(nr).getAnimation() != Entity.Animation.IDLE); // if no animation, can move
+		chAnimating = entities.get(nr).getAnimation() != Entity.Animation.IDLE; // if no animation, can move
 		
 		batch.setProjectionMatrix(camera.combined);
 

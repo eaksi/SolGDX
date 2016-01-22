@@ -12,6 +12,7 @@ public class GUI {
 	private static int leftDebugY = 0;
 	private static int rightDebugY = 0;
 
+
 	/**
 	 *  Called from SolGDX on every render() cycle after everything else has been rendered.
 	 */
@@ -27,12 +28,14 @@ public class GUI {
 				sol.entities.get(sol.nr).cr.getHPMax() , 10, sol.screenHeight - 45);
 		Gfx.getSmallFont().draw(guiBatch, sol.entities.get(sol.nr).cr.getMAString(), 10, sol.screenHeight - 60);
 
+
+
 		leftDebugY = 0;
 		rightDebugY = 0;
 
 		Gfx.getSmallFont().setColor(0f, 0f, 0f, 1f);
 
-		// debug info
+		// display debug info
 		if (sol.debug) {
 
 			// left side of debug
@@ -56,7 +59,7 @@ public class GUI {
 			//debugDraw(sol, guiBatch, "mouseIsoX: " + sol.mouseIsoX, false);
 			//debugDraw(sol, guiBatch, "mouseIsoY: " + sol.mouseIsoY, false);
 
-		} else {
+		} else {  // display other info
 			debugDraw(sol, guiBatch, "Help:", false);
 			debugDraw(sol, guiBatch, "PGUP & PGDOWN = change entity", false);
 			debugDraw(sol, guiBatch, "HOME = display battler info", false);
