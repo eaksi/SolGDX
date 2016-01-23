@@ -16,8 +16,15 @@ import com.github.eaksi.stactics.engine.gfx.Entity;
 import com.github.eaksi.stactics.engine.gfx.Entity.Direction;
 import com.github.eaksi.stactics.engine.gfx.Tile;
 
+/**
+ * SolGDX is the coordinating class for the graphics engine.
+ *
+ */
 public class SolGDX extends ApplicationAdapter {
 
+	// TODO: ini file reader
+	// FIXME: wall graphics
+	
 	// debug flags and related things
 	boolean debug = false;
 	boolean drawOrderDebug = false;
@@ -77,9 +84,9 @@ public class SolGDX extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		guiBatch = new SpriteBatch();
 
-		Gfx.initialize();
+		Gfx.initialize(); // initialize Gfx class, load graphics etc.
 
-		setEntityLocations(); // initial setup of entity locations
+		setEntityLocations(); // initial setup of entity locations XXX: move
 
 		initializePainter(); // initialize painter's algorithm (make & sort Drawables)
 

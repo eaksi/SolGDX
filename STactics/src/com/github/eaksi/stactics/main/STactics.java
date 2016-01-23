@@ -6,8 +6,14 @@ import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.db.World;
 import com.github.eaksi.stactics.engine.gfx.Entity;
 
+/**
+ * Mostly a class for prototyping game model things (for now)
+ */
 public class STactics {
 	
+	// TODO: Make an editor using Swing (or preferably a GUI editor)
+	// TODO: Character level up / skill choices, make tests
+
 	public static void main(String[] args) {
 
 		World.initialize();

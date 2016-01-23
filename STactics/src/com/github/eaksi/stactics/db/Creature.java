@@ -50,7 +50,6 @@ public class Creature {
 		movesMax = baseMovement;
 		moves = baseMovement;
 		actions = actionsMax;
-
 		
 	}
 
