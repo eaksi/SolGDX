@@ -4,12 +4,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class Camera extends OrthographicCamera {
 	
+	// TODO: fix tearing below 0 coordinates when zooming out
+	
 	private boolean zoomingIn = false;	 
 	private boolean zoomingOut = false;
 	private int zoomFrame = 0;				// current frame of zoom
 	private int zoomLevel = 0;				// current zoom level
-	private final int maxZoom = 10;			// how close you can zoom in
-	private final int minZoom = -20;		// how far can you zoom out		// TODO: fix tearing when below 0 coordinates
+	private final int zoomInLimit = 10;			// how close you can zoom in
+	private final int zoomOutLimit = -20;		// how far can you zoom out
 	private final int moveIncrement = 10;	// how many units the camera moves at once
 	
 	// TODO: vertical and horizontal moveIncrement differs? test
@@ -29,15 +31,15 @@ public class Camera extends OrthographicCamera {
 		return zoomLevel;
 	}
 	
-	// This method is called from keyboard controls, sets the zoom going
+	// This method is called from keyboard controls, sets the zoom going if not already zooming
 	public void setZoom(boolean in) {
 		if (zoomingIn || zoomingOut) return;
 		
-		if (in && zoomLevel < maxZoom) {
+		if (in && zoomLevel < zoomInLimit) {
 			zoomingIn = true;
 			zoomFrame = 10;
 		}
-		if (!in && zoomLevel > minZoom) {
+		if (!in && zoomLevel > zoomOutLimit) {
 			zoomingOut = true;
 			zoomFrame = 10;
 		}

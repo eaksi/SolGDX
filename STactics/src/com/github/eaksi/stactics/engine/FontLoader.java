@@ -6,8 +6,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
+/**
+ * This class does the TrueType font loading.
+ *
+ */
 public class FontLoader {
 
+	//
+	
 	public enum Type {
 		MAIN, SMALL
 	}

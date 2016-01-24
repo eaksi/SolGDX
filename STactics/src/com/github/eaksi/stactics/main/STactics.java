@@ -23,7 +23,6 @@ public class STactics {
 			battlers.add(new Entity(new Creature(),0,0));
 		}
 
-
 		// test delay system
 		for (int i = 0; i < 50; i++) {
 			System.out.println("*** TURN "+ (i+1) +" ***");

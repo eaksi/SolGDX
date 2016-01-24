@@ -10,8 +10,8 @@ import com.github.eaksi.stactics.engine.gfx.Entity;
  */
 public class Gfx {
 
-	private static Texture tempTile;			// temp test tile
-	private static Texture tempTile0;			// temp test water tile
+	private static Texture tempTile;			// XXX: temp test tile
+	private static Texture tempTile0;			// XXX: temp test water tile
 	private static Texture spriteSheet;
 
 	private static TextureRegion[][] splitSheet;		// sprite sheet divided into regions

@@ -23,7 +23,8 @@ import com.github.eaksi.stactics.engine.gfx.Tile;
 public class SolGDX extends ApplicationAdapter {
 
 	// TODO: ini file reader
-	// FIXME: wall graphics
+	// FIXME: wall graphics missing after gfx change
+	// FIXME: aspect ratio change on window size change 
 	
 	// debug flags and related things
 	boolean debug = false;
@@ -35,8 +36,8 @@ public class SolGDX extends ApplicationAdapter {
 	boolean showEntityInfo = false;
 	
 	Camera camera;
-	private SpriteBatch batch; // primary SpriteBatch for graphics
-	private SpriteBatch guiBatch; // GUI SpriteBatch, does not move with camera
+	private SpriteBatch batch;		// primary SpriteBatch for graphics
+	private SpriteBatch guiBatch;	// GUI SpriteBatch, does not move with camera
 
 	final int screenWidth = 1024; // screen resolution
 	final int screenHeight = 800;
@@ -44,8 +45,8 @@ public class SolGDX extends ApplicationAdapter {
 	// XXX: TEMP if the engine is animating movement -> move keys disabled
 	boolean chAnimating = false; 
 
-	private int tileWidth = 64;
-	private int tileHeight = 32;
+	private int tileWidth = 64; 	// width of tile graphics in pixels
+	private int tileHeight = 32;	// height of tile graphics in pixels
 
 	private BattleMap battleMap;
 
@@ -310,7 +311,6 @@ public class SolGDX extends ApplicationAdapter {
 			}
 		}
 
-		//FIXME: placed incorrectly
 		if (drawOrderDebug) {
 			for (Drawable d : painter) {
 				drawOrder++;
