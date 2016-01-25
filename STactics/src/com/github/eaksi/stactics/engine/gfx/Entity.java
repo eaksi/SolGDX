@@ -174,6 +174,7 @@ public class Entity extends Drawable {
 		}
 	}
 	
+	
 	private void moveCreatureOneFrame() {
 		int modX = 0;
 		int modY = 0;

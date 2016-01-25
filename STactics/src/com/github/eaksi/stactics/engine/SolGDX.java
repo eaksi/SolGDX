@@ -175,7 +175,8 @@ public class SolGDX extends ApplicationAdapter {
 		for (Entity e : entities) {
 			// XXX: z position guessed (but tested, need frame by frame
 			// analysis, height changes testing and gfx)
-			e.setZ(e.isoY - 27);
+			e.setZ(e.isoY - 30);	// should be correct (for now)
+			//e.setZ(e.isoY - 27);	// minor clipping on floor tiles when moving?
 			painter.add(e);
 		}
 
