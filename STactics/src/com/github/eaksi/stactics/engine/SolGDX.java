@@ -68,7 +68,7 @@ public class SolGDX extends ApplicationAdapter {
 
 		battleMap = new BattleMap();
 		entities = new Vector<Entity>();
-		entities.add(new Entity(new Creature(), 0, 4));
+		entities.add(new Entity(new Creature(), 1, 4));
 		entities.add(new Entity(new Creature(), 4, 5));
 		entities.add(new Entity(new Creature(), 6, 4));
 

@@ -10,14 +10,14 @@ import com.github.eaksi.stactics.engine.gfx.Entity;
  */
 public class Gfx {
 
-	private static Texture tempTile;			// XXX: temp test tile
-	private static Texture tempTile0;			// XXX: temp test water tile
+	private static Texture landTile;			// XXX: temp test tile
+	private static Texture waterTile;			// XXX: temp test water tile
 	private static Texture spriteSheet;
 
 	private static TextureRegion[][] splitSheet;		// sprite sheet divided into regions
 	private static TextureRegion[][] flippedSheet;		// same as splitSheet, but regions individually flipped
-	private static TextureRegion landTile;
-	private static TextureRegion waterTile;
+	private static TextureRegion landTileRegion;
+	private static TextureRegion waterTileRegion;
 	
 	private static BitmapFont font;			// main text font
 	private static BitmapFont smallFont;	// secondary text font
@@ -27,8 +27,8 @@ public class Gfx {
 		
 		// load sprite sheets
 		spriteSheet = new Texture("data/farcher_placeholder.png");
-		tempTile = new Texture("data/tile_placeholder.png");
-		tempTile0 = new Texture("data/tile_placeholder_water.png");
+		landTile = new Texture("data/tile_placeholder.png");
+		waterTile = new Texture("data/tile_placeholder_water.png");
 
 		splitSheet = TextureRegion.split(spriteSheet, 32, 64);		
 
@@ -42,8 +42,8 @@ public class Gfx {
 		}
 
 		// load tile graphics
-		landTile = new TextureRegion(tempTile);
-		waterTile = new TextureRegion(tempTile0);
+		landTileRegion = new TextureRegion(landTile);
+		waterTileRegion = new TextureRegion(waterTile);
 		
 		// load fonts
 		font = FontLoader.getFont(FontLoader.Type.MAIN);
@@ -54,9 +54,9 @@ public class Gfx {
 	
 	public static TextureRegion drawTileSprite(boolean water) {
 		if (water) {
-			return waterTile;
+			return waterTileRegion;
 		} else {
-			return landTile;
+			return landTileRegion;
 		}
 	}
 	
@@ -136,8 +136,8 @@ public class Gfx {
 	} // end method drawEntitySprite
 	
 	public static void dispose() {
-		tempTile.dispose();
-		tempTile0.dispose();
+		landTile.dispose();
+		waterTile.dispose();
 		spriteSheet.dispose();
 		
 		font.dispose();
