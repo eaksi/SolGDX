@@ -30,9 +30,5 @@ public class STactics {
 				battler.cr.isReady();
 			}
 		}
-		
-
-		
 	}
-
 }

@@ -10,7 +10,7 @@ import java.util.Vector;
 
 public class World {
 
-	private static Hashtable<Integer, Skill> skills; // id, name
+	//private static Hashtable<Integer, Skill> skills; // id, name
 	private static boolean skillTableInitialized = false;
 	private static Vector<String> fNameList;
 	private static Vector<String> lNameList;
@@ -19,7 +19,7 @@ public class World {
 	public static void initialize() {
 		RNG.initialize();
 		initializeNameGenerator();
-		initializeSkills();
+		// initializeSkills();
 		// initializeItems();
 	}
 
@@ -61,23 +61,5 @@ public class World {
 		return lNameList.get(nr);
 	}
 
-	private static void initializeSkills() { // TODO: load from file
-		if (!skillTableInitialized) {
-			skillTableInitialized = true;
-
-			skills = new Hashtable<Integer, Skill>();
-
-			skills.put(1, new Skill(1, "Swords", 1, 5));
-			// rest of the skills
-			System.out.println("World: Skills initialized");
-		} else {
-			System.err.println("WARNING: World: Skills already initialized!");
-		}
-
-	}
-
-	public static String getSkillName(int id) {
-		return skills.get(id).getName();
-	}
 
 }
