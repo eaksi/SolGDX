@@ -11,7 +11,6 @@ import java.util.Vector;
 public class World {
 
 	//private static Hashtable<Integer, Skill> skills; // id, name
-	private static boolean skillTableInitialized = false;
 	private static Vector<String> fNameList;
 	private static Vector<String> lNameList;
 

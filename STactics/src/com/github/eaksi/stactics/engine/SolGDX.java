@@ -50,10 +50,10 @@ public class SolGDX extends ApplicationAdapter {
 
 	private BattleMap battleMap;
 
-	Vector<Entity> entities;
-	int nr = 0; // current entity Number
+	Vector<Entity> entities;		// contains the entities currently in game
+	int nr = 0; 					// current entity Number
 
-	Vector<Drawable> painter;
+	Vector<Drawable> painter;		// has all the drawable tiles and sprites in order
 
 	// debug
 	public int mouseScreenX = -999;
