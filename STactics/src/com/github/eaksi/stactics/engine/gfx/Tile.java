@@ -3,6 +3,9 @@ package com.github.eaksi.stactics.engine.gfx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.github.eaksi.stactics.engine.Gfx;
 
+/**
+ * Tiles are (almost always) immovable and persistent floor tiles in BattleMap.
+ */
 public class Tile extends Drawable {
 	
 	private boolean water;
@@ -28,7 +31,7 @@ public class Tile extends Drawable {
 
 	@Override
 	public TextureRegion getSprite() {
-		return Gfx.drawTileSprite(water);
+		return Gfx.getTileSprite(water);
 	}
 	
 }

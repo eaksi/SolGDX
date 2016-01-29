@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /*
- * 	All drawables in isometric engine inherit this class
+ * 	All drawables in the isometric engine inherit this class. (i.e. Entity & Tile)
  */
 public abstract class Drawable implements Comparable<Drawable>{
 	

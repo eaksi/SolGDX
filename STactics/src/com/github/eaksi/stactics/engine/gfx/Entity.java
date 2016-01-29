@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.engine.Gfx;
 
-// Entities are battlers in the combat engine, contain animation data and a link to db Creature
+/**
+ *  Entities are battlers in the combat engine, contain animation data and a link to db Creature
+ */
 public class Entity extends Drawable {
 
 	public enum Direction {
@@ -68,11 +70,14 @@ public class Entity extends Drawable {
 	
 	@Override
 	public TextureRegion getSprite() {
-		return Gfx.drawEntitySprite(heading, animFrame);
+		return Gfx.getEntitySprite(heading, animFrame);
 	}
 
 
-	public boolean updateAnimFrame() {
+	/**
+	 * Updates the animation on this Entity.
+	 */
+	public boolean updateAnimation() {
 	
 		switch(currentAnimation) {
 		
@@ -90,15 +95,15 @@ public class Entity extends Drawable {
 				switch(animFrameNr) {
 					case 0: case 1: case 7: case 8: case 9: case 15:
 						animFrame = AnimFrame.STAND;
-						moveCreatureOneFrame();
+						moveForOneFrame();
 						break;
 					case 2: case 3: case 4: case 5: case 6:
 						animFrame = AnimFrame.WALK1;
-						moveCreatureOneFrame();
+						moveForOneFrame();
 						break;
 			    	case 10: case 11: case 12: case 13: case 14:
 			    		animFrame = AnimFrame.WALK2;
-			    		moveCreatureOneFrame();
+			    		moveForOneFrame();
 			    		break;
 			    	default:
 			    		System.err.println("Error: Wrong values in updateAnimFrame! (refactored wrong way?)");
@@ -174,8 +179,13 @@ public class Entity extends Drawable {
 		}
 	}
 	
-	
-	private void moveCreatureOneFrame() {
+	/**
+	 * Moves the Entity in the right direction for 1 animation frame.
+	 */
+	private void moveForOneFrame() {
+
+		//XXX: Y = Z for now, until height differences etc. are handled better.
+				
 		int modX = 0;
 		int modY = 0;
 		int modZ = 0;

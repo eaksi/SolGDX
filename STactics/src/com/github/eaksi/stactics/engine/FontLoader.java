@@ -18,7 +18,7 @@ public class FontLoader {
 		MAIN, SMALL
 	}
 
-	public static BitmapFont getFont(Type type) {
+	public static BitmapFont loadFont(Type type) {
 
 		String fontPath = "";
 		int size = 10;
@@ -51,7 +51,7 @@ public class FontLoader {
 		return font;
 	}
 	
-	public static BitmapFont getSystemFont() {
+	public static BitmapFont loadSystemFont() {
 		return new BitmapFont();
 	}
 	

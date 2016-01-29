@@ -111,10 +111,11 @@ public class SolGDX extends ApplicationAdapter {
 
 		camera.update();
 
-		Controls.getInput(this); // keyboard controls handled at this point
+		Controls.handleInput(this); // keyboard controls handled at this point
+		
 		// update animation frames for entities
 		for (Entity e : entities) {
-			e.updateAnimFrame();
+			e.updateAnimation();
 		}
 		
 		chAnimating = entities.get(nr).getAnimation() != Entity.Animation.IDLE; // if no animation, can move

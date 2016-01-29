@@ -46,13 +46,13 @@ public class Gfx {
 		waterTileRegion = new TextureRegion(waterTile);
 		
 		// load fonts
-		font = FontLoader.getFont(FontLoader.Type.MAIN);
-		smallFont = FontLoader.getFont(FontLoader.Type.SMALL);
-		systemFont = FontLoader.getSystemFont();
+		font = FontLoader.loadFont(FontLoader.Type.MAIN);
+		smallFont = FontLoader.loadFont(FontLoader.Type.SMALL);
+		systemFont = FontLoader.loadSystemFont();
 		
 	}
 	
-	public static TextureRegion drawTileSprite(boolean water) {
+	public static TextureRegion getTileSprite(boolean water) {
 		if (water) {
 			return waterTileRegion;
 		} else {
@@ -61,7 +61,7 @@ public class Gfx {
 	}
 	
 	
-	public static TextureRegion drawEntitySprite(Entity.Direction dir, Entity.AnimFrame anim) {
+	public static TextureRegion getEntitySprite(Entity.Direction dir, Entity.AnimFrame anim) {
 		switch (dir) {
 		
 

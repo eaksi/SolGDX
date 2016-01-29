@@ -10,7 +10,7 @@ import com.github.eaksi.stactics.engine.gfx.Entity.Direction;
  */
 public class Controls {
 
-	protected static void getInput(SolGDX sol) {
+	protected static void handleInput(SolGDX sol) {
 
 		// Quit the application
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE))
