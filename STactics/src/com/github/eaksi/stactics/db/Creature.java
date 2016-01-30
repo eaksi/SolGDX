@@ -28,7 +28,6 @@ public class Creature {
 	public Creature() {
 
 		id = runningId.incrementAndGet(); // generates unique id
-		skills = new Hashtable<Integer, Integer>();
 		prefixName = "";
 		name = World.getRandomFName();
 		suffixName = World.getRandomLName();
@@ -42,8 +41,6 @@ public class Creature {
 		baseMovement = 4;
 		
 		actionsMax = 1;
-		
-		skills.put(1, 2);
 
 		baseDelay = naturalDelay;
 		delay = naturalDelay;

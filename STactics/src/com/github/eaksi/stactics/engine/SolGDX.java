@@ -7,9 +7,8 @@ import java.util.Vector;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.github.eaksi.stactics.db.BattleMap;
+import com.github.eaksi.stactics.db.AreaMap;
 import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.engine.gfx.Drawable;
 import com.github.eaksi.stactics.engine.gfx.Entity;
@@ -48,7 +47,7 @@ public class SolGDX extends ApplicationAdapter {
 	private int tileWidth = 64; 	// width of tile graphics in pixels
 	private int tileHeight = 32;	// height of tile graphics in pixels
 
-	private BattleMap battleMap;
+	private AreaMap areaMap;
 
 	Vector<Entity> entities;		// contains the entities currently in game
 	int nr = 0; 					// current entity Number
@@ -66,7 +65,7 @@ public class SolGDX extends ApplicationAdapter {
 	@Override
 	public void create() {
 
-		battleMap = new BattleMap();
+		areaMap = new AreaMap();
 		entities = new Vector<Entity>();
 		entities.add(new Entity(new Creature(), 1, 4));
 		entities.add(new Entity(new Creature(), 4, 5));
@@ -91,11 +90,11 @@ public class SolGDX extends ApplicationAdapter {
 
 		initializePainter(); // initialize painter's algorithm (make & sort Drawables)
 
-		/* print the BattleMap width and height and w/h difference
+		/* print the AreaMap width and height and w/h difference
 		 *  (negative = more width than height)	 */
 		if (debug) {
-			System.out.println("battleMap.getWidth() = " + battleMap.getWidth() + "  battleMap.getHeight() = "
-					+ battleMap.getHeight() + "  difference = " + (battleMap.getWidth() - battleMap.getHeight()));
+			System.out.println("areaMap.getWidth() = " + areaMap.getWidth() + "  areaMap.getHeight() = "
+					+ areaMap.getHeight() + "  difference = " + (areaMap.getWidth() - areaMap.getHeight()));
 		}
 
 	}
@@ -126,7 +125,7 @@ public class SolGDX extends ApplicationAdapter {
 
 		// draw everything
 		batch.begin();
-		drawIsometric();
+		drawBattleMap();
 		batch.end();
 
 		guiBatch.begin();
@@ -154,12 +153,12 @@ public class SolGDX extends ApplicationAdapter {
 		Tile tile;
 
 		// add tiles
-		for (int i = 0; i < battleMap.getWidth(); i++) {
-			for (int j = 0; j < battleMap.getHeight(); j++) {
-				if (battleMap.getTile(i, j) == 0) {
+		for (int i = 0; i < areaMap.getWidth(); i++) {
+			for (int j = 0; j < areaMap.getHeight(); j++) {
+				if (areaMap.getTile(i, j) == 0) {
 					tile = new Tile(i, j, toIsoX(j, i), toIsoY(j, i), toIsoY(j, i), true);
 				} else {
-					tile = new Tile(i, j, toIsoX(j, i), toIsoY(j, i) + battleMap.getTile(i, j) * 16, toIsoY(j, i),
+					tile = new Tile(i, j, toIsoX(j, i), toIsoY(j, i) + areaMap.getTile(i, j) * 16, toIsoY(j, i),
 							false);
 				}
 
@@ -168,7 +167,7 @@ public class SolGDX extends ApplicationAdapter {
 				// debug
 				if (debug)
 					System.out.println("draw tile: (" + tile.tileX + "," + tile.tileY + ") z-depth: " + tile.getZ()
-							+ " height: " + battleMap.getTile(i, j) + " water: " + tile.isWater());
+							+ " height: " + areaMap.getTile(i, j) + " water: " + tile.isWater());
 			}
 		}
 
@@ -213,7 +212,7 @@ public class SolGDX extends ApplicationAdapter {
 		}
 
 		// test if able to move in terrain
-		if (battleMap.getTile((entities.get(nr).tileX + tryX), entities.get(nr).tileY + tryY) != 1) {
+		if (areaMap.getTile((entities.get(nr).tileX + tryX), entities.get(nr).tileY + tryY) != 1) {
 			printMoveDebug("Can't move (terrain): " + entities.get(nr).getHeading(), tryX, tryY);
 			return;
 		}
@@ -276,20 +275,20 @@ public class SolGDX extends ApplicationAdapter {
 	 *  Get the isometric projection coordinate X, given tilemap X and Y as parameters
 	 */
 	private int toIsoX(int mapx, int mapy) {
-		return (screenWidth - ((battleMap.getWidth() * 32) + (mapy - mapx) * (tileWidth / 2)));
+		return (screenWidth - ((areaMap.getWidth() * 32) + (mapy - mapx) * (tileWidth / 2)));
 	}
 
 	/**
 	 *  Get the isometric projection coordinate Y, given tilemap X and Y as parameters
 	 */
 	private int toIsoY(int mapx, int mapy) {
-		return (screenHeight - ((battleMap.getHeight() * 16) + (mapy + mapx) * (tileHeight / 2)));
+		return (screenHeight - ((areaMap.getHeight() * 16) + (mapy + mapx) * (tileHeight / 2)));
 	}
 
 	/**
 	 *  The primary draw method.
 	 */
-	private void drawIsometric() {
+	private void drawBattleMap() {
 
 		// sort everything (again)
 		// TODO: sorting optimization
@@ -302,13 +301,13 @@ public class SolGDX extends ApplicationAdapter {
 			batch.draw(d.getSprite(), d.isoX, d.isoY);
 		}
 
-		// Draw BattleMap coordinates over tiles
+		// Draw AreaMap coordinates over tiles
 		if (debug) {
 			Gfx.getSmallFont().setColor(0f, 0f, 0f, 1f);
-			for (int i = 0; i < battleMap.getWidth(); i++) {
-				for (int j = 0; j < battleMap.getHeight(); j++) {
+			for (int i = 0; i < areaMap.getWidth(); i++) {
+				for (int j = 0; j < areaMap.getHeight(); j++) {
 					Gfx.getSmallFont().draw(batch, i + "," + j, toIsoX(j, i) + 20,
-							(toIsoY(j, i) + (battleMap.getTile(i, j) * 16 + 20)));
+							(toIsoY(j, i) + (areaMap.getTile(i, j) * 16 + 20)));
 				}
 			}
 		}

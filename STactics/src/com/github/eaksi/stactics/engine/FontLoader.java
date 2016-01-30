@@ -11,8 +11,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
  *
  */
 public class FontLoader {
-
-	//
 	
 	public enum Type {
 		MAIN, SMALL

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.github.eaksi.stactics.engine.Gfx;
 
 /**
- * Tiles are (almost always) immovable and persistent floor tiles in BattleMap.
+ * Tiles are (almost always) immovable and persistent floor tiles in AreaMap.
  */
 public class Tile extends Drawable {
 	

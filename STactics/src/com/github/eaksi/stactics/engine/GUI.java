@@ -28,8 +28,6 @@ public class GUI {
 				sol.entities.get(sol.nr).cr.getHPMax() , 10, sol.screenHeight - 45);
 		Gfx.getSmallFont().draw(guiBatch, sol.entities.get(sol.nr).cr.getMAString(), 10, sol.screenHeight - 60);
 
-
-
 		leftDebugY = 0;
 		rightDebugY = 0;
 
@@ -43,7 +41,7 @@ public class GUI {
 			debugDraw(sol, guiBatch, "entity id: " + sol.entities.get(sol.nr).getId(), true);
 
 			// right side of debug
-			debugDraw(sol, guiBatch, "anim. frame: " + sol.entities.get(sol.nr).getCurrentFrame(), false);
+			debugDraw(sol, guiBatch, "anim. frame nr.: " + sol.entities.get(sol.nr).getCurrentFrame(), false);
 			debugDraw(sol, guiBatch, "animation: " + sol.entities.get(sol.nr).getAnimString(), false);
 			debugDraw(sol, guiBatch, "heading: " + sol.entities.get(sol.nr).getHeading(), false);
 			debugDraw(sol, guiBatch, "entity.isoX: " + sol.entities.get(sol.nr).isoX, false);

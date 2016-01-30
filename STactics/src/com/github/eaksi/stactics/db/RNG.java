@@ -4,10 +4,11 @@ import java.util.Random;
 
 /**
  * A very basic Random Number Generator class. Will be expanded later. 
- *
  */
 public class RNG {
 
+	// TODO: (low priority) Prevent save scumming 
+	
 	private static Random rng;
 	
 	public static void initialize() {

@@ -33,6 +33,7 @@ public class Controls {
 			sol.camera.setZoom(false);
 		}
 
+		// XXX: temp, test mouse input, click/drag
 		if (Gdx.input.isButtonPressed(Buttons.LEFT) && Gdx.input.justTouched()) {
 			sol.mouseScreenX = Gdx.input.getX();
 			sol.mouseScreenY = Gdx.input.getY();
@@ -41,9 +42,11 @@ public class Controls {
 			sol.mouseDragY = Gdx.input.getY();
 		}
 
+		// XXX: temp, Displayed info from selected creature
 		if (Gdx.input.isKeyJustPressed(Keys.HOME))
 			sol.showEntityInfo = !sol.showEntityInfo;
 
+		// XXX: temp, refreshes action points and moves
 		if (Gdx.input.isKeyJustPressed(Keys.END))
 			sol.entities.get(sol.nr).cr.startNewTurn();
 

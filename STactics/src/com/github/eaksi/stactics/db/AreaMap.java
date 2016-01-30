@@ -3,12 +3,12 @@ package com.github.eaksi.stactics.db;
 /**
  *	Contains info on the battle map, height differences etc. 
  */
-public class BattleMap {
+public class AreaMap {
 
 	private int[][] terrainMap;		// make 3d eventually for terrain effects and good borders
 	//public int[][] heightMap;
 
-	public BattleMap() {
+	public AreaMap() {
 		terrainMap = new int[][]
 		{{0,0,0,0,0,0,0,0,0,0,0},
 		{0,1,1,1,1,1,1,1,1,1,0},
@@ -64,7 +64,7 @@ public class BattleMap {
 		if (x >= 0 && y >= 0 && x < this.getWidth() && y < this.getHeight()) {
 			return terrainMap[x][y];
 		} else {
-			System.err.println("BattleMap Error: Tried to get coordinates out of bounds ("+x+","+y+")");
+			System.err.println("AreaMap Error: Tried to get coordinates out of bounds ("+x+","+y+")");
 			return 0;
 		}
 	}
