@@ -1,6 +1,5 @@
 package com.github.eaksi.stactics.db;
 
-import java.util.Hashtable;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Creature {
@@ -22,8 +21,6 @@ public class Creature {
 	private int actions, actionsMax;
 	
 	private int baseDelay, delay;
-	
-	public Hashtable<Integer, Integer> skills; // XXX: temp public
 
 	public Creature() {
 

@@ -10,8 +10,8 @@ import com.github.eaksi.stactics.engine.gfx.Entity;
  */
 public class Gfx {
 
-	private static Texture landTile;			// XXX: temp test tile
-	private static Texture waterTile;			// XXX: temp test water tile
+	private static Texture landTile;
+	private static Texture waterTile;
 	private static Texture spriteSheet;
 
 	private static TextureRegion[][] splitSheet;		// sprite sheet divided into regions
@@ -63,11 +63,10 @@ public class Gfx {
 	
 	public static TextureRegion getEntitySprite(Entity.Direction dir, Entity.AnimFrame anim) {
 		switch (dir) {
-		
 
 		default:
 			System.err.println("Error: drawEntitySprite direction wrong");
-			// fallthrough
+			// fallthrough to case NE
 		case NE:
 			switch(anim) {
 			case STAND:

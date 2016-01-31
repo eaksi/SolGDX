@@ -84,11 +84,10 @@ public class Entity extends Drawable {
 		case IDLE:
 			animFrameNr = -1;
 			animFrame = AnimFrame.STAND;
-			break;
-		// TODO: add character "bounce" to animation (change isoY couple of pixels, more with flying entities) 
+			break; 
 		case WALK:
 			if (animFrameNr == -1 || animFrameNr >= 16) {
-				animFrameNr = -1;	// TODO: more elegant solution
+				animFrameNr = -1;
 				animFrame = AnimFrame.STAND;
 				currentAnimation = Animation.IDLE;
 			} else {
@@ -112,9 +111,9 @@ public class Entity extends Drawable {
 				}
 			}
 			break;
-		case ATTACK:  // XXX: TEMP
+		case ATTACK:
 			if (animFrameNr == -1 || animFrameNr >= 16) {
-				animFrameNr = -1;	// TODO: more elegant solution
+				animFrameNr = -1;
 				animFrame = AnimFrame.STAND;
 				currentAnimation = Animation.IDLE;
 			} else {
@@ -135,9 +134,9 @@ public class Entity extends Drawable {
 				}
 			}
 			break;
-		case HURT:  // XXX: TEMP
+		case HURT:
 			if (animFrameNr == -1 || animFrameNr >= 16) {
-				animFrameNr = -1;	// TODO: more elegant solution
+				animFrameNr = -1;
 				animFrame = AnimFrame.STAND;
 				currentAnimation = Animation.IDLE;
 			} else {

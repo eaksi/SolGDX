@@ -16,6 +16,9 @@ public class FontLoader {
 		MAIN, SMALL
 	}
 
+	/**
+	 * Loads TrueTypeFonts from file, returns them.
+	 */
 	public static BitmapFont loadFont(Type type) {
 
 		String fontPath = "";

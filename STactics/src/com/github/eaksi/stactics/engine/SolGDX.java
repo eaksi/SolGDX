@@ -21,8 +21,6 @@ import com.github.eaksi.stactics.engine.gfx.Tile;
  */
 public class SolGDX extends ApplicationAdapter {
 
-	// TODO: ini file reader
-	// FIXME: wall graphics missing after gfx change
 	// FIXME: aspect ratio change on window size change 
 	
 	// debug flags and related things
@@ -41,7 +39,7 @@ public class SolGDX extends ApplicationAdapter {
 	final int screenWidth = 1024; // screen resolution
 	final int screenHeight = 800;
 
-	// XXX: TEMP if the engine is animating movement -> move keys disabled
+	// if the engine is animating movement -> move keys disabled
 	boolean chAnimating = false; 
 
 	private int tileWidth = 64; 	// width of tile graphics in pixels
@@ -86,7 +84,7 @@ public class SolGDX extends ApplicationAdapter {
 
 		Gfx.initialize(); // initialize Gfx class, load graphics etc.
 
-		setEntityLocations(); // initial setup of entity locations XXX: move
+		setEntityLocations(); // initial setup of entity locations
 
 		initializePainter(); // initialize painter's algorithm (make & sort Drawables)
 
@@ -311,7 +309,8 @@ public class SolGDX extends ApplicationAdapter {
 				}
 			}
 		}
-
+		
+		// Debug: show the painters algorithm's draw order
 		if (drawOrderDebug) {
 			for (Drawable d : painter) {
 				drawOrder++;
@@ -319,6 +318,7 @@ public class SolGDX extends ApplicationAdapter {
 			}
 		}
 		
+		// Show HP etc. info on an entity
 		if (showEntityInfo) {
 			for (Entity e : entities) {
 				Gfx.getSmallFont().setColor(0f, 0f, 0f, 1f);

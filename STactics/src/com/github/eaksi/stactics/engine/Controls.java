@@ -42,11 +42,11 @@ public class Controls {
 			sol.mouseDragY = Gdx.input.getY();
 		}
 
-		// XXX: temp, Displayed info from selected creature
+		// displays info on selected creature
 		if (Gdx.input.isKeyJustPressed(Keys.HOME))
 			sol.showEntityInfo = !sol.showEntityInfo;
 
-		// XXX: temp, refreshes action points and moves
+		// refreshes action points and moves
 		if (Gdx.input.isKeyJustPressed(Keys.END))
 			sol.entities.get(sol.nr).cr.startNewTurn();
 
