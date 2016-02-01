@@ -22,11 +22,11 @@ public class GUI {
 		Gfx.getSmallFont().setColor(0.6f, 0.6f, 0.6f, 1f);
 		
 		// display current character info
-		Gfx.getFont().draw(guiBatch, "name: " + sol.entities.get(sol.nr).cr.getFullName(), 10, sol.screenHeight - 10);
-		Gfx.getSmallFont().draw(guiBatch, "id: " + sol.entities.get(sol.nr).cr.getId(), 10, sol.screenHeight - 30);
-		Gfx.getSmallFont().draw(guiBatch, "hp: " + sol.entities.get(sol.nr).cr.getHP() + "/" + 
-				sol.entities.get(sol.nr).cr.getHPMax() , 10, sol.screenHeight - 45);
-		Gfx.getSmallFont().draw(guiBatch, sol.entities.get(sol.nr).cr.getMAString(), 10, sol.screenHeight - 60);
+		Gfx.getFont().draw(guiBatch, "name: " + sol.actors.get(sol.nr).cr.getFullName(), 10, sol.screenHeight - 10);
+		Gfx.getSmallFont().draw(guiBatch, "id: " + sol.actors.get(sol.nr).cr.getId(), 10, sol.screenHeight - 30);
+		Gfx.getSmallFont().draw(guiBatch, "hp: " + sol.actors.get(sol.nr).cr.getHP() + "/" + 
+				sol.actors.get(sol.nr).cr.getHPMax() , 10, sol.screenHeight - 45);
+		Gfx.getSmallFont().draw(guiBatch, sol.actors.get(sol.nr).cr.getMAString(), 10, sol.screenHeight - 60);
 
 		leftDebugY = 0;
 		rightDebugY = 0;
@@ -37,18 +37,18 @@ public class GUI {
 		if (sol.debug) {
 
 			// left side of debug
-			debugDraw(sol, guiBatch, "creature id: " + sol.entities.get(sol.nr).cr.getId(), true);
-			debugDraw(sol, guiBatch, "entity id: " + sol.entities.get(sol.nr).getId(), true);
+			debugDraw(sol, guiBatch, "creature id: " + sol.actors.get(sol.nr).cr.getId(), true);
+			debugDraw(sol, guiBatch, "entity id: " + sol.actors.get(sol.nr).getId(), true);
 
 			// right side of debug
-			debugDraw(sol, guiBatch, "anim. frame nr.: " + sol.entities.get(sol.nr).getCurrentFrame(), false);
-			debugDraw(sol, guiBatch, "animation: " + sol.entities.get(sol.nr).getAnimString(), false);
-			debugDraw(sol, guiBatch, "heading: " + sol.entities.get(sol.nr).getHeading(), false);
-			debugDraw(sol, guiBatch, "entity.isoX: " + sol.entities.get(sol.nr).isoX, false);
-			debugDraw(sol, guiBatch, "entity.isoY: " + sol.entities.get(sol.nr).isoY, false);
-			debugDraw(sol, guiBatch, "entity.z: " + sol.entities.get(sol.nr).z, false);
-			debugDraw(sol, guiBatch, "entity.tileX: " + sol.entities.get(sol.nr).tileX, false);
-			debugDraw(sol, guiBatch, "entity.tileY: " + sol.entities.get(sol.nr).tileY, false);
+			debugDraw(sol, guiBatch, "anim. frame nr.: " + sol.actors.get(sol.nr).getCurrentFrame(), false);
+			debugDraw(sol, guiBatch, "animation: " + sol.actors.get(sol.nr).getAnimString(), false);
+			debugDraw(sol, guiBatch, "heading: " + sol.actors.get(sol.nr).getHeading(), false);
+			debugDraw(sol, guiBatch, "entity.isoX: " + sol.actors.get(sol.nr).isoX, false);
+			debugDraw(sol, guiBatch, "entity.isoY: " + sol.actors.get(sol.nr).isoY, false);
+			debugDraw(sol, guiBatch, "entity.z: " + sol.actors.get(sol.nr).z, false);
+			debugDraw(sol, guiBatch, "entity.tileX: " + sol.actors.get(sol.nr).tileX, false);
+			debugDraw(sol, guiBatch, "entity.tileY: " + sol.actors.get(sol.nr).tileY, false);
 			rightDebugY += 15;
 			debugDraw(sol, guiBatch, "mouseScreenX: " + sol.mouseScreenX, false);
 			debugDraw(sol, guiBatch, "mouseScreenY: " + sol.mouseScreenY, false);

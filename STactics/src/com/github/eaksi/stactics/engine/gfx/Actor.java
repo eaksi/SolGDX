@@ -5,9 +5,10 @@ import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.engine.Gfx;
 
 /**
- *  Entities are battlers in the combat engine, contain animation data and a link to db Creature
+ *  Actors in a scene or a battle map. This class contains
+ *  animation data and a link to a Creature.
  */
-public class Entity extends Drawable {
+public class Actor extends Drawable {
 
 	public enum Direction {
 		NE, SE, SW, NW
@@ -28,7 +29,7 @@ public class Entity extends Drawable {
 	private Direction heading;
 	private AnimFrame animFrame;
 
-	public Entity(Creature creat, int x, int y) {
+	public Actor(Creature creat, int x, int y) {
 
 		super();
 		cr = creat;
@@ -75,7 +76,7 @@ public class Entity extends Drawable {
 
 
 	/**
-	 * Updates the animation on this Entity.
+	 * Updates the animation on this Actor.
 	 */
 	public boolean updateAnimation() {
 	
@@ -179,7 +180,7 @@ public class Entity extends Drawable {
 	}
 	
 	/**
-	 * Moves the Entity in the right direction for 1 animation frame.
+	 * Moves the Actor in the right direction for 1 animation frame.
 	 */
 	private void moveForOneFrame() {
 

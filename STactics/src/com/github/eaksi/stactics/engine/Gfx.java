@@ -3,7 +3,7 @@ package com.github.eaksi.stactics.engine;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.github.eaksi.stactics.engine.gfx.Entity;
+import com.github.eaksi.stactics.engine.gfx.Actor;
 
 /**
  * This class serves as a storage and contains help methods for drawing different graphics.
@@ -61,7 +61,7 @@ public class Gfx {
 	}
 	
 	
-	public static TextureRegion getEntitySprite(Entity.Direction dir, Entity.AnimFrame anim) {
+	public static TextureRegion getEntitySprite(Actor.Direction dir, Actor.AnimFrame anim) {
 		switch (dir) {
 
 		default:

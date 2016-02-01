@@ -3,7 +3,7 @@ package com.github.eaksi.stactics.engine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
-import com.github.eaksi.stactics.engine.gfx.Entity.Direction;
+import com.github.eaksi.stactics.engine.gfx.Actor.Direction;
 
 /**
  *	This class handles the keyboard and mouse controls. Called from render/update loop in SolGDX. 
@@ -48,7 +48,7 @@ public class Controls {
 
 		// refreshes action points and moves
 		if (Gdx.input.isKeyJustPressed(Keys.END))
-			sol.entities.get(sol.nr).cr.startNewTurn();
+			sol.actors.get(sol.nr).cr.startNewTurn();
 
 		
 		// Toggle debug mode
@@ -85,7 +85,7 @@ public class Controls {
 
 		// Change controllable entity id
 		if (Gdx.input.isKeyJustPressed(Keys.PAGE_DOWN)) {
-			if (sol.entities.size() != (sol.nr + 1)) {
+			if (sol.actors.size() != (sol.nr + 1)) {
 				sol.nr++;
 			} else {
 				sol.nr = 0;
@@ -93,7 +93,7 @@ public class Controls {
 			return;
 		} else if (Gdx.input.isKeyJustPressed(Keys.PAGE_UP)) {
 			if (sol.nr <= 0) {
-				sol.nr = sol.entities.size() - 1;
+				sol.nr = sol.actors.size() - 1;
 			} else {
 				sol.nr--;
 			}

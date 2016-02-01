@@ -11,8 +11,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.github.eaksi.stactics.db.AreaMap;
 import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.engine.gfx.Drawable;
-import com.github.eaksi.stactics.engine.gfx.Entity;
-import com.github.eaksi.stactics.engine.gfx.Entity.Direction;
+import com.github.eaksi.stactics.engine.gfx.Actor;
+import com.github.eaksi.stactics.engine.gfx.Actor.Direction;
 import com.github.eaksi.stactics.engine.gfx.Tile;
 
 /**
@@ -47,7 +47,7 @@ public class SolGDX extends ApplicationAdapter {
 
 	private AreaMap areaMap;
 
-	Vector<Entity> entities;		// contains the entities currently in game
+	Vector<Actor> actors;		// contains the actors currently in game
 	int nr = 0; 					// current entity Number
 
 	Vector<Drawable> painter;		// has all the drawable tiles and sprites in order
@@ -64,13 +64,13 @@ public class SolGDX extends ApplicationAdapter {
 	public void create() {
 
 		areaMap = new AreaMap();
-		entities = new Vector<Entity>();
-		entities.add(new Entity(new Creature(), 1, 4));
-		entities.add(new Entity(new Creature(), 4, 5));
-		entities.add(new Entity(new Creature(), 6, 4));
+		actors = new Vector<Actor>();
+		actors.add(new Actor(new Creature(), 1, 4));
+		actors.add(new Actor(new Creature(), 4, 5));
+		actors.add(new Actor(new Creature(), 6, 4));
 
 		System.out.println("***ENTITIES***");
-		for (Entity e : entities) {
+		for (Actor e : actors) {
 			System.out.println(e.cr.getId() + ": " + e.cr.getFullName());
 		}
 		System.out.println("**************");
@@ -110,12 +110,12 @@ public class SolGDX extends ApplicationAdapter {
 
 		Controls.handleInput(this); // keyboard controls handled at this point
 		
-		// update animation frames for entities
-		for (Entity e : entities) {
+		// update animation frames for actors
+		for (Actor e : actors) {
 			e.updateAnimation();
 		}
 		
-		chAnimating = entities.get(nr).getAnimation() != Entity.Animation.IDLE; // if no animation, can move
+		chAnimating = actors.get(nr).getAnimation() != Actor.Animation.IDLE; // if no animation, can move
 		
 		batch.setProjectionMatrix(camera.combined);
 
@@ -137,8 +137,8 @@ public class SolGDX extends ApplicationAdapter {
 	}
 
 	private void setEntityLocations() {
-		// set starting locations of entities
-		for (Entity e : entities) {
+		// set starting locations of actors
+		for (Actor e : actors) {
 			e.isoX = toIsoX(e.tileY, e.tileX) + 16;
 			e.isoY = toIsoY(e.tileY, e.tileX) + 22; // XXX: sprite/tile sizes hack
 			
@@ -170,7 +170,7 @@ public class SolGDX extends ApplicationAdapter {
 		}
 
 		// add characters
-		for (Entity e : entities) {
+		for (Actor e : actors) {
 			// XXX: z position guessed (but tested, need frame by frame
 			// analysis, height changes testing and gfx)
 			e.setZ(e.isoY - 30);	// should be correct (for now)
@@ -190,9 +190,9 @@ public class SolGDX extends ApplicationAdapter {
 		int tryX = 0;
 		int tryY = 0;
 
-		entities.get(nr).setHeading(d);
+		actors.get(nr).setHeading(d);
 
-		switch (entities.get(nr).getHeading()) {
+		switch (actors.get(nr).getHeading()) {
 		case NE:
 			tryX = -1;
 			break;
@@ -210,63 +210,63 @@ public class SolGDX extends ApplicationAdapter {
 		}
 
 		// test if able to move in terrain
-		if (areaMap.getTile((entities.get(nr).tileX + tryX), entities.get(nr).tileY + tryY) != 1) {
-			printMoveDebug("Can't move (terrain): " + entities.get(nr).getHeading(), tryX, tryY);
+		if (areaMap.getTile((actors.get(nr).tileX + tryX), actors.get(nr).tileY + tryY) != 1) {
+			printMoveDebug("Can't move (terrain): " + actors.get(nr).getHeading(), tryX, tryY);
 			return;
 		}
 
-		// test if able to move because of other entities
-		for (Entity e : entities) {
-			if (entities.get(nr).tileX + tryX == e.tileX && entities.get(nr).tileY + tryY == e.tileY) {
+		// test if able to move because of other actors
+		for (Actor e : actors) {
+			if (actors.get(nr).tileX + tryX == e.tileX && actors.get(nr).tileY + tryY == e.tileY) {
 				if (!hitBattlersDebug) {
 					printMoveDebug("Can't move, " + e.cr.getName() + " (id:" + e.cr.getId() + ") is in the way: "
-							+ entities.get(nr).getHeading(), tryX, tryY);
-				} else if (entities.get(nr).cr.getActions() > 0) { // XXX: TEMP attack code
-					entities.get(nr).animFrameNr = 0;
-					entities.get(nr).setAnimation(Entity.Animation.ATTACK);
+							+ actors.get(nr).getHeading(), tryX, tryY);
+				} else if (actors.get(nr).cr.getActions() > 0) { // XXX: TEMP attack code
+					actors.get(nr).animFrameNr = 0;
+					actors.get(nr).setAnimation(Actor.Animation.ATTACK);
 					chAnimating = true;
 
-					entities.get(nr).cr.spendAction();	
+					actors.get(nr).cr.spendAction();	
 					
 					// animate victim
 					e.cr.applyDamage(1);
 					e.animFrameNr = 0;
-					e.setAnimation(Entity.Animation.HURT);
+					e.setAnimation(Actor.Animation.HURT);
 				} else {
-					System.out.println(entities.get(nr).cr.getName() + " ran out of actions!");
+					System.out.println(actors.get(nr).cr.getName() + " ran out of actions!");
 				}
 				return; // NOTE!: "return;" here
 			}
 		}
 
 		// refresh moves automatically if debug flag for that is on
-		if (entities.get(nr).cr.getMoves() <= 0 && autoRefreshMovesDebug) entities.get(nr).cr.startNewTurn(); 
+		if (actors.get(nr).cr.getMoves() <= 0 && autoRefreshMovesDebug) actors.get(nr).cr.startNewTurn(); 
 		
 		
 		// check if entity has moves left
 		// TODO: moves where more than 1 point of move needed
-		if (entities.get(nr).cr.getMoves() > 0) {
+		if (actors.get(nr).cr.getMoves() > 0) {
 			
-			printMoveDebug("" + entities.get(nr).getHeading(), tryX, tryY);
-			entities.get(nr).tileX += tryX;
-			entities.get(nr).tileY += tryY;
+			printMoveDebug("" + actors.get(nr).getHeading(), tryX, tryY);
+			actors.get(nr).tileX += tryX;
+			actors.get(nr).tileY += tryY;
 	
 			// if everything okay, set movement in motion
-			entities.get(nr).animFrameNr = 0;
-			entities.get(nr).setAnimation(Entity.Animation.WALK);
+			actors.get(nr).animFrameNr = 0;
+			actors.get(nr).setAnimation(Actor.Animation.WALK);
 			chAnimating = true;
 			
-			entities.get(nr).cr.spendMove();
+			actors.get(nr).cr.spendMove();
 			
 
 		} else {
-			System.out.println(entities.get(nr).cr.getName() + " ran out of moves!");
+			System.out.println(actors.get(nr).cr.getName() + " ran out of moves!");
 		}
 	}
 
 	private void printMoveDebug(String dir, int x, int y) {
-		System.out.println(dir + "(" + entities.get(nr).tileX + "," + entities.get(nr).tileY + ") -> ("
-				+ (entities.get(nr).tileX + x) + "," + (entities.get(nr).tileY + y) + ")");
+		System.out.println(dir + "(" + actors.get(nr).tileX + "," + actors.get(nr).tileY + ") -> ("
+				+ (actors.get(nr).tileX + x) + "," + (actors.get(nr).tileY + y) + ")");
 	}
 
 	/**
@@ -320,7 +320,7 @@ public class SolGDX extends ApplicationAdapter {
 		
 		// Show HP etc. info on an entity
 		if (showEntityInfo) {
-			for (Entity e : entities) {
+			for (Actor e : actors) {
 				Gfx.getSmallFont().setColor(0f, 0f, 0f, 1f);
 				Gfx.getSmallFont().draw(batch, e.cr.getName() + " " + e.cr.getMAString(), e.isoX-4, e.isoY+87);
 				Gfx.getSystemFont().setColor(1f, 0f, 0f, 1f);

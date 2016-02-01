@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import com.github.eaksi.stactics.db.Creature;
 import com.github.eaksi.stactics.db.World;
-import com.github.eaksi.stactics.engine.gfx.Entity;
+import com.github.eaksi.stactics.engine.gfx.Actor;
 
 /**
  * Mostly a class for prototyping game model things (for now)
@@ -18,15 +18,15 @@ public class STactics {
 
 		World.initialize();
 		
-		Vector<Entity> battlers = new Vector<Entity>();
+		Vector<Actor> battlers = new Vector<Actor>();
 		for (int i=0; i<4; i++) {
-			battlers.add(new Entity(new Creature(),0,0));
+			battlers.add(new Actor(new Creature(),0,0));
 		}
 
 		// test delay system
 		for (int i = 0; i < 50; i++) {
 			System.out.println("*** TURN "+ (i+1) +" ***");
-			for (Entity battler: battlers) {
+			for (Actor battler: battlers) {
 				battler.cr.isReady();
 			}
 		}
