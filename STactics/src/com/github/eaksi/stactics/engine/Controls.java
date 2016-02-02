@@ -6,7 +6,8 @@ import com.badlogic.gdx.Input.Keys;
 import com.github.eaksi.stactics.engine.gfx.Actor.Direction;
 
 /**
- *	This class handles the keyboard and mouse controls. Called from render/update loop in SolGDX. 
+ * This class handles the keyboard and mouse controls. Called from render/update
+ * loop in SolGDX.
  */
 public class Controls {
 
@@ -50,7 +51,6 @@ public class Controls {
 		if (Gdx.input.isKeyJustPressed(Keys.END))
 			sol.actors.get(sol.nr).cr.startNewTurn();
 
-		
 		// Toggle debug mode
 		if (Gdx.input.isKeyJustPressed(Keys.NUM_0))
 			sol.debug = !sol.debug;
@@ -61,7 +61,6 @@ public class Controls {
 		// if (Gdx.input.isKeyPressed(Keys.Q)) camera.rotate(-1f, 0, 0, 1);
 		// if (Gdx.input.isKeyPressed(Keys.E)) camera.rotate(1f, 0, 0, 1);
 
-		
 		if (sol.chAnimating) // if animation in progress, break
 			return;
 

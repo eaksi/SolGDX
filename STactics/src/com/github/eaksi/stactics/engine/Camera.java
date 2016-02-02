@@ -16,10 +16,6 @@ public class Camera extends OrthographicCamera {
 	
 	// TODO: vertical and horizontal moveIncrement differs? test
 	
-	// TODO: mouse movement testing, smoothing
-
-	// TODO: reimplement camera following character movement 
-	
 	// FIXME: if window size is changed during the game, the screen ratio goes awry
 	
 	public Camera(int width, int height) {

@@ -52,6 +52,9 @@ public class FontLoader {
 		return font;
 	}
 	
+	/**
+	 * Loads default system font. This method serves mostly as a reminder.
+	 */
 	public static BitmapFont loadSystemFont() {
 		return new BitmapFont();
 	}
