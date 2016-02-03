@@ -10,15 +10,18 @@ import com.github.eaksi.stactics.engine.gfx.Actor;
  */
 public class Gfx {
 
+	// tile graphics
 	private static Texture landTile;
 	private static Texture waterTile;
-	private static Texture spriteSheet;
-
-	private static TextureRegion[][] splitSheet;		// sprite sheet divided into regions
-	private static TextureRegion[][] flippedSheet;		// same as splitSheet, but regions individually flipped
 	private static TextureRegion landTileRegion;
 	private static TextureRegion waterTileRegion;
 	
+	// character sprites
+	private static Texture spriteSheet;
+	private static TextureRegion[][] splitSheet;		// sprite sheet divided into regions
+	private static TextureRegion[][] flippedSheet;		// same as splitSheet, but regions individually flipped
+
+	// fonts
 	private static BitmapFont font;			// main text font
 	private static BitmapFont smallFont;	// secondary text font
 	private static BitmapFont systemFont;	// system font

@@ -8,25 +8,31 @@ import com.github.eaksi.stactics.engine.Gfx;
  */
 public class Tile extends Drawable {
 	
-	private boolean water;
+	private boolean water;		// is the tile water or not
+	private int height;			// for height data (may be redundant)
 	
-	public Tile(int tX, int tY, int iX, int iY, int depth, boolean w) {
+	public Tile(int tX, int tY, int iX, int iY, int drawDepth, boolean w, int height) {
 		
 		super();
-		this.tileX = tX;
-		this.tileY = tY;
+		tileX = tX;
+		tileY = tY;
 		
-		this.isoX = iX;
-		this.isoY = iY;
+		isoX = iX;
+		isoY = iY;
 		
-		this.z = depth;
+		z = drawDepth;
 		
-		this.water = w;
+		water = w;
+		this.height = height;
 		
 	}
 	
 	public boolean isWater() {
 		return this.water;
+	}
+	
+	public int getHeight() {
+		return height;
 	}
 
 	@Override

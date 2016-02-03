@@ -25,10 +25,22 @@ public class SolGDX extends ApplicationAdapter {
 	
 	// debug flags and related things
 	boolean debug = false;
-	boolean drawOrderDebug = false;
+	
 	private int drawOrder = 0;
+	boolean drawOrderDebug = false;
+	boolean tileHeightDebug = false;
+	boolean tileCoordDebug = false;
+
+	
 	boolean autoRefreshMovesDebug = true;
 	boolean hitBattlersDebug = true;
+
+	public int mouseScreenX = -999;
+	public int mouseScreenY = -999;
+	public int mouseIsoX = -999;
+	public int mouseIsoY = -999;
+	public int mouseDragX = -999;
+	public int mouseDragY = -999;
 	
 	boolean showEntityInfo = false;
 	
@@ -51,14 +63,6 @@ public class SolGDX extends ApplicationAdapter {
 	int nr = 0; 					// current entity Number
 
 	Vector<Drawable> painter;		// has all the drawable tiles and sprites in order
-
-	// debug
-	public int mouseScreenX = -999;
-	public int mouseScreenY = -999;
-	public int mouseIsoX = -999;
-	public int mouseIsoY = -999;
-	public int mouseDragX = -999;
-	public int mouseDragY = -999;
 
 	@Override
 	public void create() {
@@ -123,7 +127,7 @@ public class SolGDX extends ApplicationAdapter {
 
 		// draw everything
 		batch.begin();
-		drawBattleMap();
+		drawAreaMap();
 		batch.end();
 
 		guiBatch.begin();
@@ -154,10 +158,10 @@ public class SolGDX extends ApplicationAdapter {
 		for (int i = 0; i < areaMap.getWidth(); i++) {
 			for (int j = 0; j < areaMap.getHeight(); j++) {
 				if (areaMap.getTile(i, j) == 0) {
-					tile = new Tile(i, j, toIsoX(j, i), toIsoY(j, i), toIsoY(j, i), true);
+					tile = new Tile(i, j, toIsoX(j, i), toIsoY(j, i), toIsoY(j, i), true, areaMap.getTile(i, j));
 				} else {
 					tile = new Tile(i, j, toIsoX(j, i), toIsoY(j, i) + areaMap.getTile(i, j) * 16, toIsoY(j, i),
-							false);
+							false, areaMap.getTile(i, j));
 				}
 
 				painter.add((Drawable) tile);
@@ -286,51 +290,77 @@ public class SolGDX extends ApplicationAdapter {
 	/**
 	 *  The primary draw method.
 	 */
-	private void drawBattleMap() {
+	private void drawAreaMap() {
 
 		// sort everything (again)
 		// TODO: sorting optimization
 		Collections.sort((List<Drawable>) painter, Collections.reverseOrder());
 
-		drawOrder = 0;
 		Gfx.getSmallFont().setColor(0f, 0f, 0f, 1f);
 
 		for (Drawable d : painter) {
 			batch.draw(d.getSprite(), d.isoX, d.isoY);
 		}
 
-		// Draw AreaMap coordinates over tiles
-		if (debug) {
-			Gfx.getSmallFont().setColor(0f, 0f, 0f, 1f);
-			for (int i = 0; i < areaMap.getWidth(); i++) {
-				for (int j = 0; j < areaMap.getHeight(); j++) {
-					Gfx.getSmallFont().draw(batch, i + "," + j, toIsoX(j, i) + 20,
-							(toIsoY(j, i) + (areaMap.getTile(i, j) * 16 + 20)));
-				}
-			}
-		}
-		
-		// Debug: show the painters algorithm's draw order
-		if (drawOrderDebug) {
-			for (Drawable d : painter) {
-				drawOrder++;
-				Gfx.getSmallFont().draw(batch, "" + drawOrder, d.isoX + 24, d.isoY + 20);
-			}
-		}
-		
 		// Show HP etc. info on an entity
-		if (showEntityInfo) {
-			for (Actor e : actors) {
-				Gfx.getSmallFont().setColor(0f, 0f, 0f, 1f);
-				Gfx.getSmallFont().draw(batch, e.cr.getName() + " " + e.cr.getMAString(), e.isoX-4, e.isoY+87);
-				Gfx.getSystemFont().setColor(1f, 0f, 0f, 1f);
-				Gfx.getSystemFont().draw(batch, e.cr.getStringHP(true), e.isoX + 4 - 2*(e.cr.getHP()), e.isoY+72);
-								
-			}
-		}
+		if (showEntityInfo) drawEntityInfo();		
+		
+		// Draw AreaMap coordinates over tiles
+		if (tileCoordDebug) drawTileCoordDebug();
+		if (tileHeightDebug) drawTileHeightDebug();
+		if (drawOrderDebug) drawDrawOrderDebug();
 		
 	}
+	
+	/**
+	 * This method draws all Actors' info on top of the sprites.
+	 */
+	private void drawEntityInfo() {
+		for (Actor e : actors) {
+			Gfx.getSmallFont().setColor(0f, 0f, 0f, 1f);
+			Gfx.getSmallFont().draw(batch, e.cr.getName() + " " + e.cr.getMAString(), e.isoX-4, e.isoY+87);
+			Gfx.getSystemFont().setColor(1f, 0f, 0f, 1f);
+			Gfx.getSystemFont().draw(batch, e.cr.getStringHP(true), e.isoX + 4 - 2*(e.cr.getHP()), e.isoY+72);
+		}
+	}
+	
+	/**
+	 * This debug method draws coordinates on tiles.
+	 */
+	private void drawTileCoordDebug() {
+		Gfx.getSmallFont().setColor(0f, 0f, 0f, 1f);
+		for (int i = 0; i < areaMap.getWidth(); i++) {
+			for (int j = 0; j < areaMap.getHeight(); j++) {
+				Gfx.getSmallFont().draw(batch, i + "," + j, toIsoX(j, i) + 20,
+						(toIsoY(j, i) + (areaMap.getTile(i, j) * 16 + 20)));
+			}
+		}
+	}
+	
+	/**
+	 * This debug method draws tile heights on tiles.
+	 */
+	private void drawTileHeightDebug() {
+		for (Drawable d : painter) {
+			if (d instanceof Tile) {
+				Gfx.getSmallFont().draw(batch, "" + ((Tile)d).getHeight(), d.isoX + 24, d.isoY + 20);
+			}
+		}
+	}
+	
+	/**
+	 * This debug method draws draw orders on tiles, as per painter's algorithm.
+	 */
+	private void drawDrawOrderDebug() {
+		drawOrder = 0;
+		
+		for (Drawable d : painter) {
+			drawOrder++;
+			Gfx.getSmallFont().draw(batch, "" + drawOrder, d.isoX + 24, d.isoY + 20);
+		}
+	}
 
+	
 	@Override
 	public void dispose() {
 		batch.dispose();

@@ -54,6 +54,12 @@ public class Controls {
 		// Toggle debug mode
 		if (Gdx.input.isKeyJustPressed(Keys.NUM_0))
 			sol.debug = !sol.debug;
+
+		// Toggle various drawing debug flags
+		if (Gdx.input.isKeyJustPressed(Keys.NUM_7))
+			sol.tileCoordDebug = !sol.tileCoordDebug;
+		if (Gdx.input.isKeyJustPressed(Keys.NUM_8))
+			sol.tileHeightDebug = !sol.tileHeightDebug;
 		if (Gdx.input.isKeyJustPressed(Keys.NUM_9))
 			sol.drawOrderDebug = !sol.drawOrderDebug;
 
