@@ -62,7 +62,7 @@ public class SolGDX extends ApplicationAdapter {
 	Vector<Actor> actors;		// contains the actors currently in game
 	int nr = 0; 					// current entity Number
 
-	Vector<Drawable> painter;		// has all the drawable tiles and sprites in order
+	Vector<Drawable> drawables;		// has all the drawable tiles and sprites in order
 
 	@Override
 	public void create() {
@@ -90,7 +90,7 @@ public class SolGDX extends ApplicationAdapter {
 
 		setEntityLocations(); // initial setup of entity locations
 
-		initializePainter(); // initialize painter's algorithm (make & sort Drawables)
+		initializePainter(); // initialize drawables's algorithm (make & sort Drawables)
 
 		/* print the AreaMap width and height and w/h difference
 		 *  (negative = more width than height)	 */
@@ -137,7 +137,6 @@ public class SolGDX extends ApplicationAdapter {
 		// update FPS counter on window title
 		Gdx.graphics
 				.setTitle("SolGDX     FPS: " + Gdx.graphics.getFramesPerSecond() + " Zoom: " + camera.getZoomLevel());
-
 	}
 
 	private void setEntityLocations() {
@@ -151,7 +150,7 @@ public class SolGDX extends ApplicationAdapter {
 
 	private void initializePainter() {
 
-		painter = new Vector<Drawable>();
+		drawables = new Vector<Drawable>();
 		Tile tile;
 
 		// add tiles
@@ -164,7 +163,7 @@ public class SolGDX extends ApplicationAdapter {
 							false, areaMap.getTile(i, j));
 				}
 
-				painter.add((Drawable) tile);
+				drawables.add((Drawable) tile);
 
 				// debug
 				if (debug)
@@ -179,11 +178,11 @@ public class SolGDX extends ApplicationAdapter {
 			// analysis, height changes testing and gfx)
 			e.setZ(e.isoY - 30);	// should be correct (for now)
 			//e.setZ(e.isoY - 27);	// minor clipping on floor tiles when moving?
-			painter.add(e);
+			drawables.add(e);
 		}
 
 		// initial sorting
-		Collections.sort((List<Drawable>) painter, Collections.reverseOrder());
+		Collections.sort((List<Drawable>) drawables, Collections.reverseOrder());
 
 	}
 
@@ -294,11 +293,11 @@ public class SolGDX extends ApplicationAdapter {
 
 		// sort everything (again)
 		// TODO: sorting optimization
-		Collections.sort((List<Drawable>) painter, Collections.reverseOrder());
+		Collections.sort((List<Drawable>) drawables, Collections.reverseOrder());
 
 		Gfx.getSmallFont().setColor(0f, 0f, 0f, 1f);
 
-		for (Drawable d : painter) {
+		for (Drawable d : drawables) {
 			batch.draw(d.getSprite(), d.isoX, d.isoY);
 		}
 
@@ -341,7 +340,7 @@ public class SolGDX extends ApplicationAdapter {
 	 * This debug method draws tile heights on tiles.
 	 */
 	private void drawTileHeightDebug() {
-		for (Drawable d : painter) {
+		for (Drawable d : drawables) {
 			if (d instanceof Tile) {
 				Gfx.getSmallFont().draw(batch, "" + ((Tile)d).getHeight(), d.isoX + 24, d.isoY + 20);
 			}
@@ -349,12 +348,12 @@ public class SolGDX extends ApplicationAdapter {
 	}
 	
 	/**
-	 * This debug method draws draw orders on tiles, as per painter's algorithm.
+	 * This debug method draws draw orders on tiles, as per drawables's algorithm.
 	 */
 	private void drawDrawOrderDebug() {
 		drawOrder = 0;
 		
-		for (Drawable d : painter) {
+		for (Drawable d : drawables) {
 			drawOrder++;
 			Gfx.getSmallFont().draw(batch, "" + drawOrder, d.isoX + 24, d.isoY + 20);
 		}

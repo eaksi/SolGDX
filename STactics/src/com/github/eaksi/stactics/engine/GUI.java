@@ -18,8 +18,8 @@ public class GUI {
 	 */
 	protected static void draw(SolGDX sol, SpriteBatch guiBatch) {
 
-		Gfx.getFont().setColor(0.6f, 0.6f, 0.6f, 1f);
-		Gfx.getSmallFont().setColor(0.6f, 0.6f, 0.6f, 1f);
+		Gfx.getFont().setColor(0.4f, 0.4f, 0.4f, 1f);
+		Gfx.getSmallFont().setColor(0.4f, 0.4f, 0.4f, 1f);
 		
 		// display current character info
 		Gfx.getFont().draw(guiBatch, "name: " + sol.actors.get(sol.nr).cr.getFullName(), 10, sol.screenHeight - 10);
@@ -37,8 +37,10 @@ public class GUI {
 		if (sol.debug) {
 
 			// left side of debug
-			debugDraw(sol, guiBatch, "creature id: " + sol.actors.get(sol.nr).cr.getId(), true);
-			debugDraw(sol, guiBatch, "entity id: " + sol.actors.get(sol.nr).getId(), true);
+			debugDraw(sol, guiBatch, "Creature id: " + sol.actors.get(sol.nr).cr.getId(), true);
+			debugDraw(sol, guiBatch, "Drawable id: " + sol.actors.get(sol.nr).getId(), true);
+			debugDraw(sol, guiBatch, "actors: " + sol.actors.size(), true);
+			debugDraw(sol, guiBatch, "drawables: " + sol.drawables.size(), true);
 
 			// right side of debug
 			debugDraw(sol, guiBatch, "anim. frame nr.: " + sol.actors.get(sol.nr).getCurrentFrame(), false);
@@ -59,9 +61,10 @@ public class GUI {
 
 		} else {  // display other info
 			debugDraw(sol, guiBatch, "Help:", false);
-			debugDraw(sol, guiBatch, "PGUP & PGDOWN = change entity", false);
-			debugDraw(sol, guiBatch, "HOME = display battler info", false);
-			debugDraw(sol, guiBatch, "END = do \"new turn\" things with battler", false);
+			debugDraw(sol, guiBatch, "PGUP & PGDOWN = change actor", false);
+			debugDraw(sol, guiBatch, "HOME = display actor info", false);
+			debugDraw(sol, guiBatch, "END = restart turn with current actor", false);
+			debugDraw(sol, guiBatch, "Z / X = zoom in / out", false);
 			debugDraw(sol, guiBatch, "7 = toggle tile coordinate debug", false);
 			debugDraw(sol, guiBatch, "8 = toggle tile height info", false);
 			debugDraw(sol, guiBatch, "9 = toggle z draw order", false);
@@ -76,7 +79,7 @@ public class GUI {
 	private static void debugDraw(SolGDX sol, SpriteBatch guiBatch, String text, boolean leftAlign) {
 		if (leftAlign) {
 			leftDebugY += 15;
-			Gfx.getSmallFont().draw(guiBatch, text, 10, sol.screenHeight - leftDebugY, sol.screenWidth - 150, Align.right,
+			Gfx.getSmallFont().draw(guiBatch, text, 10, sol.screenHeight - leftDebugY, sol.screenWidth - 180, Align.right,
 					true);
 		} else {
 			rightDebugY += 15;
