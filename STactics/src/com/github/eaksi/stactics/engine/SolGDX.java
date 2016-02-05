@@ -30,7 +30,6 @@ public class SolGDX extends ApplicationAdapter {
 	boolean drawOrderDebug = false;
 	boolean tileHeightDebug = false;
 	boolean tileCoordDebug = false;
-
 	
 	boolean autoRefreshMovesDebug = true;
 	boolean hitBattlersDebug = true;

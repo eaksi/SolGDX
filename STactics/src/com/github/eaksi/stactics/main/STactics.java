@@ -18,16 +18,16 @@ public class STactics {
 
 		World.initialize();
 		
-		Vector<Actor> battlers = new Vector<Actor>();
+		Vector<Actor> actors = new Vector<Actor>();
 		for (int i=0; i<4; i++) {
-			battlers.add(new Actor(new Creature(),0,0));
+			actors.add(new Actor(new Creature(),0,0));
 		}
 
 		// test delay system
 		for (int i = 0; i < 50; i++) {
 			System.out.println("*** TURN "+ (i+1) +" ***");
-			for (Actor battler: battlers) {
-				battler.cr.isReady();
+			for (Actor actor: actors) {
+				actor.cr.isReady();
 			}
 		}
 	}

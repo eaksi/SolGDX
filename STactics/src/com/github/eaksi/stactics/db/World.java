@@ -10,7 +10,6 @@ import java.util.Vector;
 
 public class World {
 
-	//private static Hashtable<Integer, Skill> skills; // id, name
 	private static Vector<String> fNameList;
 	private static Vector<String> lNameList;
 
@@ -18,18 +17,19 @@ public class World {
 	public static void initialize() {
 		RNG.initialize();
 		initializeNameGenerator();
-		// initializeSkills();
-		// initializeItems();
 	}
 
 	private static void initializeNameGenerator() {
-		fNameList = loadNameFile("data/victorianenglish_f.txt");
-		lNameList = loadNameFile("data/dragonnames.txt");
+		fNameList = loadNameFile("data/victorianenglish_f.txt");	// XXX: temp name list
+		lNameList = loadNameFile("data/dragonnames.txt");			// XXX: temp name list
 
 		System.out.println("World: NameGen initialized (" + (fNameList.size() + lNameList.size()) + " names loaded)");
 		// /*DEBUG*/ for (String s: lNameList) System.out.println(s);
 	}
 
+	/**
+	 *	Loads a (pre-formatted, one name per line) name list file into a Vector.
+	 */
 	private static Vector<String> loadNameFile(String fileName) {
 		Vector<String> names = new Vector<String>();
 
